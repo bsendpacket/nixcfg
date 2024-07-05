@@ -11,7 +11,7 @@ in {
       config = rec {
 
         modifier = "Mod1";
-        terminal = "/home/twentyeight/.nix-profile/bin/nixGL ${pkgs.kitty}/bin/kitty";
+        terminal = "${homeDirectory}/.nix-profile/bin/nixGL ${pkgs.kitty}/bin/kitty";
         bars = [{ 
           command = "${pkgs.i3}/bin/i3bar";
           statusCommand = "${pkgs.i3status-rust}/bin/i3status-rs ${config.xdg.configHome}/i3status-rust/config-i3bar.toml";
