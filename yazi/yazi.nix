@@ -84,6 +84,11 @@ in {
 
           { on = [ "f" "g" ]; run = "plugin fg";                    desc = "Find file by Content";   }
           { on = [ "f" "f" ]; run = "plugin fg --args='fzf'";       desc = "Find file by Name";      }
+
+          { on = [ "K" ];     run = "seek -5";                      desc = "Seek up 5 units in the preview";   }
+          { on = [ "J" ];     run = "seek 5";                       desc = "Seek down 5 units in the preview"; }
+          { on = [ "<C-k>" ]; run = "arrow -5";                     desc = "Move cursor up 5 lines";           }
+          { on = [ "<C-j>" ]; run = "arrow 5";                      desc = "Move cursor down 5 lines";         }
         ];
       };
     };
@@ -95,7 +100,7 @@ in {
 
       plugin = {
         append_previewers = [
-          { name = "*"; run = "hexyl"; }
+          { name = "*"; run = "previewer"; }
         ];
         prepend_previewers = [
           { name = "*.md";                        run = "glow"; }
@@ -109,6 +114,7 @@ in {
       };
 
       manager = {
+        ratio = [ 1 3 4 ];
         show_hidden = true;
         sort_by = "natural";
         sort_dir_first = true;
@@ -295,5 +301,160 @@ in {
         ];
       };
     };
+  };
+  home.file."/.config/yazi/plugins/previewer.yazi/init.lua" = {
+    text = ''
+      local M = {}
+
+      function M:calc_sha256()
+              local child = Command('sha256sum')
+                      :args({
+                              tostring(self.file.url)
+                      })
+                      :stdout(Command.PIPED)
+                      :stderr(Command.PIPED)
+                      :spawn()
+
+              local output = child:read_line()
+              output = output:match("([a-z0-9]+)")
+
+              child:start_kill()
+
+              return output
+      end
+
+      function M:calc_file1()
+          -- Calulate File
+          local file1 = Command("file")
+              :args({
+                  "-b",
+                  tostring(self.file.url),
+              })
+              :stdout(Command.PIPED)
+              :stderr(Command.PIPED)
+              :spawn()
+
+
+          file_magic = file1:read_line()
+          file1:start_kill()
+
+          return file_magic
+      end
+
+      function M:peek()
+          local child = Command("hexyl")
+              :args({
+                  "--border",
+                  "none",
+                  "--terminal-width",
+                  tostring(self.area.w),
+                  "--character-table", "ascii",
+                  tostring(self.file.url),
+              })
+              :stdout(Command.PIPED)
+              :stderr(Command.PIPED)
+              :spawn()
+
+          local limit = self.area.h
+          local i, lines = 0, ""
+          repeat
+              local next, event = child:read_line()
+              if event == 1 then
+                  ya.err(tostring(event))
+              elseif event ~= 0 then
+                  break
+              end
+
+              i = i + 1
+              if i > self.skip then
+                  lines = lines .. next
+              end
+          until i >= self.skip + limit
+
+          child:start_kill()
+          if self.skip > 0 and i < self.skip + limit then
+              ya.manager_emit(
+                  "peek",
+                  { tostring(math.max(0, i - limit)), only_if = tostring(self.file.url), upper_bound = "" }
+              )
+          else
+              -- Print hexdump
+              magicArea = ui.Rect {
+                  x = self.area.x,
+                  y = self.area.y,
+                  w = self.area.w,
+                  h = 1,
+              }
+
+              -- Print hexdump
+              fileArea = ui.Rect {
+                  x = self.area.x,
+                  y = self.area.y + 1,
+                  w = self.area.w,
+                  h = 1,
+              }
+
+              sha256Area = ui.Rect {
+                  x = self.area.x,
+                  y = self.area.y + 2,
+                  w = self.area.w,
+                  h = 1,
+              }
+
+              hexdumpArea = ui.Rect {
+                  x = self.area.x,
+                  y = self.area.y + 4,
+                  w = self.area.w,
+                  h = self.area.h - 4,
+              }
+
+              lines = lines:gsub("\t", string.rep(" ", PREVIEW.tab_size))
+              ya.preview_widgets(self, { 
+                  ui.Paragraph.parse(hexdumpArea, lines),
+                  ui.Paragraph.parse(fileArea, " File(1): " .. "Loading..."),
+                  ui.Paragraph.parse(sha256Area, " SHA256: " .. "Loading...")
+              })
+
+              ya.preview_widgets(self, {
+                  ui.Paragraph.parse(hexdumpArea, lines), 
+                  ui.Paragraph.parse(fileArea, " File(1): " .. "Loading..."),
+                  ui.Paragraph.parse(sha256Area, " SHA256: " .. "Loading...")
+              })
+
+              local file1 = M:calc_file1()
+
+              ya.preview_widgets(self, {
+                  ui.Paragraph.parse(hexdumpArea, lines), 
+                  ui.Paragraph.parse(fileArea, " File(1): " .. file1),
+                  ui.Paragraph.parse(sha256Area, " SHA256: " .. "Loading...")
+              })
+              
+              local sha256 = M:calc_sha256()
+              
+              ya.preview_widgets(self, {
+                  ui.Paragraph.parse(hexdumpArea, lines), 
+                  ui.Paragraph.parse(fileArea, " File(1): " .. file1),
+                  ui.Paragraph.parse(sha256Area, " SHA256: " .. sha256)
+              })
+
+
+
+          end
+      end
+
+      function M:seek(units)
+          local h = cx.active.current.hovered
+          if h and h.url == self.file.url then
+              local step = math.floor(units * self.area.h / 10)
+              ya.manager_emit("peek", {
+                  tostring(math.max(0, cx.active.preview.skip + step)),
+                  only_if = tostring(self.file.url),
+              })
+          end
+      end
+
+      return M
+    '';
+    executable = false;
   };
 }
