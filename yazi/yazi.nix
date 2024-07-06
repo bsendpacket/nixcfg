@@ -72,6 +72,7 @@ in {
     keymap = {
       manager = {
         prepend_keymap = [
+          # Relative motions
           { on = [ "1" ]; run = "plugin relative-motions --args=1"; desc = "Move in relative steps"; }
           { on = [ "2" ]; run = "plugin relative-motions --args=2"; desc = "Move in relative steps"; }
           { on = [ "3" ]; run = "plugin relative-motions --args=3"; desc = "Move in relative steps"; }
@@ -82,13 +83,31 @@ in {
           { on = [ "8" ]; run = "plugin relative-motions --args=8"; desc = "Move in relative steps"; }
           { on = [ "9" ]; run = "plugin relative-motions --args=9"; desc = "Move in relative steps"; }
 
-          { on = [ "f" "g" ]; run = "plugin fg";                    desc = "Find file by Content";   }
-          { on = [ "f" "f" ]; run = "plugin fg --args='fzf'";       desc = "Find file by Name";      }
+          # File finding
+          { on = [ "f" "g" ]; run = "plugin fg";              desc = "Find file by Content"; }
+          { on = [ "f" "f" ]; run = "plugin fg --args='fzf'"; desc = "Find file by Name";    }
 
-          { on = [ "K" ];     run = "seek -5";                      desc = "Seek up 5 units in the preview";   }
-          { on = [ "J" ];     run = "seek 5";                       desc = "Seek down 5 units in the preview"; }
-          { on = [ "<C-k>" ]; run = "arrow -5";                     desc = "Move cursor up 5 lines";           }
-          { on = [ "<C-j>" ]; run = "arrow 5";                      desc = "Move cursor down 5 lines";         }
+          # Navigation
+          { on = [ "K" ];     run = "seek -5";  desc = "Seek up 5 units in the preview";   }
+          { on = [ "J" ];     run = "seek 5";   desc = "Seek down 5 units in the preview"; }
+          { on = [ "<C-k>" ]; run = "arrow -5"; desc = "Move cursor up 5 lines";           }
+          { on = [ "<C-j>" ]; run = "arrow 5";  desc = "Move cursor down 5 lines";         }
+
+          # Go to directories
+          { on = [ "g" "~" ];       run = "cd ~";                      desc = "[ G ]o to the [ ~ ]home directory";               }
+          { on = [ "g" "c" ];       run = "cd ~/.config";              desc = "[ G ]o to the [ c ]onfig directory";              }
+          { on = [ "g" "h" ];       run = "cd ~/.config/home-manager"; desc = "[ G ]o to the config [ h ]ome-manager directory"; }
+          { on = [ "g" "d" ];       run = "cd ~/Downloads";            desc = "[ G ]o to the [ d ]ownloads directory";           }
+          { on = [ "g" "D" ];       run = "cd ~/Documents";            desc = "[ G ]o to the [ d ]ocuments directory";           }
+          { on = [ "g" "t" ];       run = "cd ~/tickets";              desc = "[ G ]o to the [ t ]ickets directory";             }
+          { on = [ "g" "T" ];       run = "cd /tmp";                   desc = "[ G ]o to the [ t ]emporary directory";           }
+          { on = [ "g" "w" ];       run = "cd ~/work";                 desc = "[ G ]o to the [ w ]ork directory";                }
+          { on = [ "g" "b" ];       run = "cd ~/bin";                  desc = "[ G ]o to the [ b ]in directory (PATH)";          }
+          { on = [ "g" "<Space>" ]; run = "cd --interactive";          desc = "[ G ]o to a [   ] directory interactively";       }
+
+          # Compression
+          { on = [ "'" "3" "c" ]; run = "shell --block '7z a -pinfected -mhe=on \"$@\".7z \"$@\"'"; desc = "Compress folder with password=infected"; }
+          { on = [ "'" "3" "e" ]; run = "shell --block '7z x \"$@\" -pinfected'";                   desc = "Extract with password=infected";         }
         ];
       };
     };
