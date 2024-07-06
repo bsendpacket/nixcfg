@@ -1,3 +1,7 @@
+# Notes
+- The installation assumes that you do _not_ have i3 already installed. If you have i3 installed, it must be removed prior to installation to prevent conflicts.
+- The installation assumes that you have your `/home` directory on the same partition as your `/root` directory. If this is not the case, please use `sudo cp` instead of `sudo ln` for #11.
+
 # Installation
 ```
 1. curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
