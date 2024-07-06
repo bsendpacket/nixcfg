@@ -109,6 +109,8 @@ in
 
       # Fonts
       (nerdfonts.override { fonts = [ "CascadiaCode" ]; })
+
+      # Filesystem
     ];
 
     sessionVariables = {
