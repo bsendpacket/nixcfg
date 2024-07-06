@@ -1,5 +1,5 @@
-Install Guide:
-
+# Installation
+```
 1. curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
 2. Restart shell
 3. nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
@@ -11,3 +11,4 @@ Install Guide:
 10. home-manager switch
 11. sudo ln ~/.local/share/applications/i3.desktop /usr/share/xsessions/
 12. sudo reboot
+```
