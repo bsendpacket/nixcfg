@@ -7,6 +7,7 @@
 let
     username = builtins.getEnv "USER";
     homeDirectory = builtins.getEnv "HOME";
+    shell = builtins.getEnv "SHELL";
 
     nixvim = import (builtins.fetchGit {
       url = "https://github.com/nix-community/nixvim";
@@ -16,18 +17,21 @@ in
   imports = [
     nixvim.homeManagerModules.nixvim
 
-    ~/.config/home-manager/kitty/kitty.nix
-    ~/.config/home-manager/zsh/zsh.nix
-    ~/.config/home-manager/i3/i3.nix
-    ~/.config/home-manager/git/git.nix
-    ~/.config/home-manager/zoxide/zoxide.nix
-    ~/.config/home-manager/yazi/yazi.nix
-    ~/.config/home-manager/zathura/zathura.nix
-    ~/.config/home-manager/rofi/rofi.nix
-    ~/.config/home-manager/neovim/neovim.nix
+    # Window Manager
+    (import ./i3/i3.nix { inherit pkgs config lib homeDirectory shell; })
+
+    # Terminal Setup 
+    ./kitty/kitty.nix
+    ./zsh/zsh.nix
+    ./git/git.nix
+    ./zoxide/zoxide.nix
+    ./yazi/yazi.nix
+    ./zathura/zathura.nix
+    ./rofi/rofi.nix
+    ./neovim/neovim.nix
 
     # Services
-    ~/.config/home-manager/picom/picom.nix
+    ./picom/picom.nix
   ];
 
   nixpkgs = {
@@ -115,6 +119,8 @@ in
 
     sessionVariables = {
       EDITOR = "nvim";
+      LANG = "en_US.UTF-8";
+      LC_ALL = "en_US.UTF-8";
       XDG_DATA_DIRS = "$HOME/.nix-profile/share:$XDG_DATA_DIRS";
       FONTCONFIG_PATH = "$HOME/.nix-profile/share/fonts/truetype";
     };
