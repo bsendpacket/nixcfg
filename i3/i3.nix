@@ -1,6 +1,5 @@
-{ pkgs, config, lib, ... }: 
+{ pkgs, config, lib, shell, homeDirectory, ... }: 
 let 
-  homeDirectory = builtins.getEnv "HOME";
   modifier = "Mod1";
 in {
   xsession = {
@@ -58,7 +57,9 @@ in {
           "${modifier}+u" = "exec ${pkgs.chromium}/bin/chromium";
 
           # Rofi
-          "${modifier}+d" = "exec ${pkgs.rofi}/bin/rofi -show drun";
+          #"${modifier}+d" = "exec ${pkgs.rofi}/bin/rofi -show drun >> ${homeDirectory}/rofi.out 2>&1";
+          "${modifier}+d" = "exec --no-startup-id ${shell} -c 'LANG=en_US.UTF-8 LC_ALL=C ${pkgs.rofi}/bin/rofi -show drun >> ${homeDirectory}/rofi.out 2>&1'";
+          #"${modifier}+d" = "exec LANG=en_US.UTF-8; LC_ALL=C; ${pkgs.rofi}/bin/rofi -show drun >> ${homeDirectory}/rofi.out 2>&1";
         };
       };
       extraConfig = ''
