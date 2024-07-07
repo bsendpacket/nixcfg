@@ -15,6 +15,7 @@ in {
         bars = [{ 
           command = "${pkgs.i3}/bin/i3bar";
           statusCommand = "${pkgs.i3status-rust}/bin/i3status-rs ${config.xdg.configHome}/i3status-rust/config-i3bar.toml";
+          position = "top";
         }];
 
         # gaps = {
