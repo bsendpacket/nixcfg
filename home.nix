@@ -69,6 +69,9 @@ in
 
       neofetch
       glow
+
+      # Web
+      firefox
       
       # Social
       discord
