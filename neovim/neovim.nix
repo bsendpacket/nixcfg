@@ -51,13 +51,20 @@
         enable = true;
 
         cmdline = {
-          ":".sources = [
-            { name = "cmdline"; }
-            { name = "cmdline-history"; }
-          ];
-          ":".mapping = {
-            "<Up>" = "cmp.mapping(cmp.mapping.select_prev_item(), {'i', 's'})";
-            "<Down>" = "cmp.mapping(cmp.mapping.select_next_item(), {'i', 's'})";
+          ":" = {
+            sources = [{
+              name = "cmdline"; 
+              option = {
+                ignore_cmds = [
+                  "Man"
+                  "!"
+                ];
+              };
+            }];
+
+            mapping = {
+              __raw = "cmp.mapping.preset.cmdline()";
+            };
           };
         };
 
