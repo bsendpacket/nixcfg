@@ -79,6 +79,7 @@ in
       # Utilities
       xclip
       xdragon
+      jless
 
       bat
       lsd
