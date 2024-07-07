@@ -14,7 +14,8 @@
       # Enable mouse usage
       mouse = "a";
 
-      # Allow clipboard to yank and paste to system clipboard by default
+      # Allow clipboard to yank and paste to access system clipboard by default
+      # Setting this to both "unnamed" and "unnamedplus" allows for copy-pasting to the system clipboard by default
       # clipboard = [ "unnamed" "unnamedplus" ];
 
       # Enable break indent
@@ -99,8 +100,11 @@
 
       # Navigation helper, toggle with :Navbuddy
       # Navic is required by Navbuddy.
-      navbuddy.enable = true;
       navic.enable = true;
+      navbuddy = {
+        enable = true;
+        lsp.autoAttach = true;
+      };
 
       # Purposefully makes nvim harder to use by adding timeouts to the basic movement keys
       # This is in order to train to utilize faster and better movement mechanisms
@@ -142,7 +146,7 @@
 
       lsp = {
         enable = true;
-
+        
         onAttach = ''
           local nmap = function(keys, func, desc)
             if desc then
@@ -224,11 +228,10 @@
       # treesitter-refactor.enable = true;
 
       # Add indentation guides even on blank lines
-      indent-blankline.settings = {
+      indent-blankline = {
         enable = true;
-
         settings = {
-          indent.highlight = [ 
+          indent.highlight = [
             "MoonflyGrey58" 
             "MoonflyGrey39" 
             "MoonflyGrey27" 
