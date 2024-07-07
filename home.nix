@@ -48,6 +48,8 @@ in
 
     packages = with pkgs; [
 
+      open-vm-tools
+
       i3
       i3status-rust
       
@@ -81,7 +83,6 @@ in
       xdragon
       jless
 
-      bat
       lsd
       zoxide
       fzf
@@ -100,6 +101,16 @@ in
       poppler
 
       lazygit
+
+      ## Malware Analysis
+
+      # Binary Analysis
+      flare-floss
+      (callPackage ./detect-it-easy/detect-it-easy.nix {})
+      (callPackage ./binary-refinery/binary-refinery.nix {python-magic = python3Packages.python-magic;})
+
+      # Java
+      jadx
 
       # Custom Python environment
       (python311.withPackages (ps: with ps; [
@@ -127,6 +138,7 @@ in
       LC_ALL = "en_US.UTF-8";
       XDG_DATA_DIRS = "$HOME/.nix-profile/share:$XDG_DATA_DIRS";
       FONTCONFIG_PATH = "$HOME/.nix-profile/share/fonts/truetype";
+      PATH = "$PATH:$HOME/.local/bin";
     };
 
     file.".xsessionrc" = {
@@ -149,6 +161,17 @@ in
         Type=Application
       '';
       executable = false;
+    };
+
+    file.".local/bin/DRAG_TO_VM" = {
+      text = ''
+        #!${pkgs.zsh}/bin/zsh
+        dragon --target | while read dst
+        do
+          cp "''${dst//file:\/\//}" .
+        done
+      '';
+      executable = true;
     };
 
     stateVersion = "23.11";
