@@ -14,10 +14,8 @@
       # Enable mouse usage
       mouse = "a";
 
-      # Allow clipboard to access system clipboard
-      # Setting this to both "unnamed" and "unnamedplus" allows for copy-paste to work
-      # even if NixOS is running as a VM Guest.
-      clipboard = [ "unnamed" "unnamedplus" ];
+      # Allow clipboard to yank and paste to system clipboard by default
+      # clipboard = [ "unnamed" "unnamedplus" ];
 
       # Enable break indent
       breakindent = true;
