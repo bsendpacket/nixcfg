@@ -105,9 +105,25 @@ in {
           { on = [ "g" "b" ];       run = "cd ~/bin";                  desc = "[ G ]o to the [ b ]in directory (PATH)";          }
           { on = [ "g" "<Space>" ]; run = "cd --interactive";          desc = "[ G ]o to a [   ] directory interactively";       }
 
+          # Drag-and-drop
+          { on = [ "b" "o" ]; run = "shell 'dragon -x -i -T \"$1\"' --confirm"; desc = "Drag file OUT of yazi"; }
+          { on = [ "b" "i" ]; run = "shell DRAG_TO_VM --confirm"; desc = "Drag file INTO yazi"; }
+
+          # ' - Common Aliases
+          # 1 - Reserved
+
+          # 2 - Reserved
+
+          # 3 - Files
+
           # Compression
           { on = [ "'" "3" "c" ]; run = "shell --block '7z a -pinfected -mhe=on \"$@\".7z \"$@\"'"; desc = "Compress folder with password=infected"; }
           { on = [ "'" "3" "e" ]; run = "shell --block '7z x \"$@\" -pinfected'";                   desc = "Extract with password=infected";         }
+
+
+
+          { on = [ "'" "4" "j" ]; run = "shell --orphan 'jadx-gui \"$@\"'"; desc = "Launch Jadx-GUI with the selected file"; }
+
         ];
       };
     };
