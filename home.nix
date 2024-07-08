@@ -14,6 +14,13 @@ let
     });
 
     colorscheme = import ./colorscheme.nix;
+
+    # Packages to build, as they are not on NixPkgs
+    binary-refinery = pkgs.callPackage ./binary-refinery/binary-refinery.nix {
+      python-magic = pkgs.python3Packages.python-magic;
+    };
+
+    detect-it-easy = pkgs.callPackage ./detect-it-easy/detect-it-easy.nix {};
 in
 {
   imports = [
@@ -25,7 +32,7 @@ in
     # Terminal Setup 
     (import ./kitty/kitty.nix { inherit pkgs colorscheme; })
     (import ./yazi/yazi.nix { inherit pkgs colorscheme; })
-    ./zsh/zsh.nix
+    (import ./zsh/zsh.nix { inherit pkgs binary-refinery; })
     ./git/git.nix
     ./zoxide/zoxide.nix
     ./zathura/zathura.nix
@@ -48,7 +55,15 @@ in
     username = username;
     homeDirectory = homeDirectory;
 
-    packages = with pkgs; [
+    packages = [
+      # Packages that need to be manually built
+
+      # Binary Analysis
+      detect-it-easy
+      binary-refinery
+
+    ] ++ (with pkgs; [
+      # Packages that are avaliable within NixPkgs
 
       open-vm-tools
 
@@ -67,6 +82,7 @@ in
       thefuck
 
       _7zz
+      (hiPrio bat)
       ouch
       htop
       glances
@@ -109,8 +125,6 @@ in
 
       # Binary Analysis
       flare-floss
-      (callPackage ./detect-it-easy/detect-it-easy.nix {})
-      (callPackage ./binary-refinery/binary-refinery.nix {python-magic = python3Packages.python-magic;})
 
       # Java
       jadx
@@ -131,7 +145,7 @@ in
 
       # Fonts
       (nerdfonts.override { fonts = [ "CascadiaCode" ]; })
-    ];
+    ]);
 
     sessionVariables = {
       EDITOR = "nvim";

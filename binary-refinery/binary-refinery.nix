@@ -23,7 +23,9 @@ python3Packages.buildPythonApplication {
   propagatedBuildInputs = [
     python-magic
   ] ++ (with python3Packages; [
-    (callPackage ./macholib.nix {})
+    (callPackage ./dependencies/macholib.nix {})
+    (callPackage ./dependencies/cabarchive.nix {})
+    (callPackage ./dependencies/pyonenote.nix {})
     colorama
     defusedxml
     msgpack
@@ -32,6 +34,12 @@ python3Packages.buildPythonApplication {
     pyelftools
     setuptools
     toml
+    oletools
+    lnkparse3
+    jsbeautifier
+    pillow
+    angr
+    unicorn
   ]);
 
   # Disable tests for now
