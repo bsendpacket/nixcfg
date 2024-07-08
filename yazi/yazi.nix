@@ -1,4 +1,4 @@
-{ pkgs, ... }: 
+{ pkgs, colorscheme, ... }: 
 let
   # To get a SHA-256 for a GitHub repo:
   # Use nix-prefetch-url --unpack
@@ -160,72 +160,72 @@ in {
 
     theme = {
       manager = {
-        cwd = { fg = "#85dc85"; };
+        cwd = { fg = colorscheme.colors.bright_cyan; };
         hovered = { reversed = true; };
         preview_hovered = { underline = true; };
 
         find_keyword = {
-          fg = "#c6c684";
+          fg = colorscheme.colors.bright_yellow;
           bold = true;
           italic = true;
           underline = true;
         };
 
         find_position = { 
-          fg = "#ae81ff";
+          fg = colorscheme.colors.bright_purple;
           bg = "reset";
           bold = true;
           italic = true;
         };
 
         marker_copied = {
-          fg = "#36c692";
-          bg = "#36c692";
+          fg = colorscheme.colors.bright_green;
+          bg = colorscheme.colors.bright_green;
         };
 
         marker_cut = {
-          fg = "#ff5189";
-          bg = "#ff5189";
+          fg = colorscheme.colors.bright_red;
+          bg = colorscheme.colors.bright_red;
         };
 
         marker_marked = {
-          fg = "#c6c684";
-          bg = "#c6c684";
+          fg = colorscheme.colors.bright_yellow;
+          bg = colorscheme.colors.bright_yellow;
         };
 
         marker_selected = {
-          fg = "#74b2ff";
-          bg = "#74b2ff";
+          fg = colorscheme.colors.bright_blue;
+          bg = colorscheme.colors.bright_blue;
         };
 
         tab_active = {
-          fg = "#080808";
-          bg = "#e4e4e4";
+          fg = colorscheme.colors.background;
+          bg = colorscheme.colors.bright_white;
         };
 
         tab_inactive = {
-          fg = "#e4e4e4";
-          bg = "#323437";
+          fg = colorscheme.colors.bright_white;
+          bg = colorscheme.colors.black;
         };
 
         tab_width = 1;
         count_copied = {
-          fg = "#080808";
-          bg = "#36c692";
+          fg = colorscheme.colors.background;
+          bg = colorscheme.colors.bright_green;
         };
 
         count_cut = {
-          fg = "#080808";
-          bg = "#ff5189";
+          fg = colorscheme.colors.background;
+          bg = colorscheme.colors.bright_red;
         };
 
         count_selected = {
-          fg = "#080808";
-          bg = "#74b2ff";
+          fg = colorscheme.colors.background;
+          bg = colorscheme.colors.bright_blue;
         };
 
         border_symbol = "│";
-        border_style = { fg = "#949494"; };
+        border_style = { fg = colorscheme.colors.bright_black; };
       };
       
       status = {
@@ -233,110 +233,111 @@ in {
         separator_close = "";
 
         separator_style = {
-          fg = "#323437";
-          bg = "#323437";
+          fg = colorscheme.colors.black;
+          bg = colorscheme.colors.black;
         };
 
         mode_normal = {
-          fg = "#080808";
-          bg = "#74b2ff";
+          fg = colorscheme.colors.background;
+          bg = colorscheme.colors.bright_blue;
           bold = true;
         };
 
         mode_select = {
-          fg = "#080808";
-          bg = "#36c692";
+          fg = colorscheme.colors.background;
+          bg = colorscheme.colors.bright_green;
           bold = true;
         };
 
         mode_unset = {
-          fg = "#080808";
-          bg = "#ff5189";
+          fg = colorscheme.colors.background;
+          bg = colorscheme.colors.bright_red;
           bold = true;
         };
 
         progress_label = {
-          fg = "#e4e4e4";
+          fg = colorscheme.colors.bright_white;
           bold = true;
         };
 
         progress_normal = {
-          fg = "#74b2ff";
-          bg = "#323437";
+          fg = colorscheme.colors.bright_blue;
+          bg = colorscheme.colors.black;
         };
 
         progress_error = {
-          fg = "#ff5189";
-          bg = "#323437";
+          fg = colorscheme.colors.bright_red;
+          bg = colorscheme.colors.black;
         };
 
-        permissions_t = { fg = "#74b2ff"; };
-        permissions_r = { fg = "#c6c684"; };
-        permissions_w = { fg = "#ff5189"; };
-        permissions_x = { fg = "#36c692"; };
-        permissions_s = { fg = "#949494"; };
+        permissions_t = { fg = colorscheme.colors.bright_blue; };
+        permissions_r = { fg = colorscheme.colors.bright_yellow; };
+        permissions_w = { fg = colorscheme.colors.bright_red; };
+        permissions_x = { fg = colorscheme.colors.bright_green; };
+        permissions_s = { fg = colorscheme.colors.bright_black; };
       };
 
       input = {
-        border = { fg = "#74b2ff"; };
+        border = { fg = colorscheme.colors.bright_blue; };
         title = {};
         value = {};
         selected = { reversed = true; };
       };
 
       select = {
-        border = { fg = "#74b2ff"; };
-        active = { fg = "#ae81ff"; };
+        border = { fg = colorscheme.colors.bright_blue; };
+        active = { fg = colorscheme.colors.bright_purple; };
         inactive = {};
       };
 
       tasks = {
-        border = { fg = "#74b2ff"; };
+        border = { fg = colorscheme.colors.bright_blue; };
         title = {};
         hovered = { underline = true; };
       };
 
       which = {
-        mask = { bg = "#323437"; };
-        cand = { fg = "#85dc85"; };
-        rest = { fg = "#bdbdbd"; };
-        desc = { fg = "#ae81ff"; };
+        mask = { bg = colorscheme.colors.black; };
+        cand = { fg = colorscheme.colors.bright_cyan; };
+        rest = { fg = colorscheme.colors.foreground; };
+        desc = { fg = colorscheme.colors.bright_purple; };
         separator = "  ";
-        separator_style = { fg = "#949494"; };
+        separator_style = { fg = colorscheme.colors.bright_black; };
       };
 
       help = {
-        on = { fg = "#ae81ff"; };
-        run = { fg = "#85dc85"; };
-        desc = { fg = "#bdbdbd"; };
+        on = { fg = colorscheme.colors.bright_purple; };
+        run = { fg = colorscheme.colors.bright_cyan; };
+        desc = { fg = colorscheme.colors.foreground; };
         hovered = {
-          bg = "#323437";
+          bg = colorscheme.colors.black;
           bold = true;
         };
         footer = {
-          fg = "#323437";
-          bg = "#e4e4e4";
+          fg = colorscheme.colors.black;
+          bg = colorscheme.colors.bright_white;
         };
       };
 
       filetype = {
         rules = [
-          { mime = "image/*"; fg = "#85dc85"; }
-          { mime = "video/*"; fg = "#c6c684"; }
-          { mime = "audio/*"; fg = "#c6c684"; }
-          { mime = "application/zip"; fg = "#ae81ff"; }
-          { mime = "application/gzip"; fg = "#ae81ff"; }
-          { mime = "application/x-tar"; fg = "#ae81ff"; }
-          { mime = "application/x-bzip"; fg = "#ae81ff"; }
-          { mime = "application/x-bzip2"; fg = "#ae81ff"; }
-          { mime = "application/x-7z-compressed"; fg = "#ae81ff"; }
-          { mime = "application/x-rar"; fg = "#ae81ff"; }
-          { name = "*"; fg = "#e4e4e4"; }
-          { name = "*/"; fg = "#74b2ff"; }
+          { mime = "image/*"; fg = colorscheme.colors.bright_cyan; }
+          { mime = "video/*"; fg = colorscheme.colors.bright_yellow; }
+          { mime = "audio/*"; fg = colorscheme.colors.bright_yellow; }
+          { mime = "application/zip"; fg = colorscheme.colors.bright_purple; }
+          { mime = "application/gzip"; fg = colorscheme.colors.bright_purple; }
+          { mime = "application/x-tar"; fg = colorscheme.colors.bright_purple; }
+          { mime = "application/x-bzip"; fg = colorscheme.colors.bright_purple; }
+          { mime = "application/x-bzip2"; fg = colorscheme.colors.bright_purple; }
+          { mime = "application/x-7z-compressed"; fg = colorscheme.colors.bright_purple; }
+          { mime = "application/x-rar"; fg = colorscheme.colors.bright_purple; }
+          { name = "*"; fg = colorscheme.colors.bright_white; }
+          { name = "*/"; fg = colorscheme.colors.bright_blue; }
         ];
       };
     };
   };
+
   home.file."/.config/yazi/plugins/previewer.yazi/init.lua" = {
     text = ''
       local M = {}

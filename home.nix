@@ -12,6 +12,8 @@ let
     nixvim = import (builtins.fetchGit {
       url = "https://github.com/nix-community/nixvim";
     });
+
+    colorscheme = import ./colorscheme.nix;
 in
 {
   imports = [
@@ -21,11 +23,11 @@ in
     (import ./i3/i3.nix { inherit pkgs config lib homeDirectory shell; })
 
     # Terminal Setup 
-    ./kitty/kitty.nix
+    (import ./kitty/kitty.nix { inherit pkgs colorscheme; })
+    (import ./yazi/yazi.nix { inherit pkgs colorscheme; })
     ./zsh/zsh.nix
     ./git/git.nix
     ./zoxide/zoxide.nix
-    ./yazi/yazi.nix
     ./zathura/zathura.nix
     ./rofi/rofi.nix
     ./neovim/neovim.nix

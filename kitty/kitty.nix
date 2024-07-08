@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, colorscheme, ... }: {
 
   programs.kitty = {
     enable = true;
@@ -12,30 +12,30 @@
 
     settings = {
       # Colors
-      background = "#080808";
-      foreground = "#bdbdbd";
-      cursor = "#8e8e8e";
-      selection_background = "#b2ceee";
-      selection_foreground = "#080808";
+      background = colorscheme.colors.background;
+      foreground = colorscheme.colors.foreground;
+      cursor = colorscheme.colors.cursor;
+      selection_background = colorscheme.colors.selection;
+      selection_foreground = colorscheme.colors.selection_text;
 
-      color0 = "#323437";
-      color1 = "#ff5454";
-      color2 = "#8cc85f";
-      color3 = "#e3c78a";
-      color4 = "#80a0ff";
-      color5 = "#cf87e8";
-      color6 = "#79dac8";
-      color7 = "#c6c6c6";
-      color8 = "#949494";
-      color9 = "#ff5189";
-      color10 = "#36c692";
-      color11 = "#c6c684";
-      color12 = "#74b2ff";
-      color13 = "#ae81ff";
-      color14 = "#85dc85";
-      color15 = "#e4e4e4";
-      color16 = "#e3c78a";
-      color17 = "#cf87e8";
+      color0 = colorscheme.colors.black;
+      color1 = colorscheme.colors.red;
+      color2 = colorscheme.colors.green;
+      color3 = colorscheme.colors.yellow;
+      color4 = colorscheme.colors.blue;
+      color5 = colorscheme.colors.purple;
+      color6 = colorscheme.colors.cyan;
+      color7 = colorscheme.colors.white;
+      color8 = colorscheme.colors.bright_black;
+      color9 = colorscheme.colors.bright_red;
+      color10 = colorscheme.colors.bright_green;
+      color11 = colorscheme.colors.bright_yellow;
+      color12 = colorscheme.colors.bright_blue;
+      color13 = colorscheme.colors.bright_purple;
+      color14 = colorscheme.colors.bright_cyan;
+      color15 = colorscheme.colors.bright_white;
+      color16 = colorscheme.colors.pastel_purple;
+      color17 = colorscheme.colors.pastel_pink;
 
       # Cursor shape
       cursor_shape = "block";
