@@ -49,7 +49,7 @@ python3Packages.buildPythonApplication {
   SETUPTOOLS_USE_DISTUTILS = "stdlib";
 
   meta = with lib; {
-    description = "A toolkit to transform and refine (mostly) binary data.";
+    description = "Binary Refinery™ is a Python-based toolset for transforming binary data, designed for malware triage, and allows for the creation of complex pipelines from simple, stdin-to-stdout scripts similar to CyberChef but for the command line.";
     homepage = "https://github.com/binref/refinery/";
     license = licenses.bsd3;
     maintainers = [ "bsendpacket" ];
