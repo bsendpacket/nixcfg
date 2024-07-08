@@ -80,6 +80,7 @@ in
 
       # Utilities
       xclip
+      xsel
       xdragon
       jless
 
