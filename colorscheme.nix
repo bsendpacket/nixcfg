@@ -23,7 +23,6 @@
     bright_purple = "#ae81ff";
     bright_cyan = "#85dc85";
     bright_white = "#e4e4e4";
-
     pastel_pink = "#ffd1dc";
     pastel_purple = "#c3b1e1";
     pastel_lavender = "#d8a1c4";
