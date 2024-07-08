@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, binary-refinery, ... }: {
 
   programs.zsh = {
     enable = true;
@@ -21,6 +21,7 @@
       lt = "ls --tree"; # List Files (Tree)
       y = "yy";         # Yazi
       kitty = "nixGL kitty";
+      rbat = "${binary-refinery}/bin/bat";
     };
 
     plugins = [
