@@ -33,11 +33,11 @@ in
     (import ./kitty/kitty.nix { inherit pkgs colorscheme; })
     (import ./yazi/yazi.nix { inherit pkgs colorscheme; })
     (import ./zsh/zsh.nix { inherit pkgs binary-refinery; })
+    (import ./neovim/neovim.nix { inherit pkgs homeDirectory; })
     ./git/git.nix
     ./zoxide/zoxide.nix
     ./zathura/zathura.nix
     ./rofi/rofi.nix
-    ./neovim/neovim.nix
 
     # Services
     ./picom/picom.nix
@@ -120,14 +120,32 @@ in
       poppler
 
       lazygit
+      flatpak # TODO: Make declarative
 
       ## Malware Analysis
 
       # Binary Analysis
       flare-floss
+      imhex
+      yara
+      upx
+
+      # Go
+      goresym
+
+      # Android
+      apktool
 
       # Java
       jadx
+
+      # TODO
+      # donut-decryptor
+      # rustbinsign (+rustup)
+      # IDR
+      # webcrack (TODO: https://github.com/svanderburg/node2nix)
+      # redress (Go)
+      # capa
 
       # Custom Python environment
       (python311.withPackages (ps: with ps; [
@@ -136,6 +154,17 @@ in
         netifaces
         mitmproxy
         construct
+        unicorn
+        capstone
+        # speakeasy
+        # dnfile
+        # dncil
+        # qilling
+        # mkyara (?)
+        # pycdc
+        # view8
+        # bindiff (?)
+        # innoump
       ]))
 
       dive
