@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, homeDirectory, ... }: {
 
   programs.nixvim = {
     enable = true;
@@ -225,12 +225,38 @@
         enable = true;
         
         # folding = true;
-        indent = true;
+        settings = {
+          auto_install = true;
+
+          # ensure_installed = [
+          #   "all"
+          # ];
+
+          highlight = {
+            enable = true;
+            additional_vim_regex_highlighting = true;
+            custom_captures = { };
+          };
+
+          incremental_selection = {
+            enable = true;
+            keymaps = {
+              init_selection = "gnn";
+              node_decremental = "grm";
+              node_incremental = "grn";
+              scope_incremental = "grc";
+            };
+          };
+
+          indent = {
+            enable = true;
+          };
+
+          parser_install_dir = "${homeDirectory}/XDG_DATA_HOME/nvim/treesitter";
+          sync_install = false;
+        };
+
         nixvimInjections = true;
-
-        ensureInstalled = "all";
-
-        incrementalSelection.enable = true;
       };
       # treesitter-refactor.enable = true;
 
