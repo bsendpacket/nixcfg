@@ -136,12 +136,40 @@
       autoclose.enable = true;
 
       # Status line
-      lualine.enable = true;
+      lualine = {
+        enable = true;
+
+        sections.lualine_x = [
+          {
+            name.__raw = ''
+            function()
+              local mode = require('noice').api.statusline.mode
+              if mode.has() then
+                local content = mode.get()
+                if string.match(content, "^recording @%w$") then
+                  return content
+                end
+              end
+              return ""
+            end
+            '';
+
+            color = {
+              fg = "#ff9e64";
+            };
+          }
+        ];
+      };
 
       noice = {
         enable = true;
         # Handled by custom box in additional lua
         lsp.signature.enabled = false;
+
+        # routes = [{
+        #   view = "notify";
+        #   filter.event = "msg_showmode";
+        # }];
       };
 
       mini = {
