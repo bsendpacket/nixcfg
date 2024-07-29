@@ -204,7 +204,7 @@
           rust-analyzer = {
             enable = true;
             installCargo = true;
-            installRustc= true;
+            installRustc = true;
             settings.check.command = "clippy";
           };
 
@@ -216,6 +216,18 @@
           # CSS LSP
           cssls = {
             enable = true;
+          };
+
+          # C LSP
+          ccls = {
+            enable = true;
+            autostart = true;
+          };
+
+          # cmake LSP
+          cmake = {
+            enable = true;
+            autostart = true;
           };
         };
       };
