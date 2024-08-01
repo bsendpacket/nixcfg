@@ -159,42 +159,40 @@ in {
 
     theme = {
       manager = {
-        cwd = { fg = colorscheme.colors.bright_cyan; };
+        cwd = { fg = colorscheme.colors.n_purple_1; };
         hovered = { reversed = true; };
         preview_hovered = { underline = true; };
 
         find_keyword = {
-          fg = colorscheme.colors.bright_yellow;
-          bold = true;
+          fg = colorscheme.colors.n_pink_5;
           italic = true;
           underline = true;
         };
 
         find_position = { 
-          fg = colorscheme.colors.bright_purple;
+          fg = colorscheme.colors.n_pink_1;
           bg = "reset";
-          bold = true;
           italic = true;
         };
 
         marker_copied = {
-          fg = colorscheme.colors.bright_green;
-          bg = colorscheme.colors.bright_green;
+          fg = colorscheme.colors.n_pink_1;
+          bg = colorscheme.colors.blue;
         };
 
         marker_cut = {
-          fg = colorscheme.colors.bright_red;
+          fg = colorscheme.colors.n_pink_1;
           bg = colorscheme.colors.bright_red;
         };
 
         marker_marked = {
-          fg = colorscheme.colors.bright_yellow;
-          bg = colorscheme.colors.bright_yellow;
+          fg = colorscheme.colors.n_pink_1;
+          bg = colorscheme.colors.n_purple_6;
         };
 
         marker_selected = {
-          fg = colorscheme.colors.bright_blue;
-          bg = colorscheme.colors.bright_blue;
+          fg = colorscheme.colors.n_pink_1;
+          bg = colorscheme.colors.n_pink_4;
         };
 
         tab_active = {
@@ -210,7 +208,7 @@ in {
         tab_width = 1;
         count_copied = {
           fg = colorscheme.colors.background;
-          bg = colorscheme.colors.bright_green;
+          bg = colorscheme.colors.blue;
         };
 
         count_cut = {
@@ -220,7 +218,7 @@ in {
 
         count_selected = {
           fg = colorscheme.colors.background;
-          bg = colorscheme.colors.bright_blue;
+          bg = colorscheme.colors.n_pink_4;
         };
 
         border_symbol = "│";
@@ -238,7 +236,7 @@ in {
 
         mode_normal = {
           fg = colorscheme.colors.background;
-          bg = colorscheme.colors.bright_blue;
+          bg = colorscheme.colors.n_pink_4;
           bold = true;
         };
 
@@ -260,7 +258,7 @@ in {
         };
 
         progress_normal = {
-          fg = colorscheme.colors.bright_blue;
+          fg = colorscheme.colors.n_pink_4;
           bg = colorscheme.colors.black;
         };
 
@@ -269,7 +267,7 @@ in {
           bg = colorscheme.colors.black;
         };
 
-        permissions_t = { fg = colorscheme.colors.bright_blue; };
+        permissions_t = { fg = colorscheme.colors.n_pink_4; };
         permissions_r = { fg = colorscheme.colors.bright_yellow; };
         permissions_w = { fg = colorscheme.colors.bright_red; };
         permissions_x = { fg = colorscheme.colors.bright_green; };
@@ -277,20 +275,20 @@ in {
       };
 
       input = {
-        border = { fg = colorscheme.colors.bright_blue; };
+        border = { fg = colorscheme.colors.n_pink_4; };
         title = {};
         value = {};
         selected = { reversed = true; };
       };
 
       select = {
-        border = { fg = colorscheme.colors.bright_blue; };
+        border = { fg = colorscheme.colors.n_pink_4; };
         active = { fg = colorscheme.colors.bright_purple; };
         inactive = {};
       };
 
       tasks = {
-        border = { fg = colorscheme.colors.bright_blue; };
+        border = { fg = colorscheme.colors.n_pink_4; };
         title = {};
         hovered = { underline = true; };
       };
@@ -331,7 +329,7 @@ in {
           { mime = "application/x-7z-compressed"; fg = colorscheme.colors.bright_purple; }
           { mime = "application/x-rar"; fg = colorscheme.colors.bright_purple; }
           { name = "*"; fg = colorscheme.colors.bright_white; }
-          { name = "*/"; fg = colorscheme.colors.bright_blue; }
+          { name = "*/"; fg = colorscheme.colors.n_pink_4; }
         ];
       };
     };
