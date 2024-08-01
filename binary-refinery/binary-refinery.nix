@@ -26,6 +26,7 @@ python3Packages.buildPythonApplication {
     (callPackage ./dependencies/macholib.nix {})
     (callPackage ./dependencies/cabarchive.nix {})
     (callPackage ./dependencies/pyonenote.nix {})
+    distutils
     colorama
     defusedxml
     msgpack

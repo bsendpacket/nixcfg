@@ -33,11 +33,10 @@ let
   };
 
   # Search with fg / ff (content, fzf)
-  fgPlugin = pkgs.fetchFromGitHub {
-    owner = "DreamMaoMao";
-    repo = "fg.yazi";
-    rev = "cc53d56a673e5ec2cf48a6f18bc76d83aa61d52d";
-    sha256 = "sha256-xUZdmDZhbUzX5Ka2xogRQJI52EL81n9ZLrcxDacgfN0=";
+  fgPlugin = pkgs.fetchgit {
+    url = "https://gitee.com/DreamMaoMao/fg.yazi";
+    rev = "bb5832fcc7a20f9011fee86cab91b492ad203dfd";
+    sha256 = "sha256-IHlQSRHwnKxJ/y+bDInXmCImdEHjb1Eq7/cKECbs+oU=";
   };
 
   # Vim-like relative motions
