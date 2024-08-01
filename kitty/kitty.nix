@@ -5,7 +5,7 @@
 
     font = {
       size = 11.0;
-      name = "CaskaydiaCove Nerd Font Mono";
+      name = "CaskaydiaCove Nerd Font Mono-Light";
     };
 
     shellIntegration.enableZshIntegration = true;
@@ -20,11 +20,11 @@
 
       color0 = colorscheme.colors.black;
       color1 = colorscheme.colors.red;
-      color2 = colorscheme.colors.green;
-      color3 = colorscheme.colors.yellow;
-      color4 = colorscheme.colors.blue;
+      color2 = colorscheme.colors.pastel_coral;
+      color3 = colorscheme.colors.n_purple_5;
+      color4 = colorscheme.colors.n_pink_7;
       color5 = colorscheme.colors.purple;
-      color6 = colorscheme.colors.cyan;
+      color6 = colorscheme.colors.n_pink_5;
       color7 = colorscheme.colors.white;
       color8 = colorscheme.colors.bright_black;
       color9 = colorscheme.colors.bright_red;
