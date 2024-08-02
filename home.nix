@@ -141,7 +141,7 @@ in
 
       # TODO
       # donut-decryptor
-      # rustbinsign (+rustup)
+      # rustbinsign (+rustup) - This should be possible w/ poetry?
       # IDR
       # webcrack (TODO: https://github.com/svanderburg/node2nix)
       # redress (Go)
@@ -167,6 +167,7 @@ in
         # innoump
       ]))
 
+      # Containers
       dive
       distrobox
       podman-tui
