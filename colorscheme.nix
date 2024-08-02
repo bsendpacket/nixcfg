@@ -1,12 +1,12 @@
 {
   colors = {
-    background = "#000000";
+    background = "#080808";
     foreground = "#dddddd";
     bold = "#eeeeee";
     cursor = "#9e9e9e";
-    cursor_text = "#000000";
+    cursor_text = "#080808";
     selection = "#b2ceee";
-    selection_text = "#000000";
+    selection_text = "#080808";
     black = "#323437";
     red = "#ff5454";
     green = "#8cc85f";
@@ -15,7 +15,7 @@
     purple = "#cf87e8";
     cyan = "#79dac8";
     white = "#c6c6c6";
-    bright_black = "#949494";
+    bright_black = "#3c3f42";
     bright_red = "#ff5189";
     bright_green = "#36c692";
     bright_yellow = "#c6c684";
@@ -47,5 +47,6 @@
     n_pink_5   = "#de92a9";
     n_pink_6   = "#de7896";
     n_pink_7   = "#db6b7c";
+    n_pink_8   = "#b35d69";
   };
 }
