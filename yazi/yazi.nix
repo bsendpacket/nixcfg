@@ -160,7 +160,7 @@ in {
     theme = {
       manager = {
         cwd = { fg = colorscheme.colors.n_purple_1; };
-        hovered = { reversed = true; };
+        hovered = { fg = colorscheme.colors.n_pink_5; reversed = true; };
         preview_hovered = { underline = true; };
 
         find_keyword = {
@@ -295,9 +295,9 @@ in {
 
       which = {
         mask = { bg = colorscheme.colors.black; };
-        cand = { fg = colorscheme.colors.bright_cyan; };
+        cand = { fg = colorscheme.colors.n_pink_5; };
         rest = { fg = colorscheme.colors.foreground; };
-        desc = { fg = colorscheme.colors.bright_purple; };
+        desc = { fg = colorscheme.colors.white; };
         separator = "  ";
         separator_style = { fg = colorscheme.colors.bright_black; };
       };
