@@ -5,22 +5,24 @@
   ...
 }:
 let
-    username = builtins.getEnv "USER";
-    homeDirectory = builtins.getEnv "HOME";
-    shell = builtins.getEnv "SHELL";
+  username = builtins.getEnv "USER";
+  homeDirectory = builtins.getEnv "HOME";
+  shell = builtins.getEnv "SHELL";
 
-    nixvim = import (builtins.fetchGit {
-      url = "https://github.com/nix-community/nixvim";
-    });
+  nixvim = import (builtins.fetchGit {
+    url = "https://github.com/nix-community/nixvim";
+  });
 
-    colorscheme = import ./colorscheme.nix;
+  colorscheme = import ./colorscheme.nix;
 
-    # Packages to build, as they are not on NixPkgs
-    binary-refinery = pkgs.callPackage ./binary-refinery/binary-refinery.nix {
-      python-magic = pkgs.python3Packages.python-magic;
-    };
+  # Packages to build, as they are not on NixPkgs
+  binary-refinery = pkgs.callPackage ./binary-refinery/binary-refinery.nix {
+    python-magic = pkgs.python3Packages.python-magic;
+  };
 
-    detect-it-easy = pkgs.callPackage ./detect-it-easy/detect-it-easy.nix {};
+  jadx = pkgs.callPackage ./jadx/jadx.nix {};
+
+  detect-it-easy = pkgs.callPackage ./detect-it-easy/detect-it-easy.nix {};
 in
 {
   imports = [
@@ -61,6 +63,7 @@ in
       # Binary Analysis
       detect-it-easy
       binary-refinery
+      jadx # Temporary, until jadx pull request is finalized on NixPkgs
 
     ] ++ (with pkgs; [
       # Packages that are avaliable within NixPkgs
@@ -119,6 +122,8 @@ in
       unar
       poppler
 
+      shared-mime-info
+
       lazygit
       flatpak # TODO: Make declarative
 
@@ -137,7 +142,7 @@ in
       apktool
 
       # Java
-      jadx
+      # jadx
 
       # TODO
       # donut-decryptor
