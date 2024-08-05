@@ -1,9 +1,17 @@
 { pkgs, colorscheme, ... }: 
 let
   # To get a SHA-256 for a GitHub repo:
-  # Use nix-prefetch-url --unpack
+  # Use nurl <url>
   # i.e. for the Hexyl repo, use:
-  # nix-prefetch-url --unpack https://github.com/Reledia/hexyl.yazi/archive/refs/heads/main.zip
+  # nurl https://github.com/Reledia/hexyl.yazi
+  
+  # This will return the following:
+  # fetchFromGitHub {
+  #   owner = "Reledia";
+  #   repo = "hexyl.yazi";
+  #   rev = "64daf93a67d75eff871befe52d9013687171ffad";
+  #   hash = "sha256-B2L3/Q1g0NOO6XEMIMGBC/wItbNgBVpbaMMhiXOYcrI=";
+  # }
 
   # Alternatively, simply leave the sha256 field blank
   # and copy the correct hash during rebuild
