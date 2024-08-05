@@ -43,8 +43,8 @@ let
   relativeMotionsPlugin = pkgs.fetchFromGitHub {
     owner = "dedukun";
     repo = "relative-motions.yazi";
-    rev = "585554d512ae31fbb6211ab20372f4d913884a3f";
-    sha256 = "sha256-WPGoHx70Xrq037zT12DWcICAzolwltqbu+WeTRAsoFs=";
+    rev = "73f554295f4b69756597c9fe3caf3750a321acea";
+    sha256 = "sha256-jahJC6LXOnr974+zHEH9gqI+J1C68O+PvjSt8pelkP0=";
   };
 
 in {
@@ -110,18 +110,15 @@ in {
 
           # ' - Common Aliases
           # 1 - Reserved
-
           # 2 - Reserved
 
           # 3 - Files
-
           # Compression
-          { on = [ "'" "3" "c" ]; run = "shell --block '7z a -pinfected -mhe=on \"$@\".7z \"$@\"'"; desc = "Compress folder with password=infected"; }
-          { on = [ "'" "3" "e" ]; run = "shell --block '7z x \"$@\" -pinfected'";                   desc = "Extract with password=infected";         }
+          { on = [ "'" "3" "c" ]; run = "shell --interactive --block '7z a -pinfected -mhe=on \"$@\".7z \"$@\"'"; desc = "Compress folder with password=infected"; }
+          { on = [ "'" "3" "e" ]; run = "shell --interactive --block '7z x \"$@\" -pinfected'";                   desc = "Extract with password=infected";         }
 
-
-
-          { on = [ "'" "4" "j" ]; run = "shell --orphan 'jadx-gui \"$@\"'"; desc = "Launch Jadx-GUI with the selected file"; }
+          # 4 - Tools
+          { on = [ "'" "4" "j" ]; run = "shell --interactive --orphan 'jadx-gui \"$@\"'"; desc = "Launch Jadx-GUI with the selected file"; }
 
         ];
       };
