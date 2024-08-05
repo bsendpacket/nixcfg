@@ -9,10 +9,10 @@ python3Packages.buildPythonApplication {
   version = "0.6.42";
 
   src = fetchFromGitHub {
-    owner = "binref";
-    repo = "refinery";
-    rev = "0.6.42";
-    sha256 = "sha256-s98ILKtU54ZmGaY2lrzlCTNlXJNXEoZEsDHT9MIqJAY=";
+  owner = "binref";
+  repo = "refinery";
+  rev = "a52ae5c66a99a078cc9fa4aee1e2b21ecab61362";
+  hash = "sha256-A3ROEaI/OcPPXkHN/HZtsi0jp5BUQnRerRSo/P1678w=";
   };
 
   nativeBuildInputs = with python3Packages; [
