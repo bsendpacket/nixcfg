@@ -16,7 +16,6 @@ let
   # Alternatively, simply leave the sha256 field blank
   # and copy the correct hash during rebuild
 
-
 in {
 
   programs.yazi = {
@@ -32,24 +31,24 @@ in {
       "hexyl" = pkgs.fetchFromGitHub {
         owner = "Reledia";
         repo = "hexyl.yazi";
-        rev = "4162cb34fa9d4e27251243714c3c19166aa4be95";
-        sha256 = "15ci64d29qc6qidnmsmy4ykzfcjdzpz6hx25crsbg1rfad9vqxbj";
+        rev = "64daf93a67d75eff871befe52d9013687171ffad";
+        hash = "sha256-B2L3/Q1g0NOO6XEMIMGBC/wItbNgBVpbaMMhiXOYcrI=";
       };
 
       # Preview Markdown files
       "glow" = pkgs.fetchFromGitHub {
         owner = "Reledia";
         repo = "glow.yazi";
-        rev = "cf1f1f0a36a0411fcc99d3666692a543fc626f3d";
-        sha256 = "sha256-U4ullcOwN6TCaZ8gXCPMk/fGbtZLe4e1Y0RhRKLZKng=";
+        rev = "536185a4e60ac0adc11d238881e78678fdf084ff";
+        sha256 = "sha256-NcMbYjek99XgWFlebU+8jv338Vk1hm5+oW5gwH+3ZbI=";
       };
 
       # Preview archives as a tree
       "ouch" = pkgs.fetchFromGitHub {
         owner = "ndtoan96";
         repo = "ouch.yazi";
-        rev = "694d149be5f96eaa0af68d677c17d11d2017c976";
-        sha256 = "sha256-J3vR9q4xHjJt56nlfd+c8FrmMVvLO78GiwSNcLkM4OU=";
+        rev = "251da6930ca8b7ee0384810086c3bf644caede3e";
+        sha256 = "sha256-yLt9aY6hUIOdBI5bMdCs7VYFJGyD3WIkmPxvWKNCskA=";
       };
 
       # Search with fg / ff (content, fzf)
