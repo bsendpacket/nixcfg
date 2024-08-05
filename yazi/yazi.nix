@@ -47,6 +47,14 @@ let
     sha256 = "sha256-jahJC6LXOnr974+zHEH9gqI+J1C68O+PvjSt8pelkP0=";
   };
 
+  # Preview media metadata information
+  mediaInfoPlugin = pkgs.fetchFromGitHub {
+    owner = "Ape";
+    repo = "mediainfo.yazi";
+    rev = "c69314e80f5b45fe87a0e06a10d064ed54110439";
+    sha256 = "sha256-8xdBPdKSiwB7iRU8DJdTHY+BjfR9D3FtyVtDL9tNiy4=";
+  };
+
 in {
   xdg.configFile = {
     "yazi/init.lua".source = pkgs.writeText "init.lua" ''
@@ -57,11 +65,11 @@ in {
     "yazi/plugins/hexyl.yazi".source = hexylPlugin;
     "yazi/plugins/glow.yazi".source = glowPlugin;
     "yazi/plugins/ouch.yazi".source = ouchPlugin;
+    "yazi/plugins/mediainfo.yazi".source = mediaInfoPlugin;
 
     # Functional Plugins
     "yazi/plugins/fg.yazi".source = fgPlugin;
     "yazi/plugins/relative-motions.yazi".source = relativeMotionsPlugin;
-
   };
 
   programs.yazi = {
@@ -141,6 +149,8 @@ in {
           { mime = "application/x-7z-compressed"; run = "ouch"; }
           { mime = "application/x-rar";           run = "ouch"; }
           { mime = "application/x-xz";            run = "ouch"; }
+          { mime = "{image,audio,video}/*";       run = "mediainfo"; }
+          { mime = "application/x-subrip";        run = "mediainfo"; }
         ];
       };
 

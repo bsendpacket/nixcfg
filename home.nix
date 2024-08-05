@@ -119,6 +119,7 @@ in
       inxi
 
       ffmpegthumbnailer
+      mediainfo
       unar
       poppler
 
