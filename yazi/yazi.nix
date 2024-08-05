@@ -441,7 +441,7 @@ in {
               -- Print hexdump
               magicArea = ui.Rect {
                   x = self.area.x,
-                  y = self.area.y,
+                  y = self.area.y - 1,
                   w = self.area.w,
                   h = 1,
               }
@@ -449,23 +449,23 @@ in {
               -- Print hexdump
               fileArea = ui.Rect {
                   x = self.area.x,
-                  y = self.area.y + 1,
+                  y = self.area.y,
                   w = self.area.w,
                   h = 1,
               }
 
               sha256Area = ui.Rect {
                   x = self.area.x,
-                  y = self.area.y + 2,
+                  y = self.area.y + 1,
                   w = self.area.w,
                   h = 1,
               }
 
               hexdumpArea = ui.Rect {
                   x = self.area.x,
-                  y = self.area.y + 4,
+                  y = self.area.y + 3,
                   w = self.area.w,
-                  h = self.area.h - 4,
+                  h = self.area.h - 3,
               }
 
               lines = lines:gsub("\t", string.rep(" ", PREVIEW.tab_size))
