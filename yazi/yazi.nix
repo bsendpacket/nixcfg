@@ -89,6 +89,27 @@ in {
           { on = [ "8" ]; run = "plugin relative-motions --args=8"; desc = "Move in relative steps"; }
           { on = [ "9" ]; run = "plugin relative-motions --args=9"; desc = "Move in relative steps"; }
 
+          # Tab management
+          { on = [ "!" ]; run = "tab_switch 0"; desc = "Switch to tab"; }
+          { on = [ "@" ]; run = "tab_switch 1"; desc = "Switch to tab"; }
+          { on = [ "#" ]; run = "tab_switch 2"; desc = "Switch to tab"; }
+          { on = [ "$" ]; run = "tab_switch 3"; desc = "Switch to tab"; }
+          { on = [ "%" ]; run = "tab_switch 4"; desc = "Switch to tab"; }
+          { on = [ "^" ]; run = "tab_switch 5"; desc = "Switch to tab"; }
+          { on = [ "&" ]; run = "tab_switch 6"; desc = "Switch to tab"; }
+          { on = [ "*" ]; run = "tab_switch 7"; desc = "Switch to tab"; }
+          { on = [ "(" ]; run = "tab_switch 8"; desc = "Switch to tab"; }
+
+          { on = [ "<C-1>" ]; run = "tab_swap 0"; desc = "Swap with tab"; }
+          { on = [ "<C-2>" ]; run = "tab_swap 1"; desc = "Swap with tab"; }
+          { on = [ "<C-3>" ]; run = "tab_swap 2"; desc = "Swap with tab"; }
+          { on = [ "<C-4>" ]; run = "tab_swap 3"; desc = "Swap with tab"; }
+          { on = [ "<C-5>" ]; run = "tab_swap 4"; desc = "Swap with tab"; }
+          { on = [ "<C-6>" ]; run = "tab_swap 5"; desc = "Swap with tab"; }
+          { on = [ "<C-7>" ]; run = "tab_swap 6"; desc = "Swap with tab"; }
+          { on = [ "<C-8>" ]; run = "tab_swap 7"; desc = "Swap with tab"; }
+          { on = [ "<C-9>" ]; run = "tab_swap 8"; desc = "Swap with tab"; }
+
           # File finding
           { on = [ "f" "g" ]; run = "plugin fg";              desc = "Find file by Content"; }
           { on = [ "f" "f" ]; run = "plugin fg --args='fzf'"; desc = "Find file by Name";    }
