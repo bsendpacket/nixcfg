@@ -8,73 +8,65 @@ let
   # Alternatively, simply leave the sha256 field blank
   # and copy the correct hash during rebuild
 
-  # Hex viewer
-  hexylPlugin = pkgs.fetchFromGitHub {
-    owner = "Reledia";
-    repo = "hexyl.yazi";
-    rev = "4162cb34fa9d4e27251243714c3c19166aa4be95";
-    sha256 = "15ci64d29qc6qidnmsmy4ykzfcjdzpz6hx25crsbg1rfad9vqxbj";
-  };
-
-  # Preview Markdown files
-  glowPlugin = pkgs.fetchFromGitHub {
-    owner = "Reledia";
-    repo = "glow.yazi";
-    rev = "cf1f1f0a36a0411fcc99d3666692a543fc626f3d";
-    sha256 = "sha256-U4ullcOwN6TCaZ8gXCPMk/fGbtZLe4e1Y0RhRKLZKng=";
-  };
-
-  # Preview archives as a tree
-  ouchPlugin = pkgs.fetchFromGitHub {
-    owner = "ndtoan96";
-    repo = "ouch.yazi";
-    rev = "694d149be5f96eaa0af68d677c17d11d2017c976";
-    sha256 = "sha256-J3vR9q4xHjJt56nlfd+c8FrmMVvLO78GiwSNcLkM4OU=";
-  };
-
-  # Search with fg / ff (content, fzf)
-  fgPlugin = pkgs.fetchgit {
-    url = "https://gitee.com/DreamMaoMao/fg.yazi";
-    rev = "bb5832fcc7a20f9011fee86cab91b492ad203dfd";
-    sha256 = "sha256-IHlQSRHwnKxJ/y+bDInXmCImdEHjb1Eq7/cKECbs+oU=";
-  };
-
-  # Vim-like relative motions
-  relativeMotionsPlugin = pkgs.fetchFromGitHub {
-    owner = "dedukun";
-    repo = "relative-motions.yazi";
-    rev = "73f554295f4b69756597c9fe3caf3750a321acea";
-    sha256 = "sha256-jahJC6LXOnr974+zHEH9gqI+J1C68O+PvjSt8pelkP0=";
-  };
-
-  # Preview media metadata information
-  mediaInfoPlugin = pkgs.fetchFromGitHub {
-    owner = "Ape";
-    repo = "mediainfo.yazi";
-    rev = "c69314e80f5b45fe87a0e06a10d064ed54110439";
-    sha256 = "sha256-8xdBPdKSiwB7iRU8DJdTHY+BjfR9D3FtyVtDL9tNiy4=";
-  };
 
 in {
-  xdg.configFile = {
-    "yazi/init.lua".source = pkgs.writeText "init.lua" ''
-      require("relative-motions"):setup({ show_numbers="relative", show_motion = true })
-    '';
-    
-    # Previewers
-    "yazi/plugins/hexyl.yazi".source = hexylPlugin;
-    "yazi/plugins/glow.yazi".source = glowPlugin;
-    "yazi/plugins/ouch.yazi".source = ouchPlugin;
-    "yazi/plugins/mediainfo.yazi".source = mediaInfoPlugin;
-
-    # Functional Plugins
-    "yazi/plugins/fg.yazi".source = fgPlugin;
-    "yazi/plugins/relative-motions.yazi".source = relativeMotionsPlugin;
-  };
 
   programs.yazi = {
     enable = true;
     enableZshIntegration = true;
+
+    initLua = ''
+      require("relative-motions"):setup({ show_numbers="relative", show_motion = true })
+    '';
+
+    plugins = {
+      # Hex viewer
+      "hexyl" = pkgs.fetchFromGitHub {
+        owner = "Reledia";
+        repo = "hexyl.yazi";
+        rev = "4162cb34fa9d4e27251243714c3c19166aa4be95";
+        sha256 = "15ci64d29qc6qidnmsmy4ykzfcjdzpz6hx25crsbg1rfad9vqxbj";
+      };
+
+      # Preview Markdown files
+      "glow" = pkgs.fetchFromGitHub {
+        owner = "Reledia";
+        repo = "glow.yazi";
+        rev = "cf1f1f0a36a0411fcc99d3666692a543fc626f3d";
+        sha256 = "sha256-U4ullcOwN6TCaZ8gXCPMk/fGbtZLe4e1Y0RhRKLZKng=";
+      };
+
+      # Preview archives as a tree
+      "ouch" = pkgs.fetchFromGitHub {
+        owner = "ndtoan96";
+        repo = "ouch.yazi";
+        rev = "694d149be5f96eaa0af68d677c17d11d2017c976";
+        sha256 = "sha256-J3vR9q4xHjJt56nlfd+c8FrmMVvLO78GiwSNcLkM4OU=";
+      };
+
+      # Search with fg / ff (content, fzf)
+      "fg" = pkgs.fetchgit {
+        url = "https://gitee.com/DreamMaoMao/fg.yazi";
+        rev = "bb5832fcc7a20f9011fee86cab91b492ad203dfd";
+        sha256 = "sha256-IHlQSRHwnKxJ/y+bDInXmCImdEHjb1Eq7/cKECbs+oU=";
+      };
+
+      # Vim-like relative motions
+      "relative-motions" = pkgs.fetchFromGitHub {
+        owner = "dedukun";
+        repo = "relative-motions.yazi";
+        rev = "73f554295f4b69756597c9fe3caf3750a321acea";
+        sha256 = "sha256-jahJC6LXOnr974+zHEH9gqI+J1C68O+PvjSt8pelkP0=";
+      };
+
+      # Preview media metadata information
+      "mediainfo" = pkgs.fetchFromGitHub {
+        owner = "Ape";
+        repo = "mediainfo.yazi";
+        rev = "c69314e80f5b45fe87a0e06a10d064ed54110439";
+        sha256 = "sha256-8xdBPdKSiwB7iRU8DJdTHY+BjfR9D3FtyVtDL9tNiy4=";
+      };
+    };
 
     keymap = {
       manager = {
