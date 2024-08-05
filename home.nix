@@ -68,7 +68,11 @@ in
     ] ++ (with pkgs; [
       # Packages that are avaliable within NixPkgs
 
+      # VM tools
       open-vm-tools
+
+      # Nix-specific tools
+      nurl
 
       i3
       i3status-rust
