@@ -71,6 +71,9 @@ in
       # VM tools
       open-vm-tools
 
+      # Backup File Manager
+      nautilus
+
       # Nix-specific tools
       nurl
 
