@@ -136,6 +136,9 @@ in {
           { on = [ "b" "o" ]; run = "shell 'dragon -x -i -T \"$1\"' --confirm"; desc = "Drag file OUT of yazi"; }
           { on = [ "b" "i" ]; run = "shell DRAG_TO_VM --confirm"; desc = "Drag file INTO yazi"; }
 
+          # Copy
+          { on = [ "c" "h" ]; run = "shell --confirm 'ef \"$@\" [| cfmt \"{sha256}  {path}\n\" ]| xclip -selection clipboard'"; desc = "Copy SHA256 and filename of files in directory"; }
+
           # ' - Common Aliases
           # 1 - Reserved
           # 2 - Reserved
