@@ -357,6 +357,8 @@
       # To find the hash, place the following in the field and attempt to build.
       # sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
       # The error message during building will provide the correct hash.
+      # Alternatively (recommended): Use nurl <url>
+
       {
         # Theme
         plugin = (pkgs.vimUtils.buildVimPlugin {
@@ -418,6 +420,17 @@
           };
         });
       }
+      {
+        plugin = (pkgs.vimUtils.buildVimPlugin {
+          name = "markview";
+          src = pkgs.fetchFromGitHub {
+            owner = "OXY2DEV";
+            repo = "markview.nvim";
+            rev = "9e5275f3b7507da51deab9bc985e9154d0b6af28";
+            hash = "sha256-UVkNZku50DfzYRwzQbaztDOy9EnDGH41pJrZNrPb0qo=";
+          };
+        });
+      }
       
       # Detect tabstop and shiftwidth automatically
       pkgs.vimPlugins.vim-sleuth
@@ -473,6 +486,11 @@
       })
       -- You probably also want to set a keymap to toggle aerial
       vim.keymap.set("n", "<leader>a", "<cmd>AerialToggle!<CR>")
+
+      -- Make backticks work nicely in insert mode
+      vim.keymap.set('i', '`', function()
+        vim.api.nvim_feedkeys('``' .. vim.api.nvim_replace_termcodes('<Left>', true, false, true), 'n', true)
+      end, { noremap = true })
     '';
   };
 }
