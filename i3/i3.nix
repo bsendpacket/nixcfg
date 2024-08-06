@@ -18,12 +18,6 @@ in {
           position = "top";
         }];
 
-        # gaps = {
-        #   inner = 10;
-        #   smartBorders = "on";
-        #   #smartGaps = true;
-        # };
-
         window = {
           border = 1;
           titlebar = false;
@@ -59,6 +53,10 @@ in {
 
           # Rofi
           "${modifier}+d" = "exec --no-startup-id ${shell} -c 'LANG=en_US.UTF-8 LC_ALL=C ${pkgs.rofi}/bin/rofi -show run'";
+
+          # Floating window toggle
+          "${modifier}+Escape" = "scratchpad show";
+          "${modifier}+space" = "floating toggle";
         };
       };
       extraConfig = ''
