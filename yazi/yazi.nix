@@ -160,6 +160,14 @@ in {
         enabled = true;
       };        
 
+      manager = {
+        ratio = [ 1 3 4 ];
+        show_hidden = true;
+        sort_by = "natural";
+        sort_dir_first = true;
+        sort_reverse = false;
+      };
+
       plugin = {
         append_previewers = [
           { name = "*"; run = "previewer"; }
@@ -177,14 +185,17 @@ in {
         ];
       };
 
-      manager = {
-        ratio = [ 1 3 4 ];
-        show_hidden = true;
-        sort_by = "natural";
-        sort_dir_first = true;
-        sort_reverse = false;
+      opener = {
+        directory = [
+          { run = "nautilus \"$1\""; desc = "Open directory in Nautilus"; }
+        ];
       };
 
+      open = {
+        prepend_rules = [
+          { mime = "inode/directory"; use = [ "directory" ]; }
+        ];
+      };
     };
 
     theme = {
