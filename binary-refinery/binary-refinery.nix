@@ -27,6 +27,7 @@ python3Packages.buildPythonApplication {
     (callPackage ./dependencies/cabarchive.nix {})
     (callPackage ./dependencies/pyonenote.nix {})
     distutils
+    pyperclip
     colorama
     defusedxml
     msgpack
