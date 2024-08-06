@@ -189,11 +189,18 @@ in {
         directory = [
           { run = "nautilus \"$1\""; desc = "Open directory in Nautilus"; }
         ];
+        triage_pe = [
+          { run = "ef $@ [| pemeta -cI | dump $@_extracted/imports ];
+                   ef $@ [| pemeta -cE | dump $@_extracted/exports ];
+                   ef $@ [| pemeta -DNSTV | dump $@_extracted/pemeta ]"; }
+        ];
       };
 
       open = {
         prepend_rules = [
           { mime = "inode/directory"; use = [ "directory" ]; }
+
+          { mime = "application/vnd.microsoft.portable-executable"; use = [ "triage_pe" ]; }
         ];
       };
     };
