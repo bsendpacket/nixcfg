@@ -6,7 +6,7 @@
 
 python3Packages.buildPythonApplication {
   pname = "binary-refinery";
-  version = "0.6.42";
+  version = "0.6.43";
 
   src = fetchFromGitHub {
   owner = "binref";
