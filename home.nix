@@ -90,6 +90,7 @@ in
 
       oh-my-zsh
       thefuck
+      tealdeer
 
       _7zz
       (hiPrio bat)
