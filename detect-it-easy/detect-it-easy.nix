@@ -60,7 +60,9 @@ stdenv.mkDerivation rec {
     cp -r gui_source/translation $out/opt/${pname}/lang
     cp -r XStyles/qss $out/opt/${pname}/
     cp -r XInfoDB/info $out/opt/${pname}/
+    cp -r XYara/yara_rules $out/opt/${pname}/
     cp -r Detect-It-Easy/db $out/opt/${pname}/
+    cp -r Detect-It-Easy/db_custom $out/opt/${pname}/
     install -Dm644 signatures/crypto.db $out/opt/${pname}/signatures/crypto.db
     cp -r images $out/opt/${pname}/
 
