@@ -200,7 +200,24 @@ in {
         triage_pe = [
           { run = "ef $@ [| pemeta -cI | dump $@_extracted/imports ];
                    ef $@ [| pemeta -cE | dump $@_extracted/exports ];
-                   ef $@ [| pemeta -DNSTV | dump $@_extracted/pemeta ]"; }
+                   ef $@ [| pemeta -DNSTV | dump $@_extracted/pemeta ];
+                   ef $@ [| vsect [| dump $@_extracted/sections/{path} ]];
+                   ef $@ [| perc [| dump $@_extracted/resources/{path} ]];
+                   diec -dbru $@ | dump $@_extracted/peinfo"; }
+        ];
+
+        triage_elf = [
+          { run = "ef $@ [| vsect [| dump $@_extracted/sections/{path} ]];
+                   diec -dbru $@ | dump $@_extracted/elfinfo"; }
+        ];
+
+        triage_macho = [
+          { run = "ef $@ [| machometa -cI | dump $@_extracted/imports ];
+                   ef $@ [| machometa -cE | dump $@_extracted/exports ];
+                   ef $@ [| machometa | dump $@_extracted/machometa ];
+                   ef $@ [| vsect [| dump $@_extracted/sections/{path} ]];
+                   ef $@ [| xtmacho [| dump $@_extracted/executables/{path} ]];
+                   diec -dbru $@ | dump $@_extracted/machoinfo"; }
         ];
       };
 
@@ -210,6 +227,8 @@ in {
           { mime = "application/json"; use = [ "json" ]; }
 
           { mime = "application/vnd.microsoft.portable-executable"; use = [ "triage_pe" ]; }
+          { mime = "application/x-executable"; use = [ "triage_elf" ]; }
+          { mime = "application/x-mach-binary"; use = [ "triage_macho" ]; }
         ];
       };
     };
