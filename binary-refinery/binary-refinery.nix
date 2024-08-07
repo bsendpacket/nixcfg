@@ -24,6 +24,7 @@ python3Packages.buildPythonApplication {
     python-magic
   ] ++ (with python3Packages; [
     (callPackage ./dependencies/macholib.nix {})
+    (callPackage ./dependencies/ktool.nix {})
     (callPackage ./dependencies/cabarchive.nix {})
     (callPackage ./dependencies/pyonenote.nix {})
     distutils
