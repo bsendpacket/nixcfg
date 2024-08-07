@@ -186,9 +186,17 @@ in {
       };
 
       opener = {
+        # Open directories with nautilus (backup file manager)
         directory = [
           { run = "nautilus \"$1\""; desc = "Open directory in Nautilus"; }
         ];
+
+        # View JSON files with jless
+        json = [
+          { run = "jless $@"; desc = "View JSON with jless"; }
+        ];
+
+        # Automatically triage PE files
         triage_pe = [
           { run = "ef $@ [| pemeta -cI | dump $@_extracted/imports ];
                    ef $@ [| pemeta -cE | dump $@_extracted/exports ];
@@ -199,6 +207,7 @@ in {
       open = {
         prepend_rules = [
           { mime = "inode/directory"; use = [ "directory" ]; }
+          { mime = "application/json"; use = [ "json" ]; }
 
           { mime = "application/vnd.microsoft.portable-executable"; use = [ "triage_pe" ]; }
         ];
