@@ -23,6 +23,10 @@ let
   jadx = pkgs.callPackage ./jadx/jadx.nix {};
 
   detect-it-easy = pkgs.callPackage ./detect-it-easy/detect-it-easy.nix {};
+
+  # Work-specific
+  fileExists = path: if builtins.pathExists path then import path { inherit pkgs lib; } else {};
+  workConfig = fileExists ./work/work.nix;
 in
 {
   imports = [
@@ -189,7 +193,7 @@ in
 
       # Fonts
       (nerdfonts.override { fonts = [ "CascadiaCode" ]; })
-    ]);
+    ]) ++ (workConfig.home.packages or []);
 
     sessionVariables = {
       EDITOR = "nvim";
