@@ -37,7 +37,7 @@ in
 
     # Terminal Setup 
     (import ./kitty/kitty.nix { inherit pkgs colorscheme; })
-    (import ./yazi/yazi.nix { inherit pkgs colorscheme; })
+    (import ./yazi/yazi.nix { inherit pkgs colorscheme workConfig; })
     (import ./zsh/zsh.nix { inherit pkgs binary-refinery; })
     (import ./neovim/neovim.nix { inherit pkgs homeDirectory; })
     ./git/git.nix
