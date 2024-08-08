@@ -187,17 +187,17 @@ in {
 
       opener = {
         edit = [
-          { run = "nixGL ${pkgs.kitty}/bin/kitty -e nvim \"$@\""; orphan = true; }
+          { run = "nixGL ${pkgs.kitty}/bin/kitty -e nvim $@"; orphan = true; }
         ];
 
         # Open directories with nautilus (backup file manager)
         directory = [
-          { run = "nautilus \"$1\""; desc = "Open directory in Nautilus"; }
+          { run = "nautilus \"$0\""; desc = "Open directory in Nautilus"; }
         ];
 
         # View JSON files with jless
         json = [
-          { run = "jless $@"; desc = "View JSON with jless"; }
+          { run = "${pkgs.jless}/bin/jless $0"; desc = "View JSON with jless"; block = true; }
         ];
 
         # Automatically triage PE files
@@ -231,7 +231,11 @@ in {
           { mime = "application/json"; use = [ "json" ]; }
 
           { mime = "application/vnd.microsoft.portable-executable"; use = [ "triage_pe" ]; }
+          
           { mime = "application/x-executable"; use = [ "triage_elf" ]; }
+          { mime = "application/x-pie-executable"; use = [ "triage_elf" ]; }
+          { mime = "application/x-sharedlib"; use = [ "triage_elf" ]; }
+
           { mime = "application/x-mach-binary"; use = [ "triage_macho" ]; }
         ];
       };

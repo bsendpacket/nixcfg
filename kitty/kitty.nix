@@ -5,7 +5,7 @@
 
     font = {
       size = 11.0;
-      name = "CaskaydiaCove Nerd Font Mono-Light";
+      name = "CaskaydiaCove NFM Light";
     };
 
     shellIntegration.enableZshIntegration = true;
