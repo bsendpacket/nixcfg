@@ -1,4 +1,4 @@
-{ pkgs, colorscheme, ... }: 
+{ pkgs, colorscheme, workConfig, ... }: 
 let
   # To get a SHA-256 for a GitHub repo:
   # Use nurl <url>
@@ -151,7 +151,7 @@ in {
           # 4 - Tools
           { on = [ "'" "4" "j" ]; run = "shell --interactive --orphan 'jadx-gui \"$@\"'"; desc = "Launch Jadx-GUI with the selected file"; }
 
-        ];
+        ] ++ (workConfig.programs.yazi.keymap.manager.prepend_keymap or {});
       };
     };
 
@@ -186,6 +186,10 @@ in {
       };
 
       opener = {
+        edit = [
+          { run = "${pkgs.kitty}/bin/kitty -e nvim \"$@\""; orphan = true; }
+        ];
+
         # Open directories with nautilus (backup file manager)
         directory = [
           { run = "nautilus \"$1\""; desc = "Open directory in Nautilus"; }
