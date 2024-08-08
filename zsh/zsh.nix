@@ -7,6 +7,12 @@
 
     initExtra = ''
       # Place any values that need to be handled by ~/.zshrc here, if they cannot be defined elsewhere
+
+      unset LD_LIBRARY_PATH
+
+      export PYENV_ROOT="$HOME/.pyenv"
+      [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+      eval "$(pyenv init -)"
     '';
 
     shellAliases = {
