@@ -151,7 +151,7 @@ in {
           # 4 - Tools
           { on = [ "'" "4" "j" ]; run = "shell --interactive --orphan 'jadx-gui \"$@\"'"; desc = "Launch Jadx-GUI with the selected file"; }
 
-        ] ++ (workConfig.programs.yazi.keymap.manager.prepend_keymap or {});
+        ] ++ (workConfig.programs.yazi.keymap.manager.prepend_keymap or []);
       };
     };
 
