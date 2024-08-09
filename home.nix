@@ -21,10 +21,9 @@ let
   };
 
   jadx = pkgs.callPackage ./jadx/jadx.nix {};
-
-  detect-it-easy = pkgs.callPackage ./detect-it-easy/detect-it-easy.nix {};
-
   capa = pkgs.callPackage ./capa/capa.nix {};
+  de4dot = pkgs.callPackage ./de4dot/de4dot.nix {};
+  detect-it-easy = pkgs.callPackage ./detect-it-easy/detect-it-easy.nix {};
 
   # Work-specific
   fileExists = path: if builtins.pathExists path then import path { inherit pkgs lib; } else {};
@@ -69,6 +68,7 @@ in
       # Binary Analysis
       detect-it-easy
       binary-refinery
+      de4dot
       jadx # Temporary, until jadx pull request is finalized on NixPkgs
       capa
 
