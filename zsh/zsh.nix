@@ -10,8 +10,10 @@
 
       unset LD_LIBRARY_PATH
 
-      if [ -d "$PYENV_ROOT" ] && [ -x "$PYENV_ROOT/bin/pyenv" ]; then
-        export PATH="$PYENV_ROOT/bin:$PATH"
+      export PYENV_ROOT="$HOME/.pyenv"
+      export PATH="$PYENV_ROOT/bin:$PATH"
+
+      if command -v pyenv &> /dev/null; then
         eval "$(pyenv init -)"
       fi
     '';
