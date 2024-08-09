@@ -24,6 +24,8 @@ let
 
   detect-it-easy = pkgs.callPackage ./detect-it-easy/detect-it-easy.nix {};
 
+  capa = pkgs.callPackage ./capa/capa.nix {};
+
   # Work-specific
   fileExists = path: if builtins.pathExists path then import path { inherit pkgs lib; } else {};
   workConfig = fileExists ./work/work.nix;
@@ -68,6 +70,7 @@ in
       detect-it-easy
       binary-refinery
       jadx # Temporary, until jadx pull request is finalized on NixPkgs
+      capa
 
     ] ++ (with pkgs; [
       # Packages that are avaliable within NixPkgs
@@ -163,7 +166,6 @@ in
       # IDR
       # webcrack (TODO: https://github.com/svanderburg/node2nix)
       # redress (Go)
-      # capa
 
       # Custom Python environment
       (python311.withPackages (ps: with ps; [

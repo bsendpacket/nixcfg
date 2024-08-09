@@ -29,6 +29,7 @@
       y = "yy";         # Yazi
       kitty = "nixGL kitty";
       rbat = "${binary-refinery}/bin/bat";
+      goresym = "${pkgs.goresym}/bin/GoReSym";
     };
 
     plugins = [
