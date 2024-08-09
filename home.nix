@@ -165,6 +165,8 @@ in
       # redress (Go)
       # capa
 
+      pyenv
+
       # Custom Python environment
       (python311.withPackages (ps: with ps; [
         requests
