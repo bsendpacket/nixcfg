@@ -1,7 +1,6 @@
 { lib
 , python3Packages
 , fetchFromGitHub
-, python-magic
 }:
 
 python3Packages.buildPythonApplication {
@@ -20,13 +19,13 @@ python3Packages.buildPythonApplication {
     wheel
   ];
 
-  propagatedBuildInputs = [
-    python-magic
-  ] ++ (with python3Packages; [
+  propagatedBuildInputs = with python3Packages; [
     (callPackage ./dependencies/macholib.nix {})
     (callPackage ./dependencies/ktool.nix {})
     (callPackage ./dependencies/cabarchive.nix {})
     (callPackage ./dependencies/pyonenote.nix {})
+
+    python-magic
     distutils
     pyperclip
     colorama
@@ -43,7 +42,7 @@ python3Packages.buildPythonApplication {
     pillow
     angr
     unicorn
-  ]);
+  ];
 
   # Disable tests for now
   doCheck = false;

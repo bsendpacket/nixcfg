@@ -16,9 +16,7 @@ let
   colorscheme = import ./colorscheme.nix;
 
   # Packages to build, as they are not on NixPkgs
-  binary-refinery = pkgs.callPackage ./binary-refinery/binary-refinery.nix {
-    python-magic = pkgs.python3Packages.python-magic;
-  };
+  binary-refinery = pkgs.callPackage ./binary-refinery/binary-refinery.nix {};
 
   jadx = pkgs.callPackage ./jadx/jadx.nix {};
   capa = pkgs.callPackage ./capa/capa.nix {};
