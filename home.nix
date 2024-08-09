@@ -24,6 +24,7 @@ let
   capa = pkgs.callPackage ./capa/capa.nix {};
   de4dot = pkgs.callPackage ./de4dot/de4dot.nix {};
   detect-it-easy = pkgs.callPackage ./detect-it-easy/detect-it-easy.nix {};
+  donut-decryptor = pkgs.callPackage ./donut-decryptor/donut-decryptor.nix {};
 
   # Work-specific
   fileExists = path: if builtins.pathExists path then import path { inherit pkgs lib; } else {};
@@ -68,6 +69,7 @@ in
       # Binary Analysis
       detect-it-easy
       binary-refinery
+      donut-decryptor
       de4dot
       jadx # Temporary, until jadx pull request is finalized on NixPkgs
       capa
@@ -83,6 +85,7 @@ in
 
       # Nix-specific tools
       nurl
+      nix-init
 
       i3
       i3status-rust
@@ -161,7 +164,6 @@ in
       # jadx
 
       # TODO
-      # donut-decryptor
       # rustbinsign (+rustup) - This should be possible w/ poetry?
       # IDR
       # webcrack (TODO: https://github.com/svanderburg/node2nix)
