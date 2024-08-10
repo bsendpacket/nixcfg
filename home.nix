@@ -152,6 +152,10 @@ in
       yara
       upx
 
+      # .NET
+      avalonia-ilspy
+      ilspycmd
+
       # Go
       goresym
 
@@ -162,7 +166,6 @@ in
       # jadx
 
       # TODO
-      # ilspy
       # rustbinsign (+rustup) - This should be possible w/ poetry?
       # IDR
       # webcrack (TODO: https://github.com/svanderburg/node2nix)
