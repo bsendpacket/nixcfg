@@ -25,6 +25,7 @@ let
   detect-it-easy = pkgs.callPackage ./detect-it-easy/detect-it-easy.nix {};
   donut-decryptor = pkgs.callPackage ./donut-decryptor/donut-decryptor.nix {};
 
+  speakeasy = pkgs.callPackage ./speakeasy/speakeasy.nix {};
   webcrack = pkgs.callPackage ./webcrack/webcrack.nix {};
 
   # Work-specific
@@ -71,6 +72,7 @@ in
       detect-it-easy
       binary-refinery
       donut-decryptor
+      speakeasy
       webcrack
       redress
       de4dot
@@ -188,7 +190,6 @@ in
         unicorn
         capstone
         dnfile
-        # speakeasy
         # qilling
         # mkyara (?)
         # pycdc
