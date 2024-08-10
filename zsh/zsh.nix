@@ -19,8 +19,6 @@
     '';
 
     shellAliases = {
-      rebuild = "sudo nixos-rebuild switch --flake /home/remnix/.dotfiles#remnix --impure";
-      buildiso = "sudo nix build .#nixosConfigurations.remnixISO.config.system.build.isoImage --impure";
       py = "python3";
       ls = "lsd";       # LSDeluxe
       cd = "z";         # Zoxide
@@ -32,6 +30,7 @@
       kitty = "nixGL kitty";
       rbat = "${binary-refinery}/bin/bat";
       goresym = "${pkgs.goresym}/bin/GoReSym";
+      ilspy = "${pkgs.avalonia-ilspy}/bin/ILSpy";
     };
 
     plugins = [
