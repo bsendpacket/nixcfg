@@ -25,6 +25,8 @@ let
   detect-it-easy = pkgs.callPackage ./detect-it-easy/detect-it-easy.nix {};
   donut-decryptor = pkgs.callPackage ./donut-decryptor/donut-decryptor.nix {};
 
+  webcrack = pkgs.callPackage ./webcrack/webcrack.nix {};
+
   # Work-specific
   fileExists = path: if builtins.pathExists path then import path { inherit pkgs lib; } else {};
   workConfig = fileExists ./work/work.nix;
@@ -69,6 +71,7 @@ in
       detect-it-easy
       binary-refinery
       donut-decryptor
+      webcrack
       redress
       de4dot
       jadx # Temporary, until jadx pull request is finalized on NixPkgs
@@ -86,6 +89,8 @@ in
       # Nix-specific tools
       nurl
       nix-init
+      node2nix
+      nuget-to-nix
 
       i3
       i3status-rust
@@ -170,7 +175,6 @@ in
       # TODO
       # rustbinsign (+rustup) - This should be possible w/ poetry?
       # IDR
-      # webcrack (TODO: https://github.com/svanderburg/node2nix)
 
       # Custom Python environment
       (python311.withPackages (ps: with ps; [
