@@ -21,6 +21,7 @@ let
   jadx = pkgs.callPackage ./jadx/jadx.nix {};
   capa = pkgs.callPackage ./capa/capa.nix {};
   de4dot = pkgs.callPackage ./de4dot/de4dot.nix {};
+  redress = pkgs.callPackage ./redress/redress.nix {};
   detect-it-easy = pkgs.callPackage ./detect-it-easy/detect-it-easy.nix {};
   donut-decryptor = pkgs.callPackage ./donut-decryptor/donut-decryptor.nix {};
 
@@ -68,6 +69,7 @@ in
       detect-it-easy
       binary-refinery
       donut-decryptor
+      redress
       de4dot
       jadx # Temporary, until jadx pull request is finalized on NixPkgs
       capa
@@ -169,7 +171,6 @@ in
       # rustbinsign (+rustup) - This should be possible w/ poetry?
       # IDR
       # webcrack (TODO: https://github.com/svanderburg/node2nix)
-      # redress (Go)
 
       # Custom Python environment
       (python311.withPackages (ps: with ps; [
