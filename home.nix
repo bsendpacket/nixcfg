@@ -162,6 +162,7 @@ in
       # jadx
 
       # TODO
+      # ilspy
       # rustbinsign (+rustup) - This should be possible w/ poetry?
       # IDR
       # webcrack (TODO: https://github.com/svanderburg/node2nix)
@@ -169,6 +170,8 @@ in
 
       # Custom Python environment
       (python311.withPackages (ps: with ps; [
+        (callPackage ./capa/dependencies/dncil.nix {})
+
         requests
         flask
         netifaces
@@ -176,9 +179,8 @@ in
         construct
         unicorn
         capstone
+        dnfile
         # speakeasy
-        # dnfile
-        # dncil
         # qilling
         # mkyara (?)
         # pycdc
