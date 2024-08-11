@@ -16,17 +16,21 @@ let
   colorscheme = import ./colorscheme.nix;
 
   # Packages to build, as they are not on NixPkgs
-  binary-refinery = pkgs.callPackage ./binary-refinery/binary-refinery.nix {};
+  customPackages = {
+    capa = pkgs.callPackage ./capa/capa.nix {};
+    jadx = pkgs.callPackage ./jadx/jadx.nix {};
+    de4dot = pkgs.callPackage ./de4dot/de4dot.nix {};
+    redress = pkgs.callPackage ./redress/redress.nix {};
+    webcrack = pkgs.callPackage ./webcrack/webcrack.nix {};
+    speakeasy = pkgs.callPackage ./speakeasy/speakeasy.nix {};
+    detect-it-easy = pkgs.callPackage ./detect-it-easy/detect-it-easy.nix {};
+    binary-refinery = pkgs.callPackage ./binary-refinery/binary-refinery.nix {};
+    donut-decryptor = pkgs.callPackage ./donut-decryptor/donut-decryptor.nix {};
+  };
 
-  jadx = pkgs.callPackage ./jadx/jadx.nix {};
-  capa = pkgs.callPackage ./capa/capa.nix {};
-  de4dot = pkgs.callPackage ./de4dot/de4dot.nix {};
-  redress = pkgs.callPackage ./redress/redress.nix {};
-  detect-it-easy = pkgs.callPackage ./detect-it-easy/detect-it-easy.nix {};
-  donut-decryptor = pkgs.callPackage ./donut-decryptor/donut-decryptor.nix {};
-
-  speakeasy = pkgs.callPackage ./speakeasy/speakeasy.nix {};
-  webcrack = pkgs.callPackage ./webcrack/webcrack.nix {};
+  customLibraries = {
+    # TODO
+  };
 
   # Work-specific
   fileExists = path: if builtins.pathExists path then import path { inherit pkgs lib; } else {};
@@ -42,7 +46,7 @@ in
     # Terminal Setup 
     (import ./kitty/kitty.nix { inherit pkgs colorscheme; })
     (import ./yazi/yazi.nix { inherit pkgs colorscheme workConfig; })
-    (import ./zsh/zsh.nix { inherit pkgs binary-refinery; })
+    (import ./zsh/zsh.nix { inherit pkgs customPackages; })
     (import ./neovim/neovim.nix { inherit pkgs homeDirectory; })
     ./git/git.nix
     ./zoxide/zoxide.nix
@@ -65,148 +69,147 @@ in
     username = username;
     homeDirectory = homeDirectory;
 
-    packages = [
-      # Packages that need to be manually built
+  packages = (with pkgs // customPackages // customLibraries; [
 
-      # Binary Analysis
-      detect-it-easy
-      binary-refinery
-      donut-decryptor
-      speakeasy
-      webcrack
-      redress
-      de4dot
-      jadx # Temporary, until jadx pull request is finalized on NixPkgs
-      capa
+    # VM tools
+    open-vm-tools
 
-    ] ++ (with pkgs; [
-      # Packages that are avaliable within NixPkgs
+    # Backup File Manager
+    nautilus
 
-      # VM tools
-      open-vm-tools
+    # Nix-specific tools
+    nurl
+    nix-init
+    node2nix
+    nuget-to-nix
 
-      # Backup File Manager
-      nautilus
+    i3
+    i3status-rust
+    
+    # Needed by i3status-rust
+    xorg.setxkbmap
 
-      # Nix-specific tools
-      nurl
-      nix-init
-      node2nix
-      nuget-to-nix
+    kitty
 
-      i3
-      i3status-rust
+    git
+    zsh-fast-syntax-highlighting
+
+    oh-my-zsh
+    thefuck
+    tealdeer
+
+    _7zz
+    (hiPrio bat)
+    ouch
+    htop
+    glances
+
+    neofetch
+    glow
+
+    # Web
+    firefox
+    
+    # Social
+    discord
+
+    # Utilities
+    xclip
+    xsel
+    xdragon
+    jless
+
+    lsd
+    zoxide
+    fzf
+    fd
+    ripgrep
+    jq
+    yazi
+    hexyl
+    ueberzugpp
+
+    rofi
+    inxi
+
+    ffmpegthumbnailer
+    mediainfo
+    unar
+    poppler
+
+    shared-mime-info
+
+    lazygit
+    flatpak # TODO: Make declarative
+
+    ## Malware Analysis
       
-      # Needed by i3status-rust
-      xorg.setxkbmap
+    # Binary Analysis
+    detect-it-easy
+    binary-refinery
+    capa
+    flare-floss
+    imhex
+    yara
+    upx
 
-      kitty
+    # Family-Specific
+    donut-decryptor
 
-      git
-      zsh-fast-syntax-highlighting
+    # Shellcode
+    speakeasy
 
-      oh-my-zsh
-      thefuck
-      tealdeer
+    # JavaScript
+    webcrack
 
-      _7zz
-      (hiPrio bat)
-      ouch
-      htop
-      glances
+    # Java
+    jadx
 
-      neofetch
-      glow
+    # .NET
+    avalonia-ilspy
+    ilspycmd
+    de4dot
 
-      # Web
-      firefox
-      
-      # Social
-      discord
+    # Go
+    goresym
+    redress
 
-      # Utilities
-      xclip
-      xsel
-      xdragon
-      jless
+    # Android
+    apktool
 
-      lsd
-      zoxide
-      fzf
-      fd
-      ripgrep
-      jq
-      yazi
-      hexyl
-      ueberzugpp
+    # TODO
+    # rustbinsign (+rustup) - This should be possible w/ poetry?
+    # IDR
 
-      rofi
-      inxi
+    # Custom Python environment
+    (python311.withPackages (ps: [
+      # Custom Libraries - TODO
+    ] ++ (with ps; [
+      requests
+      flask
+      netifaces
+      mitmproxy
+      construct
+      unicorn
+      capstone
+      dnfile
+      # qilling
+      # mkyara (?)
+      # pycdc
+      # view8
+      # bindiff (?)
+      # innoump
+    ])))
 
-      ffmpegthumbnailer
-      mediainfo
-      unar
-      poppler
+    # Containers
+    dive
+    distrobox
+    podman-tui
+    podman-compose
 
-      shared-mime-info
-
-      lazygit
-      flatpak # TODO: Make declarative
-
-      ## Malware Analysis
-
-      # Binary Analysis
-      flare-floss
-      imhex
-      yara
-      upx
-
-      # .NET
-      avalonia-ilspy
-      ilspycmd
-
-      # Go
-      goresym
-
-      # Android
-      apktool
-
-      # Java
-      # jadx
-
-      # TODO
-      # rustbinsign (+rustup) - This should be possible w/ poetry?
-      # IDR
-
-      # Custom Python environment
-      (python311.withPackages (ps: with ps; [
-        (callPackage ./capa/dependencies/dncil.nix {})
-
-        requests
-        flask
-        netifaces
-        mitmproxy
-        construct
-        unicorn
-        capstone
-        dnfile
-        # qilling
-        # mkyara (?)
-        # pycdc
-        # view8
-        # bindiff (?)
-        # innoump
-      ]))
-
-      # Containers
-      dive
-      distrobox
-      podman-tui
-      podman-compose
-
-      # Fonts
-      (nerdfonts.override { fonts = [ "CascadiaCode" ]; })
-    ]) ++ (workConfig.home.packages or []);
+    # Fonts
+    (nerdfonts.override { fonts = [ "CascadiaCode" ]; })
+  ]) ++ (workConfig.home.packages or []);
 
     sessionVariables = {
       EDITOR = "nvim";

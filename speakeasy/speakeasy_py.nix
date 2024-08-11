@@ -1,6 +1,6 @@
 { lib, pkgs }:
 
-pkgs.python3.pkgs.buildPythonApplication rec {
+pkgs.python3.pkgs.buildPythonPackage rec {
   pname = "speakeasy";
   version = "1.5.11";
   pyproject = true;

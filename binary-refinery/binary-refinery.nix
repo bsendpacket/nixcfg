@@ -20,10 +20,10 @@ python3Packages.buildPythonApplication {
   ];
 
   propagatedBuildInputs = with python3Packages; [
-    (callPackage ./dependencies/macholib.nix {})
-    (callPackage ./dependencies/ktool.nix {})
-    (callPackage ./dependencies/cabarchive.nix {})
-    (callPackage ./dependencies/pyonenote.nix {})
+    (callPackage ../dependencies/macholib.nix {})
+    (callPackage ../dependencies/ktool.nix {})
+    (callPackage ../dependencies/cabarchive.nix {})
+    (callPackage ../dependencies/pyonenote.nix {})
 
     python-magic
     distutils

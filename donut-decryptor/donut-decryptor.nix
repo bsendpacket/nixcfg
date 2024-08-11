@@ -16,9 +16,9 @@ python3Packages.buildPythonApplication {
   ];
 
   propagatedBuildInputs = with python3Packages; [
-    (callPackage ./dependencies/chaskey-lts.nix {})
-    (callPackage ./dependencies/aplib.nix {})
-    (callPackage ./dependencies/lznt1.nix {})
+    (callPackage ../dependencies/chaskey-lts.nix {})
+    (callPackage ../dependencies/aplib.nix {})
+    (callPackage ../dependencies/lznt1.nix {})
     yara-python
   ];
 
