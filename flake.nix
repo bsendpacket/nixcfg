@@ -7,19 +7,41 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixgl = {
+      url = "github:guibou/nixGL";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }:
+  outputs = { self, nixpkgs, home-manager, nixgl, nixvim, ... }:
     let
       system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
+      pkgs = import nixpkgs {
+        inherit system;
+        overlays = [
+          nixgl.overlay
+          (final: prev: {
+            nixvim = nixvim.legacyPackages.${system};
+          })
+        ];
+        config.allowUnfree = true;
+      };
     in {
-      homeConfigurations."bsendpacket" = home-manager.lib.homeManagerConfiguration {
+      homeConfigurations.default = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
 
-        modules = [ ./home.nix ];
+        modules = [
+          ./home.nix
+          nixvim.homeManagerModules.nixvim
+        ];
 
-        extraSpecialArgs = { };
+        extraSpecialArgs = {
+          inherit nixgl;
+        };
       };
     };
 }
