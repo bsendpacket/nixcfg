@@ -27,10 +27,10 @@ python3Packages.buildPythonApplication {
   ];
 
   propagatedBuildInputs = with python3Packages; [
-    (callPackage ./dependencies/ida-settings.nix {})
-    (callPackage ./dependencies/dncil.nix {})
-    (callPackage ./dependencies/networkx.nix {}) # Version on NixPkgs is 3.3, need 3.1
-    (callPackage ./dependencies/protobuf5.nix {}) # Version on NixPkgs is v4, need v5
+    (callPackage ../dependencies/ida-settings.nix {})
+    (callPackage ../dependencies/dncil.nix {})
+    (callPackage ../dependencies/networkx-3_1.nix {}) # Version on NixPkgs is 3.3, need 3.1
+    (callPackage ../dependencies/protobuf-5_27_3.nix {}) # Version on NixPkgs is v4, need v5
 
     tqdm
     pyyaml
