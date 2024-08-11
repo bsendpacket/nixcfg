@@ -1,6 +1,5 @@
 { pkgs, homeDirectory, ... }: {
 
-  programs.nixvim = {
     enable = true;
     
     opts = {
@@ -492,5 +491,4 @@
         vim.api.nvim_feedkeys('``' .. vim.api.nvim_replace_termcodes('<Left>', true, false, true), 'n', true)
       end, { noremap = true })
     '';
-  };
 }

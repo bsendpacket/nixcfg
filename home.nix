@@ -5,7 +5,6 @@
   ...
 }:
 let
-  username = builtins.getEnv "USER";
   homeDirectory = builtins.getEnv "HOME";
   shell = builtins.getEnv "SHELL";
 
@@ -47,7 +46,7 @@ in
     (import ./kitty/kitty.nix { inherit pkgs colorscheme; })
     (import ./yazi/yazi.nix { inherit pkgs colorscheme workConfig; })
     (import ./zsh/zsh.nix { inherit pkgs customPackages; })
-    (import ./neovim/neovim.nix { inherit pkgs homeDirectory; })
+    #(import ./neovim/neovim.nix { inherit pkgs homeDirectory; })
     ./git/git.nix
     ./zoxide/zoxide.nix
     ./zathura/zathura.nix
@@ -57,159 +56,159 @@ in
     ./picom/picom.nix
   ];
 
-  nixpkgs = {
-    overlays = [];
-    config = {
-      allowUnfree = true;
-      allowUnfreePredicate = _: true;
-    };
-  };
+  programs.home-manager.enable = true;
+  # nixpkgs = {
+  #   overlays = [];
+  #   config = {
+  #     allowUnfree = true;
+  #     allowUnfreePredicate = _: true;
+  #   };
+  # };
 
   home = {
-    username = username;
-    homeDirectory = homeDirectory;
+    # username = username;
+    # homeDirectory = homeDirectory;
 
-  packages = (with pkgs // customPackages // customLibraries; [
+    packages = (with pkgs // customPackages // customLibraries; [
+      # VM tools
+      open-vm-tools
 
-    # VM tools
-    open-vm-tools
+      # Backup File Manager
+      nautilus
 
-    # Backup File Manager
-    nautilus
+      # Nix-specific tools
+      nurl
+      nix-init
+      node2nix
+      nuget-to-nix
 
-    # Nix-specific tools
-    nurl
-    nix-init
-    node2nix
-    nuget-to-nix
-
-    i3
-    i3status-rust
-    
-    # Needed by i3status-rust
-    xorg.setxkbmap
-
-    kitty
-
-    git
-    zsh-fast-syntax-highlighting
-
-    oh-my-zsh
-    thefuck
-    tealdeer
-
-    _7zz
-    (hiPrio bat)
-    ouch
-    htop
-    glances
-
-    neofetch
-    glow
-
-    # Web
-    firefox
-    
-    # Social
-    discord
-
-    # Utilities
-    xclip
-    xsel
-    xdragon
-    jless
-
-    lsd
-    zoxide
-    fzf
-    fd
-    ripgrep
-    jq
-    yazi
-    hexyl
-    ueberzugpp
-
-    rofi
-    inxi
-
-    ffmpegthumbnailer
-    mediainfo
-    unar
-    poppler
-
-    shared-mime-info
-
-    lazygit
-    flatpak # TODO: Make declarative
-
-    ## Malware Analysis
+      i3
+      i3status-rust
       
-    # Binary Analysis
-    detect-it-easy
-    binary-refinery
-    capa
-    flare-floss
-    imhex
-    yara
-    upx
+      # Needed by i3status-rust
+      xorg.setxkbmap
 
-    # Family-Specific
-    donut-decryptor
+      kitty
 
-    # Shellcode
-    speakeasy
+      git
+      zsh-fast-syntax-highlighting
 
-    # JavaScript
-    webcrack
+      oh-my-zsh
+      thefuck
+      tealdeer
 
-    # Java
-    jadx
+      _7zz
+      (hiPrio bat)
+      ouch
+      htop
+      glances
 
-    # .NET
-    avalonia-ilspy
-    ilspycmd
-    de4dot
+      neofetch
+      glow
 
-    # Go
-    goresym
-    redress
+      # Web
+      firefox
+      
+      # Social
+      discord
 
-    # Android
-    apktool
+      # Utilities
+      xclip
+      xsel
+      xdragon
+      jless
 
-    # TODO
-    # rustbinsign (+rustup) - This should be possible w/ poetry?
-    # IDR
+      lsd
+      zoxide
+      fzf
+      fd
+      ripgrep
+      jq
+      yazi
+      hexyl
+      ueberzugpp
 
-    # Custom Python environment
-    (python311.withPackages (ps: [
-      # Custom Libraries - TODO
-    ] ++ (with ps; [
-      requests
-      flask
-      netifaces
-      mitmproxy
-      construct
-      unicorn
-      capstone
-      dnfile
-      # qilling
-      # mkyara (?)
-      # pycdc
-      # view8
-      # bindiff (?)
-      # innoump
-    ])))
+      rofi
+      inxi
 
-    # Containers
-    dive
-    distrobox
-    podman-tui
-    podman-compose
+      ffmpegthumbnailer
+      mediainfo
+      unar
+      poppler
 
-    # Fonts
-    (nerdfonts.override { fonts = [ "CascadiaCode" ]; })
-  ]) ++ (workConfig.home.packages or []);
+      shared-mime-info
+
+      lazygit
+      flatpak # TODO: Make declarative
+
+      ## Malware Analysis
+        
+      # Binary Analysis
+      detect-it-easy
+      binary-refinery
+      capa
+      flare-floss
+      imhex
+      yara
+      upx
+
+      # Family-Specific
+      donut-decryptor
+
+      # Shellcode
+      speakeasy
+
+      # JavaScript
+      webcrack
+
+      # Java
+      jadx
+
+      # .NET
+      avalonia-ilspy
+      ilspycmd
+      de4dot
+
+      # Go
+      goresym
+      redress
+
+      # Android
+      apktool
+
+      # TODO
+      # rustbinsign (+rustup) - This should be possible w/ poetry?
+      # IDR
+
+      # Custom Python environment
+      (python311.withPackages (ps: [
+        # Custom Libraries - TODO
+      ] ++ (with ps; [
+        requests
+        flask
+        netifaces
+        mitmproxy
+        construct
+        unicorn
+        capstone
+        dnfile
+        # qilling
+        # mkyara (?)
+        # pycdc
+        # view8
+        # bindiff (?)
+        # innoump
+      ])))
+
+      # Containers
+      dive
+      distrobox
+      podman-tui
+      podman-compose
+
+      # Fonts
+      (nerdfonts.override { fonts = [ "CascadiaCode" ]; })
+    ]) ++ (workConfig.home.packages or []);
 
     sessionVariables = {
       EDITOR = "nvim";
@@ -255,6 +254,4 @@ in
 
     stateVersion = "23.11";
   };
-
-  programs.home-manager.enable = true;
 }
