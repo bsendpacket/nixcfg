@@ -1,6 +1,6 @@
-{ lib, buildPythonPackage, fetchPypi }:
+{ lib, python312Packages, fetchPypi }:
 
-buildPythonPackage rec {
+python312Packages.buildPythonPackage rec {
   pname = "kimg4";
   version = "0.1.1";
 

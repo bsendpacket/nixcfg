@@ -1,6 +1,6 @@
-{ lib, buildPythonPackage, fetchPypi }:
+{ lib, python312Packages, fetchPypi }:
 
-buildPythonPackage rec {
+python312Packages.buildPythonPackage rec {
   pname = "cabarchive";
   version = "0.2.4";
 

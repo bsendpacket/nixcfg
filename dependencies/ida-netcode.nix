@@ -1,6 +1,6 @@
-{ lib, buildPythonPackage, python3Packages, fetchFromGitHub }:
+{ lib, python312Packages, fetchFromGitHub }:
 
-buildPythonPackage rec {
+python312Packages.buildPythonPackage {
   pname = "ida-netcode";
   version = "3.0";
 
@@ -11,11 +11,11 @@ buildPythonPackage rec {
     hash = "sha256-hXApNeeDYHX41zuYDpSNqSXdM/c8DoVXuB6NMqYf7iU=";
   };
 
-  nativeBuildInputs = with python3Packages; [
+  nativeBuildInputs = with python312Packages; [
     pip
   ];
 
-  propagatedBuildInputs = with python3Packages; [
+  propagatedBuildInputs = with python312Packages; [
     six
   ];
 

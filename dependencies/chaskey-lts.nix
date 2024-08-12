@@ -1,6 +1,6 @@
-{ python3Packages, fetchFromGitHub }:
+{ python312Packages, fetchFromGitHub }:
 
-python3Packages.buildPythonPackage {
+python312Packages.buildPythonPackage {
   pname = "chaskey-lts";
   version = "0.0.3";
 
@@ -11,7 +11,7 @@ python3Packages.buildPythonPackage {
     hash = "sha256-KFMpHSc21V1divx8vUGjHzmoz9ZFcyBgVnK6pmtz7OM=";
   };
 
-  nativeBuildInputs = with python3Packages; [
+  nativeBuildInputs = with python312Packages; [
     setuptools
   ];
 

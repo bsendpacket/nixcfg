@@ -1,4 +1,4 @@
-{ lib, fetchFromGitHub, python3Packages }:
+{ lib, fetchFromGitHub, python312Packages }:
 
 let 
   rules = fetchFromGitHub {
@@ -8,7 +8,7 @@ let
     hash = "sha256-/tbPRejnexWgzJK+eX+JdXH62SLtmOPIACF4sSCL4EA=";
   };
 in
-python3Packages.buildPythonApplication {
+python312Packages.buildPythonApplication {
   pname = "capa";
   version = "7.1.0";
   format = "pyproject";
@@ -20,17 +20,16 @@ python3Packages.buildPythonApplication {
     hash = "sha256-zONYNulc7i1xFjWtAYSMappvbq+qe8yi3iRCAEzvM3k=";
   };
 
-  nativeBuildInputs = with python3Packages; [
+  nativeBuildInputs = with python312Packages; [
     setuptools
     setuptools-scm
     wheel
   ];
 
-  propagatedBuildInputs = with python3Packages; [
+  propagatedBuildInputs = with python312Packages; [
     (callPackage ../dependencies/ida-settings.nix {})
     (callPackage ../dependencies/dncil.nix {})
     (callPackage ../dependencies/networkx-3_1.nix {}) # Version on NixPkgs is 3.3, need 3.1
-    (callPackage ../dependencies/protobuf-5_27_3.nix {}) # Version on NixPkgs is v4, need v5
 
     tqdm
     pyyaml
@@ -49,6 +48,7 @@ python3Packages.buildPythonApplication {
     viv-utils
     dnfile
     python-flirt
+    protobuf5
   ];
 
   postInstall = ''
