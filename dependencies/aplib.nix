@@ -1,11 +1,11 @@
 { lib
-, buildPythonPackage
+, python312Packages 
 , fetchPypi
 , setuptools
 , wheel
 }:
 
-buildPythonPackage rec {
+python312Packages.buildPythonPackage rec {
   pname = "aplib";
   version = "0.6";
   pyproject = true;

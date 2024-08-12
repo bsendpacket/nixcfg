@@ -1,23 +1,23 @@
-{ lib, pkgs }:
+{ lib, python312Packages, fetchFromGitHub }:
 
-pkgs.python3.pkgs.buildPythonApplication rec {
+python312Packages.buildPythonApplication rec {
   pname = "speakeasy";
   version = "1.5.11";
   pyproject = true;
 
-  src = pkgs.fetchFromGitHub {
+  src = fetchFromGitHub {
     owner = "mandiant";
     repo = "speakeasy";
     rev = "v${version}";
     hash = "sha256-PhIIk0UNNPZQAhP/149EEAi5ECOOShmXJGHyGeIQUqk=";
   };
 
-  nativeBuildInputs = [
-    pkgs.python3.pkgs.setuptools
-    pkgs.python3.pkgs.wheel
+  nativeBuildInputs = with python312Packages; [
+    setuptools
+    wheel
   ];
 
-  propagatedBuildInputs = with pkgs.python3.pkgs; [
+  propagatedBuildInputs = with python312Packages; [
     (callPackage ../dependencies/lznt1.nix {})
     (callPackage ../dependencies/unicorn-1_0_2.nix {})
 

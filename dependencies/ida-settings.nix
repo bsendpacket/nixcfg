@@ -1,6 +1,6 @@
-{ lib, buildPythonPackage, python3Packages, fetchPypi }:
+{ lib, python312Packages, fetchPypi }:
 
-buildPythonPackage rec {
+python312Packages.buildPythonPackage rec {
   pname = "ida-settings";
   version = "2.1.0";
 
@@ -9,11 +9,11 @@ buildPythonPackage rec {
     hash = "sha256-E3FzC05kvziIRbZaQb6glOveil06Bb307fL0KquoMmI=";
   };
 
-  nativeBuildInputs = with python3Packages; [
+  nativeBuildInputs = with python312Packages; [
     pip
   ];
 
-  propagatedBuildInputs = with python3Packages; [
+  propagatedBuildInputs = with python312Packages; [
     (callPackage ./ida-netcode.nix {})
 
     six

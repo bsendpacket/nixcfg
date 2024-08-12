@@ -1,6 +1,6 @@
-{ lib, buildPythonPackage, fetchPypi, python3Packages }:
+{ lib, fetchPypi, python312Packages }:
 
-buildPythonPackage rec {
+python312Packages.buildPythonPackage rec {
   pname = "macholib";
   version = "1.16.3";
 
@@ -12,7 +12,7 @@ buildPythonPackage rec {
   # Disable tests, as they only work on macOS
   doCheck = false;
 
-  propagatedBuildInputs = with python3Packages; [
+  propagatedBuildInputs = with python312Packages; [
     altgraph
   ];
 

@@ -15,21 +15,43 @@ let
 
   colorscheme = import ./colorscheme.nix;
 
+  # Force protobuf5 over protobuf4
+  # The NixPkg for angr uses protobuf4, although it works with protobuf5
+  # By forcing protobuf5 here, conflicts of multiple versions existing is prevented
+  protobufOverlay = self: super: {
+    python312Packages = super.python312Packages.override {
+      overrides = pythonSelf: pythonSuper: {
+        protobuf = pythonSuper.protobuf5;
+      };
+    };
+  };
+
+  pkgs = import <nixpkgs> {
+    overlays = [ protobufOverlay ];
+    config = {
+      allowUnfree = true;
+      allowUnfreePredicate = _: true;
+    };
+  };
+
   # Packages to build, as they are not on NixPkgs
   customPackages = {
-    capa = pkgs.callPackage ./capa/capa.nix {};
-    jadx = pkgs.callPackage ./jadx/jadx.nix {};
+    jadx = pkgs.callPackage ./jadx/jadx.nix { };
     de4dot = pkgs.callPackage ./de4dot/de4dot.nix {};
-    redress = pkgs.callPackage ./redress/redress.nix {};
-    webcrack = pkgs.callPackage ./webcrack/webcrack.nix {};
-    speakeasy = pkgs.callPackage ./speakeasy/speakeasy.nix {};
-    detect-it-easy = pkgs.callPackage ./detect-it-easy/detect-it-easy.nix {};
-    binary-refinery = pkgs.callPackage ./binary-refinery/binary-refinery.nix {};
-    donut-decryptor = pkgs.callPackage ./donut-decryptor/donut-decryptor.nix {};
+    redress = pkgs.callPackage ./redress/redress.nix { };
+    webcrack = pkgs.callPackage ./webcrack/webcrack.nix { };
+    detect-it-easy = pkgs.callPackage ./detect-it-easy/detect-it-easy.nix { };
+
+    # Python Packages
+    capa = pkgs.callPackage ./capa/capa.nix { };
+    speakeasy = pkgs.callPackage ./speakeasy/speakeasy.nix { };
+    binary-refinery = pkgs.callPackage ./binary-refinery/binary-refinery.nix { };
+    donut-decryptor = pkgs.callPackage ./donut-decryptor/donut-decryptor.nix { };
   };
 
   customLibraries = {
-    # TODO
+    dncil = pkgs.callPackage ./dependencies/dncil.nix { };
+
   };
 
   # Work-specific
@@ -57,159 +79,161 @@ in
     ./picom/picom.nix
   ];
 
-  nixpkgs = {
-    overlays = [];
-    config = {
-      allowUnfree = true;
-      allowUnfreePredicate = _: true;
-    };
-  };
-
   home = {
     username = username;
     homeDirectory = homeDirectory;
 
-  packages = (with pkgs // customPackages // customLibraries; [
+    packages = (with pkgs // customPackages // customLibraries; [
 
-    # VM tools
-    open-vm-tools
+      # VM tools
+      open-vm-tools
 
-    # Backup File Manager
-    nautilus
+      # Backup File Manager
+      nautilus
 
-    # Nix-specific tools
-    nurl
-    nix-init
-    node2nix
-    nuget-to-nix
+      # Nix-specific tools
+      nurl
+      nix-init
+      node2nix
+      nuget-to-nix
 
-    i3
-    i3status-rust
-    
-    # Needed by i3status-rust
-    xorg.setxkbmap
-
-    kitty
-
-    git
-    zsh-fast-syntax-highlighting
-
-    oh-my-zsh
-    thefuck
-    tealdeer
-
-    _7zz
-    (hiPrio bat)
-    ouch
-    htop
-    glances
-
-    neofetch
-    glow
-
-    # Web
-    firefox
-    
-    # Social
-    discord
-
-    # Utilities
-    xclip
-    xsel
-    xdragon
-    jless
-
-    lsd
-    zoxide
-    fzf
-    fd
-    ripgrep
-    jq
-    yazi
-    hexyl
-    ueberzugpp
-
-    rofi
-    inxi
-
-    ffmpegthumbnailer
-    mediainfo
-    unar
-    poppler
-
-    shared-mime-info
-
-    lazygit
-    flatpak # TODO: Make declarative
-
-    ## Malware Analysis
+      i3
+      i3status-rust
       
-    # Binary Analysis
-    detect-it-easy
-    binary-refinery
-    capa
-    flare-floss
-    imhex
-    yara
-    upx
+      # Needed by i3status-rust
+      xorg.setxkbmap
 
-    # Family-Specific
-    donut-decryptor
+      kitty
 
-    # Shellcode
-    speakeasy
+      git
+      zsh-fast-syntax-highlighting
 
-    # JavaScript
-    webcrack
+      oh-my-zsh
+      thefuck
+      tealdeer
 
-    # Java
-    jadx
+      _7zz
+      (hiPrio bat)
+      ouch
+      htop
+      glances
 
-    # .NET
-    avalonia-ilspy
-    ilspycmd
-    de4dot
+      neofetch
+      glow
 
-    # Go
-    goresym
-    redress
+      # Web
+      firefox
+      
+      # Social
+      discord
 
-    # Android
-    apktool
+      # Utilities
+      xclip
+      xsel
+      xdragon
+      jless
 
-    # TODO
-    # rustbinsign (+rustup) - This should be possible w/ poetry?
-    # IDR
+      lsd
+      zoxide
+      fzf
+      fd
+      ripgrep
+      jq
+      yazi
+      hexyl
+      ueberzugpp
 
-    # Custom Python environment
-    (python311.withPackages (ps: [
-      # Custom Libraries - TODO
-    ] ++ (with ps; [
-      requests
-      flask
-      netifaces
-      mitmproxy
-      construct
-      unicorn
-      capstone
-      dnfile
+      rofi
+      inxi
+
+      ffmpegthumbnailer
+      mediainfo
+      unar
+      poppler
+
+      shared-mime-info
+
+      lazygit
+      flatpak # TODO: Make declarative
+
+      ## Malware Analysis
+        
+      # Binary Analysis
+      detect-it-easy
+      capa
+      flare-floss
+      imhex
+      yara
+      upx
+
+      # Family-Specific
+      donut-decryptor
+
+
+      # JavaScript
+      webcrack
+
+      # Java
+      jadx
+
+      # .NET
+      avalonia-ilspy
+      ilspycmd
+      de4dot
+
+      # Go
+      goresym
+      redress
+
+      # Android
+      apktool
+
+      # TODO
+      # rustbinsign (+rustup) - This should be possible w/ poetry?
+      # IDR
+
+      # Custom Python environment
+      (python312.withPackages (ps: with ps; [
+        pip
+        setuptools
+        wheel
+
+        # Networking
+        requests
+        flask
+        netifaces
+        mitmproxy
+
+        # Binary Analysis
+        binary-refinery
+        construct
+
+        # .NET
+        dnfile
+        dncil
+
+        # Emulation
+        unicorn
+        capstone
+        speakeasy
+
+      ]))
       # qilling
       # mkyara (?)
       # pycdc
       # view8
       # bindiff (?)
       # innoump
-    ])))
 
-    # Containers
-    dive
-    distrobox
-    podman-tui
-    podman-compose
+      # Containers
+      dive
+      distrobox
+      podman-tui
+      podman-compose
 
-    # Fonts
-    (nerdfonts.override { fonts = [ "CascadiaCode" ]; })
-  ]) ++ (workConfig.home.packages or []);
+      # Fonts
+      (nerdfonts.override { fonts = [ "CascadiaCode" ]; })
+    ]) ++ (workConfig.home.packages or []);
 
     sessionVariables = {
       EDITOR = "nvim";

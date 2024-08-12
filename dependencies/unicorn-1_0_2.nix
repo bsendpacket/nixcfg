@@ -1,12 +1,11 @@
 { lib
-, buildPythonPackage
+, python312Packages
 , fetchPypi
 , setuptools
-, python3
 , wheel
 }:
 
-buildPythonPackage rec {
+python312Packages.buildPythonPackage rec {
   pname = "unicorn";
   version = "1.0.2";
   pyproject = true;
@@ -21,7 +20,7 @@ buildPythonPackage rec {
     wheel
   ];
 
-  propagatedBuildInputs = with python3.pkgs; [
+  propagatedBuildInputs = with python312Packages; [
     distutils
   ];
 
