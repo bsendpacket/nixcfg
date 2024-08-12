@@ -202,26 +202,26 @@ in {
 
         # Automatically triage PE files
         triage_pe = [
-          { run = "ef $@ [| pemeta -cI | dump $@_extracted/imports ];
-                   ef $@ [| pemeta -cE | dump $@_extracted/exports ];
-                   ef $@ [| pemeta -DNSTV | dump $@_extracted/pemeta ];
-                   ef $@ [| vsect [| dump $@_extracted/sections/{path} ]];
-                   ef $@ [| perc [| dump $@_extracted/resources/{path} ]];
-                   diec -dbru $@ | dump $@_extracted/peinfo"; }
+          { run = "ef $@ [| pemeta -cI | dump $@_info/imports ];
+                   ef $@ [| pemeta -cE | dump $@_info/exports ];
+                   ef $@ [| pemeta -DNSTV | dump $@_info/pemeta ];
+                   ef $@ [| vsect [| dump $@_info/sections/{path} ]];
+                   ef $@ [| perc [| dump $@_info/resources/{path} ]];
+                   diec -dbru $@ | dump $@_info/peinfo"; }
         ];
 
         triage_elf = [
-          { run = "ef $@ [| vsect [| dump $@_extracted/sections/{path} ]];
-                   diec -dbru $@ | dump $@_extracted/elfinfo"; }
+          { run = "ef $@ [| vsect [| dump $@_info/sections/{path} ]];
+                   diec -dbru $@ | dump $@_info/elfinfo"; }
         ];
 
         triage_macho = [
-          { run = "ef $@ [| machometa -cI | dump $@_extracted/imports ];
-                   ef $@ [| machometa -cE | dump $@_extracted/exports ];
-                   ef $@ [| machometa | dump $@_extracted/machometa ];
-                   ef $@ [| vsect [| dump $@_extracted/sections/{path} ]];
-                   ef $@ [| xtmacho [| dump $@_extracted/executables/{path} ]];
-                   diec -dbru $@ | dump $@_extracted/machoinfo"; }
+          { run = "ef $@ [| machometa -cI | dump $@_info/imports ];
+                   ef $@ [| machometa -cE | dump $@_info/exports ];
+                   ef $@ [| machometa | dump $@_info/machometa ];
+                   ef $@ [| vsect [| dump $@_info/sections/{path} ]];
+                   ef $@ [| xtmacho [| dump $@_info/executables/{path} ]];
+                   diec -dbru $@ | dump $@_info/machoinfo"; }
         ];
       };
 
