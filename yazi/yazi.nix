@@ -73,6 +73,13 @@ in {
         rev = "c69314e80f5b45fe87a0e06a10d064ed54110439";
         sha256 = "sha256-8xdBPdKSiwB7iRU8DJdTHY+BjfR9D3FtyVtDL9tNiy4=";
       };
+
+      "projects" = pkgs.fetchFromGitHub {
+        owner = "MasouShizuka";
+        repo = "projects.yazi";
+        rev = "7a1dc3729f0bc3f0d62214683117d490113c3007";
+        hash = "sha256-ANDO+BgC9hb6bfq4pc/jTVBL/camUMtYZ0r6gbwHe6M=";
+      };
     };
 
     keymap = {
@@ -88,6 +95,16 @@ in {
           { on = [ "7" ]; run = "plugin relative-motions --args=7"; desc = "Move in relative steps"; }
           { on = [ "8" ]; run = "plugin relative-motions --args=8"; desc = "Move in relative steps"; }
           { on = [ "9" ]; run = "plugin relative-motions --args=9"; desc = "Move in relative steps"; }
+
+          # Project management; not working at the moment?
+          # { on = [ "P" "s" ]; run = "plugin projects --args=save"; desc = "Save current project"; }
+          # { on = [ "P" "l" ]; run = "plugin projects --args=load"; desc = "Load project"; }
+          # { on = [ "P" "P" ]; run = "plugin projects --args=load_last"; desc = "Load last project"; }
+          # { on = [ "P" "d" ]; run = "plugin projects --args=delete"; desc = "Delete project"; }
+          # { on = [ "P" "D" ]; run = "plugin projects --args=delete_all"; desc = "Delete all projects"; }
+          # { on = [ "P" "m" ]; run = "plugin projects --args='merge current'"; desc = "Merge current tab to other projects"; }
+          # { on = [ "P" "M" ]; run = "plugin projects --args='merge all'"; desc = "Merge current project to other projects"; }
+          # { on = [ "q" ]; run = "plugin projects --args=quit"; desc = "Quit and save projects"; }
 
           # Tab management
           { on = [ "!" ]; run = "tab_switch 0"; desc = "Switch to tab"; }
