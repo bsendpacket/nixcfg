@@ -28,6 +28,7 @@
       lt = "ls --tree"; # List Files (Tree)
       y = "yy";         # Yazi
       kitty = "nixGL kitty";
+      alacritty = "nixGL alacritty";
       rbat = "${customPackages.binary-refinery}/bin/bat";
       goresym = "${pkgs.goresym}/bin/GoReSym";
       ilspy = "${pkgs.avalonia-ilspy}/bin/ILSpy";

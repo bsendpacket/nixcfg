@@ -54,20 +54,6 @@
         padding = { x = 0; y = 0; };
       };
 
-      font = {
-        normal = {
-          family = "CaskaydiaCove NFM Light";
-          style = "Light";
-        };
-        size = 11.0;
-        use_thin_strokes = false;
-      };
-
-      dpi = {
-        x = 96.0;
-        y = 96.0;
-      };
-
       shell = { 
         program = "${pkgs.zsh}/bin/zsh";
       };
