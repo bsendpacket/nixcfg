@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, colorscheme, ... }: {
 
   programs.alacritty = {
     enable = true;
@@ -8,61 +8,91 @@
         draw_bold_text_with_bright_colors = true;
 
         primary = {
-          background = "#080808";
-          foreground = "#bdbdbd";
-          bright_foreground = "#eeeeee";
+          background = "${colorscheme.colors.background}";
+          foreground = "${colorscheme.colors.foreground}";
         };
 
         cursor = {
-          cursor = "#8e8e8e";
-          text = "#080808";
+          cursor = "${colorscheme.colors.cursor}";
+          text = "${colorscheme.colors.background}";
         };
 
         selection = {
-          background = "#b2ceee";
-          text = "#080808";
+          background = "${colorscheme.colors.selection}";
+          text = "${colorscheme.colors.selection_text}";
         };
 
         normal = {
-          black = "#323437";
-          blue = "#80a0ff";
-          cyan = "#79dac8";
-          green = "#8cc85f";
-          magenta = "#cf87e8";
-          red = "#ff5454";
-          white = "#c6c6c6";
-          yellow = "#e3c78a";
+          black = "${colorscheme.colors.black}";
+          red = "${colorscheme.colors.red}";
+          green = "${colorscheme.colors.blue}";
+          yellow = "${colorscheme.colors.n_purple_3}";
+          blue = "${colorscheme.colors.n_pink_8}";
+          magenta = "${colorscheme.colors.purple}";
+          cyan = "${colorscheme.colors.n_pink_5}";
+          white = "${colorscheme.colors.white}";
         };
 
         bright = {
-          black = "#949494";
-          blue = "#74b2ff";
-          cyan = "#85dc85";
-          green = "#36c692";
-          magenta = "#ae81ff";
-          red = "#ff5189";
-          white = "#e4e4e4";
-          yellow = "#c6c684";
+          black = "${colorscheme.colors.bright_black}";
+          red = "${colorscheme.colors.bright_red}";
+          green = "${colorscheme.colors.bright_green}";
+          yellow = "${colorscheme.colors.bright_yellow}";
+          blue = "${colorscheme.colors.bright_blue}";
+          magenta = "${colorscheme.colors.bright_purple}";
+          cyan = "${colorscheme.colors.bright_cyan}";
+          white = "${colorscheme.colors.bright_white}";
         };
+
+        indexed_colors = [
+          { index = 16; color = "${colorscheme.colors.pastel_purple}"; }
+          { index = 17; color = "${colorscheme.colors.pastel_pink}"; }
+        ];
       };
 
       window = {
-        title = "Terminal";
-        padding = { y = 5; };
-        
-        dimensions = {
-          lines = 75;
-          columns = 100;
-        };
+        padding = { x = 0; y = 0; };
       };
 
       font = {
-        normal.family = "CaskaydiaCove Nerd Font Mono";
+        normal = {
+          family = "CaskaydiaCove NFM Light";
+          style = "Light";
+        };
         size = 11.0;
+        use_thin_strokes = false;
+      };
+
+      dpi = {
+        x = 96.0;
+        y = 96.0;
       };
 
       shell = { 
         program = "${pkgs.zsh}/bin/zsh";
+      };
+
+      cursor = {
+        style = {
+          shape = "Block";
+        };
+      };
+
+      bell = {
+        duration = 0;
+      };
+
+      hints = {
+        enabled = [
+          {
+            mouse = {
+              enabled = false;
+            };
+            hyperlinks = false;
+            action = "Select";
+            regex = "";
+          }
+        ];
       };
 
     };
