@@ -1,5 +1,4 @@
 {
-  pkgs,
   config,
   lib,
   ...
@@ -47,11 +46,7 @@ let
     speakeasy = pkgs.callPackage ./speakeasy/speakeasy.nix { };
     binary-refinery = pkgs.callPackage ./binary-refinery/binary-refinery.nix { };
     donut-decryptor = pkgs.callPackage ./donut-decryptor/donut-decryptor.nix { };
-  };
-
-  customLibraries = {
     dncil = pkgs.callPackage ./dependencies/dncil.nix { };
-
   };
 
   # Work-specific
@@ -83,7 +78,7 @@ in
     username = username;
     homeDirectory = homeDirectory;
 
-    packages = (with pkgs // customPackages // customLibraries; [
+    packages = (with pkgs // customPackages; [
 
       # VM tools
       open-vm-tools
@@ -160,9 +155,9 @@ in
         
       # Binary Analysis
       detect-it-easy
-      capa
       flare-floss
       imhex
+      capa
       yara
       upx
 
