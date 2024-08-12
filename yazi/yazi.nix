@@ -74,12 +74,12 @@ in {
         sha256 = "sha256-8xdBPdKSiwB7iRU8DJdTHY+BjfR9D3FtyVtDL9tNiy4=";
       };
 
-      "projects" = pkgs.fetchFromGitHub {
-        owner = "MasouShizuka";
-        repo = "projects.yazi";
-        rev = "7a1dc3729f0bc3f0d62214683117d490113c3007";
-        hash = "sha256-ANDO+BgC9hb6bfq4pc/jTVBL/camUMtYZ0r6gbwHe6M=";
-      };
+      # "projects" = pkgs.fetchFromGitHub {
+      #   owner = "MasouShizuka";
+      #   repo = "projects.yazi";
+      #   rev = "7a1dc3729f0bc3f0d62214683117d490113c3007";
+      #   hash = "sha256-ANDO+BgC9hb6bfq4pc/jTVBL/camUMtYZ0r6gbwHe6M=";
+      # };
     };
 
     keymap = {
@@ -154,8 +154,8 @@ in {
           { on = [ "b" "i" ]; run = "shell DRAG_TO_VM --confirm"; desc = "Drag file INTO yazi"; }
 
           # Copy
-          { on = [ "c" "h" ]; run = "shell --confirm 'ef \"$@\" [| cfmt \"{sha256}  {path}\n\" ]| xclip -selection clipboard'"; desc = "Copy SHA256 and filename of files in directory"; }
-
+          { on = [ "c" "h" ]; run = "shell --confirm 'ef \"$@\" [| cfmt \"{sha256}  {path}\n\" ]| xsel -psb'"; desc = "Copy SHA256 and filename of selected files"; }
+          { on = [ "c" "H" ]; run = "shell --confirm 'ef \"$@\" [| cfmt \"{sha256}\n\" ]| xsel -psb'"; desc = "Copy SHA256 of selected files"; }
           # ' - Common Aliases
           # 1 - Reserved
           # 2 - Reserved
@@ -167,6 +167,8 @@ in {
 
           # 4 - Tools
           { on = [ "'" "4" "j" ]; run = "shell --interactive --orphan 'jadx-gui \"$@\"'"; desc = "Launch Jadx-GUI with the selected file"; }
+          { on = [ "'" "4" "g" ]; run = "shell --confirm 'GoReSym $@ | dump $@_info/goresym'"; desc = "Run GoReSym"; }
+          { on = [ "'" "4" "w" ]; run = "shell --confirm 'wireshark $@'"; desc = "Run Wireshark"; }
 
         ] ++ (workConfig.programs.yazi.keymap.manager.prepend_keymap or []);
       };
@@ -204,7 +206,7 @@ in {
 
       opener = {
         edit = [
-          { run = "nixGL ${pkgs.alacritty}/bin/alacritty -e nvim $@"; orphan = true; }
+          { run = "nixGL ${pkgs.kitty}/bin/kitty -e nvim $@"; orphan = true; }
         ];
 
         # Open directories with nautilus (backup file manager)
