@@ -165,6 +165,8 @@ in
       # Family-Specific
       donut-decryptor
 
+      # Networking
+      wireshark
 
       # JavaScript
       webcrack
