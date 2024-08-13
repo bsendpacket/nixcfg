@@ -24,10 +24,13 @@
       }
 
       python <<EOF | alias-noglob
-      import pkg_resources
-      for ep in pkg_resources.iter_entry_points('console_scripts'):
-          if ep.module_name.startswith('refinery'):
-              print(ep.name)
+      from importlib.metadata import entry_points
+
+      eps = entry_points(group='console_scripts')
+      refinery_eps = [ep.name for ep in eps if ep.module.startswith('refinery')]
+
+      for ep_name in refinery_eps:
+          print(ep_name)
       EOF
     '';
 
