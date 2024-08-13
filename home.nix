@@ -165,6 +165,9 @@ in
       # Family-Specific
       donut-decryptor
 
+      # InnoSetup
+      innoextract
+
       # Networking
       wireshark
 
