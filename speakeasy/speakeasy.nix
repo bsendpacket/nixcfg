@@ -1,6 +1,6 @@
 { lib, python312Packages, fetchFromGitHub }:
 
-python312Packages.buildPythonApplication rec {
+python312Packages.buildPythonPackage rec {
   pname = "speakeasy";
   version = "1.5.11";
   pyproject = true;
