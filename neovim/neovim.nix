@@ -124,13 +124,13 @@
       nvim-colorizer.enable = true;
 
       # LSP Formatter
-      lsp-format.enable = true;
+      # lsp-format.enable = true;
 
       # Friendly Snippets
       friendly-snippets.enable = true;
 
       # Multi-cursor support
-      multicursors.enable = true;
+      # multicursors.enable = true;
       
       # Auto-close brackets and quotes
       autoclose.enable = true;
@@ -249,7 +249,7 @@
           # C LSP
           ccls = {
             enable = true;
-            autostart = true;
+            #autostart = true;
             rootDir = ''
               function(fname)
                 return vim.loop.cwd()
@@ -260,7 +260,7 @@
           # cmake LSP
           cmake = {
             enable = true;
-            autostart = true;
+            #autostart = true;
           };
         };
       };
@@ -396,31 +396,6 @@
         });
       } 
       {
-        # Auto-generate documentation with <Leader>d
-        plugin = (pkgs.vimUtils.buildVimPlugin {
-          name = "vim-doge";
-          src = pkgs.fetchFromGitHub {
-            owner = "kkoomen";
-            repo = "vim-doge";
-            rev = "e8aa8acb1924ecc78a31c2de487e96ecc92720a9";
-            hash = "sha256-SQCCRaLgoHvaVJ98p/LIIIlpGV8qWRrRIEDYQlqIhhg=";
-          };
-        });
-      }
-      {
-        # Code outline for skimming and quick navigation
-        # Use with <leader>a, Skim with n-{ and n-}
-        plugin = (pkgs.vimUtils.buildVimPlugin {
-          name = "aerial";
-          src = pkgs.fetchFromGitHub {
-            owner = "stevearc";
-            repo = "aerial.nvim";
-            rev = "993142d49274092c64a2d475aa726df3c323949d";
-            hash = "sha256-BgztBMZCJ1ew4HOiScFzwY8HMhteqmLe/MW4up43/Bo=";
-          };
-        });
-      }
-      {
         plugin = (pkgs.vimUtils.buildVimPlugin {
           name = "markview";
           src = pkgs.fetchFromGitHub {
@@ -475,17 +450,6 @@
         end,
       }
       require "lsp_signature".setup(signature_cfg)
-
-      require("aerial").setup({
-        -- optionally use on_attach to set keymaps when aerial has attached to a buffer
-        on_attach = function(bufnr)
-          -- Jump forwards/backwards with '-' and '+'
-          vim.keymap.set("n", "-", "<cmd>AerialPrev<CR>", { buffer = bufnr })
-          vim.keymap.set("n", "+", "<cmd>AerialNext<CR>", { buffer = bufnr })
-        end,
-      })
-      -- You probably also want to set a keymap to toggle aerial
-      vim.keymap.set("n", "<leader>a", "<cmd>AerialToggle!<CR>")
 
       -- Make backticks work nicely in insert mode
       vim.keymap.set('i', '`', function()
