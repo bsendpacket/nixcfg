@@ -169,6 +169,7 @@ in {
           { on = [ "'" "4" "j" ]; run = "shell --interactive --orphan 'jadx-gui \"$@\"'"; desc = "Launch Jadx-GUI with the selected file"; }
           { on = [ "'" "4" "g" ]; run = "shell --confirm 'GoReSym $@ | dump $@_info/goresym'"; desc = "Run GoReSym"; }
           { on = [ "'" "4" "w" ]; run = "shell --confirm 'wireshark $@'"; desc = "Run Wireshark"; }
+          { on = [ "'" "4" "c" ]; run = "shell --confirm 'capa -j $@ | dump $@_info/capa'"; desc = "Run Capa"; }
 
         ] ++ (workConfig.programs.yazi.keymap.manager.prepend_keymap or []);
       };

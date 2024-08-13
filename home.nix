@@ -186,6 +186,9 @@ in
       # Android
       apktool
 
+      # Emulation
+      speakeasy
+
       # TODO
       # rustbinsign (+rustup) - This should be possible w/ poetry?
       # IDR
@@ -213,7 +216,6 @@ in
         # Emulation
         unicorn
         capstone
-        speakeasy
 
       ]))
       # qilling
