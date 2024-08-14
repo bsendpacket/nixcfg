@@ -9,6 +9,7 @@
       # Place any values that need to be handled by ~/.zshrc here, if they cannot be defined elsewhere
 
       unset LD_LIBRARY_PATH
+      unset QT_PLUGIN_PATH
 
       export PYENV_ROOT="$HOME/.pyenv"
       export PATH="$PYENV_ROOT/bin:$PATH"
