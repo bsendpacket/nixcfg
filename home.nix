@@ -71,6 +71,9 @@ in
     ./zathura/zathura.nix
     ./rofi/rofi.nix
 
+    ./contour/settings.nix
+    (import ./contour/contour.nix { inherit pkgs colorscheme; })
+
     # Services
     ./picom/picom.nix
   ];
@@ -100,6 +103,8 @@ in
       xorg.setxkbmap
 
       kitty
+      alacritty
+      contour
 
       git
       zsh-fast-syntax-highlighting
