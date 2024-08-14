@@ -6,6 +6,8 @@
 , pnpm
 , makeWrapper
 , esbuild
+, python3
+, nodePackages
 }:
 
 # This derivation was the worst to make so far by a long shot. 
@@ -34,6 +36,8 @@ stdenv.mkDerivation (finalAttrs: {
     nodejs
     pnpm
     makeWrapper
+    python3
+    nodePackages.node-gyp # Required for isolated-vm build
   ];
 
   # We specifically need version 0.21.4 of esbuild
@@ -76,6 +80,11 @@ stdenv.mkDerivation (finalAttrs: {
     # Install packages offline, with a frozen lockfile
     # and specifically with hoisting enabled in order to flatten node-packages
     pnpm install --offline --frozen-lockfile --shamefully-hoist
+
+    # Build isolated-vm
+    pushd node_modules/isolated-vm
+    node-gyp rebuild
+    popd
 
     cd packages/webcrack
     pnpm build
