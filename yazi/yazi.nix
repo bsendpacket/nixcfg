@@ -207,7 +207,7 @@ in {
 
       opener = {
         edit = [
-          { run = "nixGL ${pkgs.kitty}/bin/kitty -e nvim $@"; orphan = true; }
+          { run = "nixGL ${pkgs.contour}/bin/contour nvim $@"; orphan = true; }
         ];
 
         # Open directories with nautilus (backup file manager)
