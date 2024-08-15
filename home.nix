@@ -93,7 +93,7 @@ in
 
       # Nix-specific tools
       nurl
-      nix-init
+      #nix-init
       node2nix
       nuget-to-nix
 
@@ -143,7 +143,6 @@ in
       jq
       yazi
       hexyl
-      ueberzugpp
 
       rofi
       inxi
