@@ -47,6 +47,7 @@
       kitty = "nixGL kitty";
       alacritty = "nixGL alacritty";
       contour = "nixGL contour";
+      netreactorslayer = "${customPackages.net-reactor-slayer}/bin/NETReactorSlayer";
       rbat = "${customPackages.binary-refinery}/bin/bat";
       goresym = "${pkgs.goresym}/bin/GoReSym";
       ilspy = "${pkgs.avalonia-ilspy}/bin/ILSpy";
