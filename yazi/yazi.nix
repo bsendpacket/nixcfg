@@ -52,10 +52,11 @@ in {
       };
 
       # Search with fg / ff (content, fzf)
-      "fg" = pkgs.fetchgit {
-        url = "https://gitee.com/DreamMaoMao/fg.yazi";
-        rev = "bb5832fcc7a20f9011fee86cab91b492ad203dfd";
-        sha256 = "sha256-IHlQSRHwnKxJ/y+bDInXmCImdEHjb1Eq7/cKECbs+oU=";
+      "fg" = pkgs.fetchFromGitHub {
+        owner = "lpnh";
+        repo = "fg.yazi";
+        rev = "a9a79fc2be8622173aaab0daf90c0114d80e8347";
+        hash = "sha256-g4ul6q0EHmBKxXsfMY567E7J5SDuNxZ29goCaTfVLtE=";
       };
 
       # Vim-like relative motions
