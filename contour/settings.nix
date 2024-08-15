@@ -45,6 +45,12 @@ in
         description = "PTY buffer size.";
       };
 
+      spawnNewProcess = mkOption {
+        type = types.bool;
+        default = false;
+        description = "Spawn new process when creating a new terminal";
+      };
+
       profiles = mkOption {
         type = types.attrsOf types.attrs;
         default = {
@@ -358,6 +364,7 @@ in
         renderer = config.programs.contour.renderer;
         word_delimiters = config.programs.contour.wordDelimiters;
         pty_buffer_size = config.programs.contour.ptyBufferSize;
+        spawn_new_process = config.programs.contour.spawnNewProcess;
         profiles = config.programs.contour.profiles;
         color_schemes = config.programs.contour.colorSchemes;
         input_mapping = config.programs.contour.inputMapping;

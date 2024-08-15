@@ -4,6 +4,8 @@
   programs.contour = {
     enable = true;
 
+    spawnNewProcess = true;
+
     profiles = {
       main = {
         escape_sandbox = true;
@@ -16,12 +18,16 @@
         maximized = false;
         wm_class = "contour";
         option_as_alt = false;
-        terminal_id = "VT525";
         slow_scrolling_time = 100;
         highlight_word_and_matches_on_double_click = true;
         draw_bold_text_with_bright_colors = false;
         vi_mode_highlight_timeout = 300;
         vi_mode_scrolloff = 8;
+
+        environment = {
+          TERM = "xterm-256color";
+          COLORTERM = "truecolor";
+        };
 
         bell = {
           sound = "off";
