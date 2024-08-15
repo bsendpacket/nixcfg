@@ -44,7 +44,7 @@ stdenv.mkDerivation rec {
       pushd $subdir
       qmake PREFIX=$out $subdir.pro
       make clean
-      make
+      make -j2
       popd
     done
 
