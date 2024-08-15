@@ -72,7 +72,7 @@ in
     ./rofi/rofi.nix
 
     ./contour/settings.nix
-    (import ./contour/contour.nix { inherit pkgs colorscheme; })
+    (import ./contour/contour.nix { inherit lib pkgs colorscheme; })
 
     # Services
     ./picom/picom.nix
