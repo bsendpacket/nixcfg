@@ -344,6 +344,7 @@ in
           { mods = [ "Shift" ]; key = "F3"; action = "FocusPreviousSearchMatch"; }
         ];
         description = "Input mapping for Contour.";
+        apply = list: concatLists (map toList (toList list));
       };
     };
   };
