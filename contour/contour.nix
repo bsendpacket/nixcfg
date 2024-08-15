@@ -182,7 +182,6 @@
 
     inputMapping = lib.mkOptionDefault [
       { mods = [ "Control" "Shift" ]; key = "C"; action = "CopySelection"; }
-      { mods = [ "Control" "Shift" ]; key = "V"; action = "PasteClipboard"; strip = false; }
     ];
   };
 }
