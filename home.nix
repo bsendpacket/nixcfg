@@ -156,7 +156,10 @@ in
       shared-mime-info
 
       lazygit
+      poetry
       flatpak # TODO: Make declarative
+
+      rustup
 
       ## Malware Analysis
 
