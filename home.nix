@@ -71,6 +71,7 @@ in
     ./zoxide/zoxide.nix
     ./zathura/zathura.nix
     ./rofi/rofi.nix
+    ./malwoverview/malwoverview.nix
 
     ./contour/settings.nix
     (import ./contour/contour.nix { inherit lib pkgs colorscheme; })
@@ -158,6 +159,9 @@ in
       flatpak # TODO: Make declarative
 
       ## Malware Analysis
+
+      # Triage
+      malwoverview
         
       # Binary Analysis
       detect-it-easy
