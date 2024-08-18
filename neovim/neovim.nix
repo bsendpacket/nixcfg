@@ -242,9 +242,9 @@
           };
 
           # CSS LSP
-          cssls = {
-            enable = true;
-          };
+          #cssls = {
+          #  enable = true;
+          #};
 
           # C LSP
           ccls = {
