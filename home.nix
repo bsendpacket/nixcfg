@@ -36,11 +36,11 @@ let
   # Packages to build, as they are not on NixPkgs
   customPackages = {
     jadx = pkgs.callPackage ./jadx/jadx.nix { };
-    de4dot = pkgs.callPackage ./de4dot/de4dot.nix {};
+    de4dot = pkgs.callPackage ./de4dot/de4dot.nix { };
     redress = pkgs.callPackage ./redress/redress.nix { };
     webcrack = pkgs.callPackage ./webcrack/webcrack.nix { };
     detect-it-easy = pkgs.callPackage ./detect-it-easy/detect-it-easy.nix { };
-    net-reactor-slayer = pkgs.callPackage ./net-reactor-slayer/net-reactor-slayer.nix {};
+    net-reactor-slayer = pkgs.callPackage ./net-reactor-slayer/net-reactor-slayer.nix { };
 
     # Python Packages
     capa = pkgs.callPackage ./capa/capa.nix { };
