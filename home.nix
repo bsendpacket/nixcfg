@@ -94,7 +94,7 @@ in
 
       # Nix-specific tools
       nurl
-      #nix-init
+      nix-init
       node2nix
       nuget-to-nix
 
