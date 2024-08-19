@@ -24,6 +24,8 @@ python312Packages.buildPythonPackage {
     (callPackage ../dependencies/ktool.nix {})
     (callPackage ../dependencies/cabarchive.nix {})
     (callPackage ../dependencies/pyonenote.nix {})
+    (callPackage ../dependencies/pyzstd.nix {})
+    (callPackage ../dependencies/pypcapkit.nix {})
 
     python-magic
     distutils
