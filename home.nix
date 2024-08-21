@@ -115,6 +115,9 @@ in
       thefuck
       tealdeer
 
+      man-pages
+      man-pages-posix
+
       _7zz
       (hiPrio bat)
       ouch

@@ -71,7 +71,7 @@
         settings = {
           snippet.expand = ''
           function(args)
-            luasnip.lsp_expand(args.body)
+            require('luasnip').lsp_expand(args.body)
           end
           '';
 
@@ -249,7 +249,7 @@
           # C LSP
           ccls = {
             enable = true;
-            #autostart = true;
+            autostart = true;
             rootDir = ''
               function(fname)
                 return vim.loop.cwd()
@@ -449,7 +449,7 @@
           return 0
         end,
       }
-      require "lsp_signature".setup(signature_cfg)
+      require("lsp_signature").setup(signature_cfg)
 
       -- Make backticks work nicely in insert mode
       vim.keymap.set('i', '`', function()
