@@ -65,6 +65,11 @@
         file = "share/zsh-fzf-history-search/zsh-fzf-history-search.zsh";
       }
       {
+        name = "zsh-autosuggestions";
+        src = pkgs.zsh-autosuggestions;
+        file = "share/zsh-autosuggestions/zsh-autosuggestions.zsh";
+      }
+      {
         name = "powerlevel10k-config";
         src = ./powerlevel10k;
         file = "p10k.zsh";
