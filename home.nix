@@ -161,6 +161,8 @@ in
 
       rustup
 
+      sqlitebrowser
+
       ## Malware Analysis
 
       # Triage

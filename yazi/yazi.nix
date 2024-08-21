@@ -230,11 +230,13 @@ in {
                    ef $@ [| pemeta -DNSTV | dump $@_info/pemeta ];
                    ef $@ [| vsect [| dump $@_info/sections/{path} ]];
                    ef $@ [| perc [| dump $@_info/resources/{path} ]];
+                   strings $@ | dump $@_info/strings;
                    diec -dbru $@ | dump $@_info/peinfo"; }
         ];
 
         triage_elf = [
           { run = "ef $@ [| vsect [| dump $@_info/sections/{path} ]];
+                   strings $@ | dump $@_info/strings;
                    diec -dbru $@ | dump $@_info/elfinfo"; }
         ];
 
@@ -244,6 +246,7 @@ in {
                    ef $@ [| machometa | dump $@_info/machometa ];
                    ef $@ [| vsect [| dump $@_info/sections/{path} ]];
                    ef $@ [| xtmacho [| dump $@_info/executables/{path} ]];
+                   strings $@ | dump $@_info/strings;
                    diec -dbru $@ | dump $@_info/machoinfo"; }
         ];
       };
