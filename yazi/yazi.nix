@@ -257,7 +257,7 @@ in {
           { mime = "application/json"; use = [ "json" ]; }
 
           { mime = "application/vnd.microsoft.portable-executable"; use = [ "triage_pe" ]; }
-          { mime = "application/x-msi; charset=binary"; use = [ "triage_pe" ]; }
+          { mime = "application/x-msi"; use = [ "triage_pe" ]; }
 
           { mime = "application/x-executable"; use = [ "triage_elf" ]; }
           { mime = "application/x-pie-executable"; use = [ "triage_elf" ]; }
