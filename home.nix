@@ -252,9 +252,11 @@ in
       # Containers
       dive
       distrobox
-      podman
-      podman-tui
-      podman-compose
+
+      # podman is broken on nix at the moment, if not on NixOS
+      # podman
+      # podman-tui
+      # podman-compose
 
       # Fonts
       (nerdfonts.override { fonts = [ "CascadiaCode" ]; })
