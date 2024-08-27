@@ -220,6 +220,9 @@ in
         setuptools
         wheel
 
+        # Regex
+        exrex
+
         # Networking
         requests
         flask
