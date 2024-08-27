@@ -227,7 +227,7 @@ in {
         triage_pe = [
           { run = "ef $@ [| pemeta -cI | dump $@_info/imports ];
                    ef $@ [| pemeta -cE | dump $@_info/exports ];
-                   ef $@ [| pemeta -DNSTV | dump $@_info/pemeta ];
+                   ef $@ [| pemeta -DNSTVH | dump $@_info/pemeta ];
                    ef $@ [| vsect [| dump $@_info/sections/{path} ]];
                    ef $@ [| perc [| dump $@_info/resources/{path} ]];
                    strings $@ | dump $@_info/strings;
