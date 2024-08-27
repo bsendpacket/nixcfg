@@ -234,6 +234,16 @@ in {
                    diec -dbru $@ | dump $@_info/peinfo"; }
         ];
 
+        triage_msi = [
+          { run = "ef $@ [| xtmsi [| dump $@_info/extracted/{path} ]]
+                   strings $@ | dump $@_info/strings;
+                   diec -dbru $@ | dump $@_info/msiinfo"; }
+        ];
+
+        triage_cab = [
+          { run = "ef $@ [| xtcab [| dump $@_extracted/{path} ]]"; }
+        ];
+
         triage_elf = [
           { run = "ef $@ [| vsect [| dump $@_info/sections/{path} ]];
                    strings $@ | dump $@_info/strings;
@@ -257,7 +267,8 @@ in {
           { mime = "application/json"; use = [ "json" ]; }
 
           { mime = "application/vnd.microsoft.portable-executable"; use = [ "triage_pe" ]; }
-          { mime = "application/x-msi"; use = [ "triage_pe" ]; }
+          { mime = "application/x-msi"; use = [ "triage_msi" ]; }
+          { mime = "application/vnd.ms-cab-compressed"; use = [ "triage_cab" ]; }
 
           { mime = "application/x-executable"; use = [ "triage_elf" ]; }
           { mime = "application/x-pie-executable"; use = [ "triage_elf" ]; }
