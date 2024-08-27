@@ -1,4 +1,4 @@
-{ pkgs, customPackages, ... }: {
+{ pkgs, customPackages, workConfig, ... }: {
 
   programs.zsh = {
     enable = true;
@@ -51,7 +51,7 @@
       rbat = "${customPackages.binary-refinery}/bin/bat";
       goresym = "${pkgs.goresym}/bin/GoReSym";
       ilspy = "${pkgs.avalonia-ilspy}/bin/ILSpy";
-    };
+    } // (workConfig.programs.zsh.shellAliases or {});
 
     plugins = [
       {
@@ -63,11 +63,6 @@
         name = "zsh-fzf-history-search";
         src = pkgs.zsh-fzf-history-search;
         file = "share/zsh-fzf-history-search/zsh-fzf-history-search.zsh";
-      }
-      {
-        name = "zsh-autosuggestions";
-        src = pkgs.zsh-autosuggestions;
-        file = "share/zsh-autosuggestions/zsh-autosuggestions.zsh";
       }
       {
         name = "powerlevel10k-config";

@@ -44,6 +44,8 @@ python312Packages.buildPythonPackage {
     pillow
     angr
     unicorn
+    intervaltree
+    capstone
   ];
 
   # Disable tests for now
