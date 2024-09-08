@@ -139,7 +139,7 @@
       lualine = {
         enable = true;
 
-        sections.lualine_x = [
+        settings.sections.lualine_x = [
           {
             name.__raw = ''
             function()
