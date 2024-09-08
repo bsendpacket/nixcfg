@@ -1,0 +1,8 @@
+{
+	"rendering.strings.maxAnnotationLength" : 64,
+	"ui.featureMap.location" : "top",
+	"ui.font.app.size" : 11,
+	"ui.font.view.size" : 11,
+	"ui.theme.name" : "Magic Darkest",
+	"ui.view.symbols.showImports" : false
+}

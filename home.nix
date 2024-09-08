@@ -33,6 +33,9 @@ let
     };
   };
 
+  binaryNinjaURL = import ./binary-ninja/binary-ninja-url.nix;
+  binaryNinjaConfig = import ./binary-ninja/config.nix { inherit pkgs; };
+
   # Packages to build, as they are not on NixPkgs
   customPackages = {
     jadx = pkgs.callPackage ./jadx/jadx.nix { };
@@ -48,6 +51,12 @@ let
     binary-refinery = pkgs.callPackage ./binary-refinery/binary-refinery.nix { };
     donut-decryptor = pkgs.callPackage ./donut-decryptor/donut-decryptor.nix { };
     dncil = pkgs.callPackage ./dependencies/dncil.nix { };
+
+    binary-ninja = pkgs.callPackage ./binary-ninja/binary-ninja.nix { 
+      binaryNinjaUrl = binaryNinjaURL.binaryNinjaUrl;
+      binaryNinjaHash = binaryNinjaURL.binaryNinjaHash;
+      pythonEnv = binaryNinjaConfig.pythonEnv;
+    };
   };
 
   # Work-specific
@@ -78,6 +87,8 @@ in
 
     # Services
     ./picom/picom.nix
+
+    binaryNinjaConfig.binaryNinjaConfig
   ];
 
   home = {
@@ -173,6 +184,7 @@ in
         
       # Binary Analysis
       detect-it-easy
+      binary-ninja
       flare-floss
       imhex
       capa
