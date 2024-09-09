@@ -12,33 +12,27 @@ buildDotnetModule {
   };
 
   projectFile = "NETReactorSlayer.CLI/NETReactorSlayer.CLI.csproj";
-
   nugetDeps = ./deps.nix;
   buildType = "Release";
   selfContainedBuild = true;
-
-  executables = [ "NETReactorSlayer.CLI" ];
   runtimeIds = [ "linux-x64" ];
 
-  dotnetFlags = [
-    "/p:TargetFramework=netcoreapp3.1"
-    "/p:RuntimeIdentifier=linux-x64"
-    "/p:IncludeNativeLibrariesForSelfExtract=true"
-    "/p:PublishTrimmed=true"
-    "/p:PublishSingleFile=true"
-  ];
+  dotnet-sdk = dotnetCorePackages.sdk_6_0;
+  dotnet-runtime = dotnetCorePackages.runtime_6_0;
 
-  buildPhase = ''
-    runHook preBuild
-    dotnet publish --no-restore -c Release $dotnetFlags $projectFile
-    runHook postBuild
-  '';
+  dotnetInstallFlags = [
+    "-p:TargetFramework=net6.0"
+    "-p:RuntimeIdentifier=linux-x64"
+    "-p:IncludeNativeLibrariesForSelfExtract=true"
+    "-p:PublishTrimmed=true"
+    "-p:PublishSingleFile=true"
+  ];
 
   installPhase = ''
     runHook preInstall
     mkdir -p $out/bin
     mkdir -p $out/lib/NETReactorSlayer
-    cp bin/Release/netcoreapp3.1/linux-x64/publish/NETReactorSlayer.CLI $out/lib/NETReactorSlayer/
+    cp -r ./bin/Release/net6.0/linux-x64/* $out/lib/NETReactorSlayer/
     runHook postInstall
   '';
 
