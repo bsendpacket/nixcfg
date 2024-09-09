@@ -230,6 +230,7 @@ in {
                    ef $@ [| pemeta -DNSTVH | dump $@_info/pemeta ];
                    ef $@ [| vsect [| dump $@_info/sections/{path} ]];
                    ef $@ [| perc [| dump $@_info/resources/{path} ]];
+                   ef $@ [| peoverlay [| dump $@_info/peoverlay ]];
                    strings $@ | dump $@_info/strings;
                    diec -dbru $@ | dump $@_info/peinfo"; }
         ];
