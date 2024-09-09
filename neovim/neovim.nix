@@ -266,7 +266,7 @@
       };
 
       # LSP Additions to rust_analyzer
-      rustaceanvim.enable = true;
+      #rustaceanvim.enable = true;
 
       # Highlight, edit, and navigate code
       treesitter = {
