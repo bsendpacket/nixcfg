@@ -141,22 +141,21 @@
 
         settings.sections.lualine_x = [
           {
-            name.__raw = ''
-            function()
-              local mode = require('noice').api.statusline.mode
-              if mode.has() then
-                local content = mode.get()
-                if string.match(content, "^recording @%w$") then
-                  return content
+            __raw = ''
+            {
+              function()
+                local mode = require('noice').api.statusline.mode
+                if mode.has() then
+                  local content = mode.get()
+                  if string.match(content, "^recording @%w$") then
+                    return content
+                  end
                 end
-              end
-              return ""
-            end
+                return ""
+              end,
+              color = { fg = "#ff9e64" }
+            }
             '';
-
-            color = {
-              fg = "#ff9e64";
-            };
           }
         ];
       };
