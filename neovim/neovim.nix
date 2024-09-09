@@ -238,6 +238,11 @@
           # Python LSP
           pyright = {
             enable = true;
+            rootDir = ''
+              function(fname)
+                return vim.loop.cwd()
+              end
+            '';
           };
 
           # CSS LSP
