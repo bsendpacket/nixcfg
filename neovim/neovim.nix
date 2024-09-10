@@ -413,6 +413,17 @@
           };
         });
       }
+      {
+        plugin = (pkgs.vimUtils.buildVimPlugin {
+          name = "vim-syntax-yara";
+          src = pkgs.fetchFromGitHub {
+            owner = "s3rvac";
+            repo = "vim-syntax-yara";
+            rev = "7f163d489bb041fe74f8788662620a0bcd3c0025";
+            hash = "sha256-TEo9TV2Iexki0n1ME2ywLvkqpnq5ZosWc8di0/VNYIA=";
+          };
+        });
+      }
       
       # Detect tabstop and shiftwidth automatically
       pkgs.vimPlugins.vim-sleuth
