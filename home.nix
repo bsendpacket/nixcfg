@@ -203,7 +203,7 @@ in
       webcrack
 
       # Java
-      jadx
+      #jadx
 
       # .NET
       avalonia-ilspy
