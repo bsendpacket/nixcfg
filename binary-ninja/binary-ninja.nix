@@ -48,7 +48,7 @@ let
       xorg.libXi
       dbus
       
-      # Not sure if this actually works on Wayland currently, as I use X11 and haven't'
+      # Not sure if this actually works on Wayland currently
       wayland 
       qt6.qtbase
       qt6.qtsvg
