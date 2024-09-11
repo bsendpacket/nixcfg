@@ -256,6 +256,14 @@
   "org/gradle/kotlin/kotlin-dsl#org.gradle.kotlin.kotlin-dsl.gradle.plugin/4.5.0": {
    "pom": "sha256-WPAIDJzwTgVq1U0Ok91KI0KGXnihMR6TVAVk90wgDjc="
   },
+  "org/gradle/kotlin/kotlin-dsl#org.gradle.kotlin.kotlin-dsl.gradle.plugin/4.3.1": {
+   "pom": "sha256-Oispc8Afy2j0kx8ZbNeLAzctoWrBYmqOPWMYVkNqlOc="
+  },
+  "org/gradle/kotlin#gradle-kotlin-dsl-plugins/4.3.1": {
+   "jar": "sha256-j8X5xgrEWoeaQXdoEbWf0s5cWtXkJW8S18i+rFCkHcg=",
+   "module": "sha256-k+eJyXjl4QG8QXfLsnmFQSvMtpNtsA7MQeYoG4QD/F4=",
+   "pom": "sha256-Fr3gZfWofPRP3FD5xbYNMS9xOgwbyq4AixJItHhojAo="
+  },
   "org/jdom#jdom2/2.0.6.1": {
    "jar": "sha256-CyD0XjoP2PDRLNxTFrBndukCsTZdsAEYh2+RdcYPMCw=",
    "pom": "sha256-VXleEBi4rmR7k3lnz4EKmbCFgsI3TnhzwShzTIyRS/M="
@@ -280,9 +288,20 @@
    "jar": "sha256-4z5UUlSR0ZgdRODKmnxTIWh91QRDPsVJZhqb5UYKEW4=",
    "pom": "sha256-6QmjYHLn/lbQULgKdXEDwdP4dz+2wb0GcrxKr7hRCEs="
   },
+  "org/jetbrains/kotlin#kotlin-assignment-compiler-plugin-embeddable/1.9.22": {
+   "jar": "sha256-KmHdIZ/tvlMYo7HiPA9zm0XtG1sksLZzdRm3hF6Alfg=",
+   "pom": "sha256-nbJr6D8/Y8Uf972pHjpqQNTDTaAj5ilsAQW7SqZvzJI="
+  },
   "org/jetbrains/kotlin#kotlin-assignment-compiler-plugin-embeddable/1.9.24": {
    "jar": "sha256-AoVjJSRkxIYBkX8rbFTRuOQhzcfya/L5zzCIlcgSSgY=",
    "pom": "sha256-Hzfc9EhcI3qtLk70O40RQJleMTKduiTJ9qa3uEBrg9Q="
+  },
+  "org/jetbrains/kotlin#kotlin-assignment/1.9.22": {
+   "module": "sha256-bxIe+E4ozzMG/eTDHVXC2D14RPJLDnslZfh7Apn7sx0=",
+   "pom": "sha256-9kQYoM3bm9hQ96/CasjyPon7ptlgSNqnNZVWJ5AgbwA="
+  },
+  "org/jetbrains/kotlin#kotlin-assignment/1.9.22/gradle82": {
+   "jar": "sha256-SbgHX6DiGLoRuhim9yUE38XwOZQovs8Ta9yHHceBgMU="
   },
   "org/jetbrains/kotlin#kotlin-assignment/1.9.24": {
    "module": "sha256-qa+tevGbZXAv892pBdPJt/mem9rqadY1+s2f3mi7VQU=",
@@ -506,6 +525,17 @@
   "org/jetbrains/kotlin#kotlin-reflect/1.9.24": {
    "jar": "sha256-plFmRFu4XvgWzeEnJ5/gAX0rfMQ5s7lyOQ4bc21k6Uw=",
    "pom": "sha256-CghcMAUb1tSrdlrVoMUXnEE7NfdBjyiDFy+9m6GrzMk="
+  },
+  "org/jetbrains/kotlin#kotlin-sam-with-receiver-compiler-plugin-embeddable/1.9.22": {
+   "jar": "sha256-jqUUoRQABsxXoHMVsVoTaI7W/qFwfzrJjpzoCVu2z38=",
+   "pom": "sha256-MM9L0JPCbn/Ryt/F1Qop5q60WXUSeia84rEJUfJPgqo="
+  },
+  "org/jetbrains/kotlin#kotlin-sam-with-receiver/1.9.22": {
+   "module": "sha256-7rpm+YBjiXkSCkm5/aW4YeEHLWCQIzi1NyYH8kljDC0=",
+   "pom": "sha256-AD+clOG/rX8ZDm70F+kTOhCjH3hRMBPlkHS2DzZZLCY="
+  },
+  "org/jetbrains/kotlin#kotlin-sam-with-receiver/1.9.22/gradle82": {
+   "jar": "sha256-cvvN3L25ZaQ9uWfLKjGaXXp3NttQrCA8lrmatVc5wkE="
   },
   "org/jetbrains/kotlin#kotlin-sam-with-receiver-compiler-plugin-embeddable/1.9.24": {
    "jar": "sha256-mbinMB9ylR2d5sJW1cBSMowL/zndEm7/tQ/nhkq3CWM=",
