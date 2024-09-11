@@ -38,6 +38,7 @@ let
 
   # Packages to build, as they are not on NixPkgs
   customPackages = {
+    jadx = pkgs.callPackage ./jadx/default.nix { };
     de4dot = pkgs.callPackage ./de4dot/de4dot.nix { };
     redress = pkgs.callPackage ./redress/redress.nix { };
     webcrack = pkgs.callPackage ./webcrack/webcrack.nix { };
@@ -204,7 +205,7 @@ in
       webcrack
 
       # Java
-      #jadx
+      jadx
 
       # .NET
       avalonia-ilspy
