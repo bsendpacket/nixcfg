@@ -192,8 +192,10 @@ in
       flare-floss
       imhex
       capa
-      yara
       upx
+
+      yara-x
+      yaralyzer
 
       # Family-Specific
       donut-decryptor
