@@ -173,6 +173,8 @@ in {
           { on = [ "'" "4" "c" ]; run = "shell --confirm 'capa -j $@ | dump $@_info/capa'"; desc = "Run Capa"; }
           { on = [ "'" "4" "f" ]; run = "shell --confirm 'floss -j $@ | dump $@_info/floss'"; desc = "Run Floss"; }
           { on = [ "'" "4" "d" "d" ]; run = "shell --confirm 'ilspycmd -p -d -usepdb --no-dead-code --no-dead-stores -o $@_info/decompiled/ $@'"; desc = "[D]otNet [D]ecompile"; }
+          { on = [ "'" "4" "h" ]; run = "shell --confirm --orphan 'nixGL imhex $@'"; desc = "Open in ImHex"; }
+
 
         ] ++ (workConfig.programs.yazi.keymap.manager.prepend_keymap or []);
       };
