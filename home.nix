@@ -72,6 +72,7 @@ in
     (import ./i3/i3.nix { inherit pkgs config lib homeDirectory shell; })
 
     # Terminal Setup 
+    (import ./tmux/tmux.nix { inherit pkgs; })
     (import ./kitty/kitty.nix { inherit pkgs colorscheme; })
     (import ./alacritty/alacritty.nix { inherit pkgs colorscheme; })
     (import ./yazi/yazi.nix { inherit pkgs colorscheme workConfig; })
@@ -119,6 +120,8 @@ in
       kitty
       alacritty
       contour
+
+      tmux
 
       git
       zsh-fast-syntax-highlighting
