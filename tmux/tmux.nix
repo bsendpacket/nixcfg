@@ -4,7 +4,15 @@
     enable = true;
 
     shell = "${pkgs.zsh}/bin/zsh";
+
+    mouse = true;
     keyMode = "vi";
+
+    baseIndex = 1;
+
+    historyLimit = 5000;
+
+    resizeAmount = 10;
     customPaneNavigationAndResize = true;
 
     extraConfig = ''
@@ -16,9 +24,6 @@
 
       # Toggle status bar with C-b Space
       bind Space set-option status
-
-      # Start from 1 instead of 0
-      set-option -g base-index 1
 
       set -g status-style bg=default
       set -g default-terminal "tmux-256color"
