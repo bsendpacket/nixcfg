@@ -12,7 +12,7 @@ in {
         defaultWorkspace = "workspace number 1";
 
         #terminal = "${homeDirectory}/.nix-profile/bin/nixGL ${pkgs.contour}/bin/contour";
-        terminal = "${homeDirectory}/.nix-profile/bin/nixGL ${pkgs.contour}/bin/contour";
+        terminal = "${homeDirectory}/.nix-profile/bin/nixGL ${pkgs.contour}/bin/contour ${pkgs.tmux}/bin/tmux";
         bars = [{ 
           command = "${pkgs.i3}/bin/i3bar";
           statusCommand = "${pkgs.i3status-rust}/bin/i3status-rs ${config.xdg.configHome}/i3status-rust/config-i3bar.toml";
