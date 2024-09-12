@@ -4,6 +4,7 @@
 	"ui.files.detection.database" : "always",
 	"ui.font.app.size" : 11,
 	"ui.font.view.size" : 11,
+	"ui.font.view.name" : "CaskaydiaCove Nerd Font Mono",
 	"ui.theme.name" : "Magic Darkest",
 	"ui.view.symbols.showImports" : false,
 	"ui.view.symbols.showFoldersFirst" : true
