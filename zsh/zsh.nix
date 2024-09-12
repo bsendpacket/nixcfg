@@ -44,6 +44,7 @@
       lla = "ls -la";   # List Files (+ Hidden)
       lt = "ls --tree"; # List Files (Tree)
       y = "yy";         # Yazi
+      yara = "${pkgs.yara-x}/bin/yr";
       kitty = "nixGL kitty";
       alacritty = "nixGL alacritty";
       contour = "nixGL contour";
