@@ -1,4 +1,4 @@
-{ pkgs, colorscheme, workConfig, ... }: 
+{ pkgs, config, colorscheme, workConfig, ... }: 
 let
   # To get a SHA-256 for a GitHub repo:
   # Use nurl <url>
@@ -157,6 +157,7 @@ in {
           # Copy
           { on = [ "c" "h" ]; run = "shell --confirm 'ef \"$@\" [| cfmt \"{sha256}  {path}\n\" ]| xsel -psb'"; desc = "Copy SHA256 and filename of selected files"; }
           { on = [ "c" "H" ]; run = "shell --confirm 'ef \"$@\" [| cfmt \"{sha256}\n\" ]| xsel -psb'"; desc = "Copy SHA256 of selected files"; }
+          { on = [ "c" "p" ]; run = "shell --confirm 'echo $PWD | xsel -psb'"; desc = "Copy the current folder path"; }
           # ' - Common Aliases
           # 1 - Reserved
           # 2 - Reserved
@@ -174,6 +175,8 @@ in {
           { on = [ "'" "4" "f" ]; run = "shell --confirm 'floss -j $@ | dump $@_info/floss'"; desc = "Run Floss"; }
           { on = [ "'" "4" "d" "d" ]; run = "shell --confirm 'ilspycmd -p -d -usepdb --no-dead-code --no-dead-stores -o $@_info/decompiled/ $@'"; desc = "[D]otNet [D]ecompile"; }
           { on = [ "'" "4" "h" ]; run = "shell --confirm --orphan 'nixGL imhex $@'"; desc = "Open in ImHex"; }
+
+          { on = [ "'" "9" "y" ]; run = "shell --confirm 'cp ${config.xdg.configHome}/home-manager/yara/skeleton.yara .'"; }
 
 
         ] ++ (workConfig.programs.yazi.keymap.manager.prepend_keymap or []);

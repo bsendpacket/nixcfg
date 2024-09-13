@@ -75,7 +75,7 @@ in
     (import ./tmux/tmux.nix { inherit pkgs; })
     (import ./kitty/kitty.nix { inherit pkgs colorscheme; })
     (import ./alacritty/alacritty.nix { inherit pkgs colorscheme; })
-    (import ./yazi/yazi.nix { inherit pkgs colorscheme workConfig; })
+    (import ./yazi/yazi.nix { inherit pkgs config colorscheme workConfig; })
     (import ./zsh/zsh.nix { inherit pkgs customPackages workConfig; })
     (import ./neovim/neovim.nix { inherit pkgs homeDirectory; })
     ./git/git.nix
