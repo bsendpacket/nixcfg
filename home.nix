@@ -177,6 +177,7 @@ in
       poetry
       flatpak # TODO: Make declarative
 
+      zig
       rustup
 
       sqlitebrowser
