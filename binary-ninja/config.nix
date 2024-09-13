@@ -4,6 +4,7 @@ let
     requests
     lxml
     httpx
+    flatbuffers
     (callPackage ../dependencies/mkyara.nix {})
   ]); 
   fetchBinaryNinjaPlugin = { owner, repo, rev ? "main", name, sha256, folder ? "" }: 
@@ -77,6 +78,17 @@ let
       name = "binja_doc_lookup";
       folder = "binja_doc_lookup";
     })
+
+    # Create and load .sig files
+    (fetchBinaryNinjaPlugin {
+      owner = "Vector35";
+      repo = "sigkit";
+      rev = "a7420964415a875a1e6181ecdc603cfc29e34058";
+      sha256 = "sha256-A7EcsOpnYL6SNJJhCL+tITGmxyHgI6MjGRbosmJHt9w=";
+      name = "sigkit";
+      folder = "sigkit";
+    })
+
   ];
   binaryNinjaConfigFiles = pkgs.stdenv.mkDerivation {
     name = "binary-ninja-config-files";
