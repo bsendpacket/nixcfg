@@ -142,6 +142,9 @@ in
       neofetch
       glow
 
+      # RSS
+      nom
+
       # Web
       firefox
       
@@ -153,6 +156,7 @@ in
       xsel
       xdragon
       jless
+      p7zip
 
       lsd
       zoxide
@@ -169,6 +173,7 @@ in
       ffmpegthumbnailer
       mediainfo
       unar
+      file
       poppler
 
       shared-mime-info
@@ -254,6 +259,7 @@ in
         # Binary Analysis
         binary-refinery
         construct
+        frida-python
 
         # .NET
         dnfile
