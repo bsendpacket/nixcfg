@@ -267,6 +267,17 @@
             #autostart = true;
           };
 
+          # Typescript LSP
+          tsserver = {
+            enable = true;
+            autostart = true;
+            rootDir = ''
+              function(fname)
+                return vim.loop.cwd()
+              end
+            '';
+          };
+
           # Zig LSP
           zls = {
             enable = true;
