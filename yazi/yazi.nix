@@ -166,6 +166,7 @@ in {
           # Compression
           { on = [ "'" "3" "c" ]; run = "shell --interactive --block '7z a -pinfected -mhe=on \"$@\".7z \"$@\"'"; desc = "Compress folder with password=infected"; }
           { on = [ "'" "3" "e" ]; run = "shell --interactive --block '7z x \"$@\" -pinfected'";                   desc = "Extract with password=infected";         }
+          { on = [ "'" "3" "r" ]; run = "shell --interactive --block 'unar $@'"; desc = "Decompress with unar"; }
 
           # 4 - Tools
           { on = [ "'" "4" "j" ]; run = "shell --interactive --orphan 'jadx-gui \"$@\"'"; desc = "Launch Jadx-GUI with the selected file"; }
@@ -217,7 +218,7 @@ in {
 
       opener = {
         edit = [
-          { run = "nixGL ${pkgs.contour}/bin/contour nvim $@"; orphan = true; }
+          { run = "nixGL ${pkgs.contour}/bin/contour nvim \"$@\""; orphan = true; }
         ];
 
         # Open directories with nautilus (backup file manager)
@@ -267,6 +268,10 @@ in {
                    strings $@ | dump $@_info/strings;
                    diec -dbru $@ | dump $@_info/machoinfo"; }
         ];
+
+        extract_rar = [
+          { run = "unar $@"; }
+        ];
       };
 
       open = {
@@ -283,6 +288,8 @@ in {
           { mime = "application/x-sharedlib"; use = [ "triage_elf" ]; }
 
           { mime = "application/x-mach-binary"; use = [ "triage_macho" ]; }
+
+          { mime = "application/x-rar"; use = [ "extract_rar" ]; }
         ];
       };
     };

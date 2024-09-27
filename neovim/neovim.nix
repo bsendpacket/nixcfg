@@ -268,7 +268,7 @@
           };
 
           # Typescript LSP
-          tsserver = {
+          ts-ls = {
             enable = true;
             autostart = true;
             rootDir = ''
@@ -377,6 +377,9 @@
           "<leader>fh" = "help_tags";
         };
       };
+
+      # Web devicons, required for Telescope
+      web-devicons.enable = true;
 
       # Show possible next keypress based on currently pressed key
       which-key.enable = true; 
