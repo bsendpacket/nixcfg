@@ -42,6 +42,7 @@ let
     de4dot = pkgs.callPackage ./de4dot/de4dot.nix { };
     redress = pkgs.callPackage ./redress/redress.nix { };
     webcrack = pkgs.callPackage ./webcrack/webcrack.nix { };
+    frida-tools = pkgs.callPackage ./dependencies/frida-tools.nix { };
     decompylepp = pkgs.callPackage ./decompylepp/decompylepp.nix { };
     detect-it-easy = pkgs.callPackage ./detect-it-easy/detect-it-easy.nix { };
     net-reactor-slayer = pkgs.callPackage ./net-reactor-slayer/net-reactor-slayer.nix { };
@@ -71,6 +72,9 @@ in
     # Window Manager
     (import ./i3/i3.nix { inherit pkgs config lib homeDirectory shell; })
 
+    # Git
+    (import (if builtins.pathExists ./work/git/git.nix then ./work/git/git.nix else ./git/git.nix))
+
     # Terminal Setup 
     (import ./tmux/tmux.nix { inherit pkgs; })
     (import ./kitty/kitty.nix { inherit pkgs colorscheme; })
@@ -78,7 +82,6 @@ in
     (import ./yazi/yazi.nix { inherit pkgs config colorscheme workConfig; })
     (import ./zsh/zsh.nix { inherit pkgs customPackages workConfig; })
     (import ./neovim/neovim.nix { inherit pkgs homeDirectory; })
-    ./git/git.nix
     ./zoxide/zoxide.nix
     ./zathura/zathura.nix
     ./rofi/rofi.nix
@@ -157,6 +160,7 @@ in
       xdragon
       jless
       p7zip
+      unar
 
       lsd
       zoxide
@@ -172,6 +176,7 @@ in
 
       ffmpegthumbnailer
       mediainfo
+      exiftool
       unar
       file
       poppler
@@ -195,6 +200,7 @@ in
       # Binary Analysis
       detect-it-easy
       binary-ninja
+      frida-tools
       flare-floss
       imhex
       capa
@@ -258,8 +264,8 @@ in
 
         # Binary Analysis
         binary-refinery
-        construct
         frida-python
+        construct
 
         # .NET
         dnfile
