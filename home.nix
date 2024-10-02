@@ -14,19 +14,45 @@ let
 
   colorscheme = import ./colorscheme.nix;
 
-  # Force protobuf5 over protobuf4
-  # The NixPkg for angr uses protobuf4, although it works with protobuf5
-  # By forcing protobuf5 here, conflicts of multiple versions existing is prevented
-  protobufOverlay = self: super: {
+  # Force the same interpreter version
+  # Allows Python packages from stable to be used on unstable
+  pythonInterpreterOverlay = self: super: {
+    python312 = pkgs.python312;
+  };
+
+  stablePkgs = import <nixpkgs-stable> { 
+    overlays = [ pythonInterpreterOverlay ];
+  };
+
+  # Fix Python package issues
+  pythonOverlay = self: super: {
     python312Packages = super.python312Packages.override {
       overrides = pythonSelf: pythonSuper: {
+
+        # The NixPkg for angr uses protobuf4, although it works with protobuf5
+        # By forcing protobuf5 here, conflicts of multiple versions existing is prevented
         protobuf = pythonSuper.protobuf5;
+
+        # Stable unicorn is required for angr at the moment
+        unicorn = stablePkgs.python312Packages.unicorn;
+
+        # Suppress broken state
+        angr = pythonSuper.angr.overrideAttrs (oldAttrs: {
+          meta = oldAttrs.meta // {
+            broken = false;
+          };
+        });
       };
     };
   };
 
+  # Some packages are broken in unstable, use the stable versions instead
+  stableOverlay = self: super: {
+    contour = stablePkgs.contour;
+  };
+
   pkgs = import <nixpkgs> {
-    overlays = [ protobufOverlay ];
+    overlays = [ pythonOverlay stableOverlay ];
     config = {
       allowUnfree = true;
       allowUnfreePredicate = _: true;
@@ -38,7 +64,7 @@ let
 
   # Packages to build, as they are not on NixPkgs
   customPackages = {
-    jadx = pkgs.callPackage ./jadx/default.nix { };
+    #jadx = pkgs.callPackage ./jadx/default.nix { };
     de4dot = pkgs.callPackage ./de4dot/de4dot.nix { };
     redress = pkgs.callPackage ./redress/redress.nix { };
     webcrack = pkgs.callPackage ./webcrack/webcrack.nix { };
@@ -66,6 +92,9 @@ let
   workConfig = fileExists ./work/work.nix;
 in
 {
+  # Apply overlays globally
+  nixpkgs.overlays = pkgs.overlays;
+
   imports = [
     nixvim.homeManagerModules.nixvim
 
@@ -82,13 +111,14 @@ in
     (import ./yazi/yazi.nix { inherit pkgs config colorscheme workConfig; })
     (import ./zsh/zsh.nix { inherit pkgs customPackages workConfig; })
     (import ./neovim/neovim.nix { inherit pkgs homeDirectory; })
+    (import ./rofi/rofi.nix { inherit config pkgs; })
+    (import ./contour/settings.nix { inherit config lib pkgs; })
+    (import ./contour/contour.nix { inherit lib pkgs colorscheme; })
+
     ./zoxide/zoxide.nix
     ./zathura/zathura.nix
-    ./rofi/rofi.nix
     ./malwoverview/malwoverview.nix
 
-    ./contour/settings.nix
-    (import ./contour/contour.nix { inherit lib pkgs colorscheme; })
 
     # Services
     ./picom/picom.nix
@@ -122,8 +152,6 @@ in
 
       kitty
       alacritty
-      contour
-
       tmux
 
       git
@@ -222,7 +250,7 @@ in
       webcrack
 
       # Java
-      jadx
+      #jadx
 
       # .NET
       avalonia-ilspy
