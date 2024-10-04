@@ -1,9 +1,9 @@
 { pkgs }:
 let
   pythonWithPackages = pkgs.python312.withPackages (ps: with ps; [
-    requests
     lxml
     httpx
+    requests
     flatbuffers
     (callPackage ../dependencies/mkyara.nix {})
     (callPackage ../binary-refinery/binary-refinery.nix {})
@@ -25,8 +25,8 @@ let
     (fetchBinaryNinjaPlugin {
       owner = "cxiao";
       repo = "hashdb_bn";
-      rev = "b257b83d806b856029ae0452e303d5a8cac03682";
-      sha256 = "sha256-squ8PAD43uM4u9CulIalzONIEMqSBkz43u9CTWeL8Wc=";
+      rev = "cc5ef77c78b929aeee13ae0fcb02d0db2218fe62";
+      sha256 = "sha256-MgMICkc3c1ynINZOQB7WUvkr/1B5RQTaVTM3xpKb5+s=";
       name = "hashdb";
       folder = "hashdb";
     })
@@ -97,6 +97,16 @@ let
       sha256 = "sha256-A7EcsOpnYL6SNJJhCL+tITGmxyHgI6MjGRbosmJHt9w=";
       name = "sigkit";
       folder = "sigkit";
+    })
+
+    # Apply COM interface information
+    (fetchBinaryNinjaPlugin {
+      owner = "Vector35";
+      repo = "COMpanion";
+      rev = "32dfb4c71bbd5ee998831b224b8506d0643dba24";
+      sha256 = "sha256-FX1gGLvGHpPVz230I06S1goWiFQhqR8UV0p4GAkqOPE=";
+      name = "COMpanion";
+      folder = "COMpanion";
     })
 
   ];
