@@ -1,4 +1,4 @@
-{ pkgs, customPackages, workConfig, ... }: {
+{ lib, pkgs, customPackages, workConfig, ... }: {
 
   programs.zsh = {
     enable = true;
@@ -35,7 +35,12 @@
       EOF
     '';
 
-    shellAliases = {
+    shellAliases = (
+      if builtins.pathExists "/etc/NIXOS" then {
+        # NixOS Specific
+        nixGL = "";       # No-op nixGL on NixOS systems
+      } else {}
+    ) // {
       py = "python3";
       ls = "lsd";       # LSDeluxe
       cd = "z";         # Zoxide
