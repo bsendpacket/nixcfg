@@ -16,6 +16,7 @@ let
   # Alternatively, simply leave the sha256 field blank
   # and copy the correct hash during rebuild
 
+  isNixOS = builtins.pathExists "/etc/NIXOS";
 in {
 
   programs.yazi = {
@@ -217,7 +218,9 @@ in {
       };
 
       opener = {
-        edit = [
+        edit = if isNixOS then [
+          { run = "${pkgs.contour}/bin/contour nvim \"$@\""; orphan = true; }
+        ] else [
           { run = "nixGL ${pkgs.contour}/bin/contour nvim \"$@\""; orphan = true; }
         ];
 

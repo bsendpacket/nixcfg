@@ -109,7 +109,7 @@ in
     (import ./kitty/kitty.nix { inherit pkgs colorscheme; })
     (import ./alacritty/alacritty.nix { inherit pkgs colorscheme; })
     (import ./yazi/yazi.nix { inherit pkgs config colorscheme workConfig; })
-    (import ./zsh/zsh.nix { inherit pkgs customPackages workConfig; })
+    (import ./zsh/zsh.nix { inherit lib pkgs customPackages workConfig; })
     (import ./neovim/neovim.nix { inherit pkgs homeDirectory; })
     (import ./rofi/rofi.nix { inherit config pkgs; })
     (import ./contour/settings.nix { inherit config lib pkgs; })
