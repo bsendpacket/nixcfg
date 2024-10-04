@@ -239,13 +239,15 @@ in {
                    ef $@ [| vsect [| dump $@_info/sections/{path} ]];
                    ef $@ [| perc [| dump $@_info/resources/{path} ]];
                    ef $@ [| peoverlay [| dump $@_info/peoverlay ]];
-                   strings $@ | dump $@_info/strings;
+                   strings --encoding=s $@ | dump $@_info/strings_utf8;
+                   strings --encoding=b $@ | dump $@_info/strings_unicode;
                    diec -dbru $@ | dump $@_info/peinfo"; }
         ];
 
         triage_msi = [
           { run = "ef $@ [| xtmsi [| dump $@_info/extracted/{path} ]]
-                   strings $@ | dump $@_info/strings;
+                   strings --encoding=s $@ | dump $@_info/strings_utf8;
+                   strings --encoding=b $@ | dump $@_info/strings_unicode;
                    diec -dbru $@ | dump $@_info/msiinfo"; }
         ];
 
@@ -255,7 +257,8 @@ in {
 
         triage_elf = [
           { run = "ef $@ [| vsect [| dump $@_info/sections/{path} ]];
-                   strings $@ | dump $@_info/strings;
+                   strings --encoding=s $@ | dump $@_info/strings_utf8;
+                   strings --encoding=b $@ | dump $@_info/strings_unicode;
                    diec -dbru $@ | dump $@_info/elfinfo"; }
         ];
 
@@ -265,7 +268,8 @@ in {
                    ef $@ [| machometa | dump $@_info/machometa ];
                    ef $@ [| vsect [| dump $@_info/sections/{path} ]];
                    ef $@ [| xtmacho [| dump $@_info/executables/{path} ]];
-                   strings $@ | dump $@_info/strings;
+                   strings --encoding=s $@ | dump $@_info/strings_utf8;
+                   strings --encoding=b $@ | dump $@_info/strings_unicode;
                    diec -dbru $@ | dump $@_info/machoinfo"; }
         ];
 
