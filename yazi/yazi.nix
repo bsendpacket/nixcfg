@@ -1,4 +1,4 @@
-{ pkgs, config, colorscheme, workConfig, ... }: 
+{ pkgs, config, colorscheme, workConfig, isNixOS, ... }: 
 let
   # To get a SHA-256 for a GitHub repo:
   # Use nurl <url>
@@ -12,11 +12,8 @@ let
   #   rev = "64daf93a67d75eff871befe52d9013687171ffad";
   #   hash = "sha256-B2L3/Q1g0NOO6XEMIMGBC/wItbNgBVpbaMMhiXOYcrI=";
   # }
-
   # Alternatively, simply leave the sha256 field blank
   # and copy the correct hash during rebuild
-
-  isNixOS = builtins.pathExists "/etc/NIXOS";
 in {
 
   programs.yazi = {
