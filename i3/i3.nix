@@ -1,7 +1,6 @@
-{ pkgs, config, lib, shell, homeDirectory, ... }: 
+{ pkgs, config, lib, shell, homeDirectory, isNixOS, ... }: 
 let 
   modifier = "Mod1";
-  isNixOS = builtins.pathExists "/etc/NIXOS";
 in {
   xsession = {
     windowManager.i3 = {
@@ -83,6 +82,7 @@ in {
 
         exec --no-startup-id dex --autostart --environment i3
         exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+        exec --no-startup-id libinput-gestures
         exec --no-startup-id nm-applet
         exec --no-startup-id vmware-user
         exec --no-startup-id vmware-user-suid-wrapper
@@ -122,6 +122,9 @@ in {
           block = "load";
           format = " $icon $1m ";
           interval = 1;
+        }
+        {
+          block = "battery";
         }
         {
           block = "time";

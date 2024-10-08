@@ -5,6 +5,7 @@
 
     activeOpacity = 0.95;
     inactiveOpacity = 0.8;
+    vSync = true;
 
     opacityRules = [ "100:class_g *?= 'Rofi'" ];
 

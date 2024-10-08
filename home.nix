@@ -7,6 +7,7 @@ let
   username = builtins.getEnv "USER";
   homeDirectory = builtins.getEnv "HOME";
   shell = builtins.getEnv "SHELL";
+  isNixOS = builtins.pathExists "/etc/NIXOS";
 
   nixvim = import (builtins.fetchGit {
     url = "https://github.com/nix-community/nixvim";
@@ -56,6 +57,13 @@ let
     config = {
       allowUnfree = true;
       allowUnfreePredicate = _: true;
+
+      # Add NUR packages
+      packageOverrides = pkgs: {
+        nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
+          inherit pkgs;
+        };
+      };
     };
   };
 
@@ -99,7 +107,7 @@ in
     nixvim.homeManagerModules.nixvim
 
     # Window Manager
-    (import ./i3/i3.nix { inherit pkgs config lib homeDirectory shell; })
+    (import ./i3/i3.nix { inherit pkgs config lib homeDirectory shell isNixOS; })
 
     # Git
     (import (if builtins.pathExists ./work/git/git.nix then ./work/git/git.nix else ./git/git.nix))
@@ -108,7 +116,7 @@ in
     (import ./tmux/tmux.nix { inherit pkgs; })
     (import ./kitty/kitty.nix { inherit pkgs colorscheme; })
     (import ./alacritty/alacritty.nix { inherit pkgs colorscheme; })
-    (import ./yazi/yazi.nix { inherit pkgs config colorscheme workConfig; })
+    (import ./yazi/yazi.nix { inherit pkgs config colorscheme workConfig isNixOS; })
     (import ./zsh/zsh.nix { inherit lib pkgs customPackages workConfig; })
     (import ./neovim/neovim.nix { inherit pkgs homeDirectory; })
     (import ./rofi/rofi.nix { inherit config pkgs; })
@@ -119,11 +127,13 @@ in
     ./zathura/zathura.nix
     ./malwoverview/malwoverview.nix
 
-
     # Services
     ./picom/picom.nix
 
     binaryNinjaConfig.binaryNinjaConfig
+
+    # Program Setup
+    (import ./firefox/firefox.nix { inherit pkgs lib; })
   ];
 
   home = {
@@ -137,6 +147,11 @@ in
 
       # Backup File Manager
       nautilus
+
+      # Touchpad
+      libinput-gestures
+      wmctrl
+      xdotool
 
       # Nix-specific tools
       nurl
@@ -175,11 +190,13 @@ in
       neofetch
       glow
 
+      lxqt.screengrab
+
       # RSS
       nom
 
       # Web
-      firefox
+      #firefox
       
       # Social
       discord
