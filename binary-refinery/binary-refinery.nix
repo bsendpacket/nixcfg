@@ -5,13 +5,13 @@
 
 python312Packages.buildPythonPackage {
   pname = "binary-refinery";
-  version = "0.6.43";
+  version = "0.7.4";
 
   src = fetchFromGitHub {
   owner = "binref";
   repo = "refinery";
-  rev = "a52ae5c66a99a078cc9fa4aee1e2b21ecab61362";
-  hash = "sha256-A3ROEaI/OcPPXkHN/HZtsi0jp5BUQnRerRSo/P1678w=";
+  rev = "79a7d4fbd9dd8f2bfe3575917ffe44a242a552f9";
+  hash = "sha256-Wc702Ovabmb3XYzHMJH3+bsYChgN01IPYJ8mTh+T1ZE=";
   };
 
   nativeBuildInputs = with python312Packages; [
