@@ -61,8 +61,14 @@ in {
           # Floating window toggle
           "${modifier}+Escape" = "scratchpad show";
           "${modifier}+space" = "floating toggle";
+
+          # Laptop function keys
+          "XF86AudioMute" = "exec pamixer -t";
+          "XF86AudioLowerVolume" = "exec pamixer --decrease 5";
+          "XF86AudioRaiseVolume" = "exec pamixer --increase 5";
         };
       };
+
       extraConfig = ''
         mode "resize" {
           bindsym Up resize shrink height 10 px or 10 ppt
