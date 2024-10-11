@@ -7,7 +7,7 @@
 ```
 1. curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
 2. Restart shell
-3. nix-channel --add https://nixos.org/channels/nixpkgs-24.05 nixpkgs-stable
+3. nix-channel --add https://nixos.org/channels/nixos-24.05 nixpkgs-stable
 4. nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
 5. nix-channel --update
 6. nix-shell '<home-manager>' -A install
