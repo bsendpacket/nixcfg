@@ -37,6 +37,16 @@ let
         # Stable unicorn is required for angr at the moment
         unicorn = stablePkgs.python312Packages.unicorn;
 
+        # Fix version mismatch on NixPkgs Unstable
+        pyvex = pythonSuper.pyvex.overrideAttrs (oldAttrs: rec {
+          version = "9.2.119";
+          src = pythonSelf.fetchPypi {
+            pname = "pyvex";
+            version = version;
+            sha256 = "sha256-c9CaftT7VInEMRsWN7FhDHwXJccma5wkUfiN9EpjUTQ=";
+          };
+        });
+
         # Suppress broken state
         angr = pythonSuper.angr.overrideAttrs (oldAttrs: {
           meta = oldAttrs.meta // {
