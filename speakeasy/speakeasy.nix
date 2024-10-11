@@ -3,7 +3,6 @@
 python312Packages.buildPythonPackage rec {
   pname = "speakeasy";
   version = "1.5.11";
-  pyproject = true;
 
   src = fetchFromGitHub {
     owner = "mandiant";
@@ -12,7 +11,7 @@ python312Packages.buildPythonPackage rec {
     hash = "sha256-PhIIk0UNNPZQAhP/149EEAi5ECOOShmXJGHyGeIQUqk=";
   };
 
-  nativeBuildInputs = with python312Packages; [
+  buildInputs = with python312Packages; [
     setuptools
     wheel
   ];

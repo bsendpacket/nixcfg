@@ -37,18 +37,66 @@ let
         # Stable unicorn is required for angr at the moment
         unicorn = stablePkgs.python312Packages.unicorn;
 
-        # Fix version mismatch on NixPkgs Unstable
         pyvex = pythonSuper.pyvex.overrideAttrs (oldAttrs: rec {
-          version = "9.2.119";
+          version = "9.2.120";
+
           src = pythonSelf.fetchPypi {
             pname = "pyvex";
             version = version;
-            sha256 = "sha256-c9CaftT7VInEMRsWN7FhDHwXJccma5wkUfiN9EpjUTQ=";
+            sha256 = "sha256-pMGjUHGu/cxFqQb0It8/ZRzy+l3zJ0r8vsCO5TMbvrY=";
           };
         });
 
-        # Suppress broken state
-        angr = pythonSuper.angr.overrideAttrs (oldAttrs: {
+        archinfo = pythonSuper.archinfo.overrideAttrs (oldAttrs: rec {
+          version = "9.2.120";
+
+          src = pythonSelf.fetchPypi {
+            pname = "archinfo";
+            version = version;
+            sha256 = "sha256-zlXHn9sXqA460dOAjnq6tEaIsKPU/nh+IKHCPX9RVhY=";
+          };
+        });
+
+        claripy = pythonSuper.claripy.overrideAttrs (oldAttrs: rec {
+          version = "9.2.120";
+
+          src = pythonSelf.fetchPypi {
+            pname = "claripy";
+            version = version;
+            sha256 = "sha256-DTX7ktnreH4d8J+7e+vutZbvClxO4Hb4NuicM+enZjY=";
+          };
+        });
+          
+        cle = pythonSuper.cle.overrideAttrs (oldAttrs: rec {
+          version = "9.2.120";
+
+          src = pythonSelf.fetchPypi {
+            pname = "cle";
+            version = version;
+            sha256 = "sha256-FJ2nt3krfY8y24cukto3KeQrq6mJHJMiK9WEe4R65Wo=";
+          };
+        });
+
+        ailment = pythonSuper.ailment.overrideAttrs (oldAttrs: rec {
+          version = "9.2.120";
+
+          src = pythonSelf.fetchPypi {
+            pname = "ailment";
+            version = version;
+            sha256 = "sha256-B5aSEQYs3B6RzlQmkOeEnvdgrkSDlJIFC+KHU4eN/6k=";
+          };
+        });
+
+        # Fix version mismatch on NixPkgs Unstable and suppress broken state
+        angr = pythonSuper.angr.overrideAttrs (oldAttrs: rec {
+          version = "9.2.120";
+
+          src = pythonSelf.fetchPypi {
+            pname = "angr";
+            version = version;
+            sha256 = "sha256-CGHE2sJVPlAJ6mBcmtuR3k7MvMBkBgppOH4tVPmewuA=";
+          };
+
           meta = oldAttrs.meta // {
             broken = false;
           };
