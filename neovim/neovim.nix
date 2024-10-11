@@ -222,13 +222,13 @@
 
         servers = {
           # Lua LSP
-          lua-ls.enable = true;
+          lua_ls.enable = true;
 
           # Nix LSP
           nixd.enable = true;
 
           # Rust LSP
-          rust-analyzer = {
+          rust_analyzer = {
             enable = true;
             installCargo = true;
             installRustc = true;
@@ -268,7 +268,7 @@
           };
 
           # Typescript LSP
-          ts-ls = {
+          ts_ls = {
             enable = true;
             autostart = true;
             rootDir = ''
@@ -326,7 +326,7 @@
             enable = true;
           };
 
-          parser_install_dir = "${homeDirectory}/XDG_DATA_HOME/nvim/treesitter";
+          parser_install_dir = "${homeDirectory}/.nvim/treesitter";
           sync_install = false;
         };
 
