@@ -110,8 +110,21 @@ let
     contour = stablePkgs.contour;
   };
 
+  customOverlay = self: super: {
+    innoextract = super.innoextract.overrideAttrs (oldAttrs: {
+      version = "1.10-dev";
+
+      src = pkgs.fetchFromGitHub {
+        owner = "bsendpacket";
+        repo = "innoextract";
+        rev = "447ddfcba73d6f77d6a31aa3229513785d6b4fcd";
+        hash = "sha256-VFqFw3319T3fK8srP/mUxmWz5HrbewGwegu+vjqfUj8=";
+      };    
+    });
+  };
+
   pkgs = import <nixpkgs> {
-    overlays = [ pythonOverlay stableOverlay ];
+    overlays = [ pythonOverlay stableOverlay customOverlay ];
     config = {
       allowUnfree = true;
       allowUnfreePredicate = _: true;
