@@ -215,6 +215,9 @@ in
       wmctrl
       xdotool
 
+      # Display
+      brightnessctl
+
       # Nix-specific tools
       nurl
       nix-init
@@ -226,6 +229,9 @@ in
       
       # Needed by i3status-rust
       xorg.setxkbmap
+
+      # Find pressed key
+      xorg.xev
 
       kitty
       alacritty
