@@ -42,6 +42,17 @@
       maplocalleader = " ";
     };
 
+    keymaps = [
+      {
+        action = "<cmd>Neotree toggle<CR>";
+        key = "<leader>e";
+        mode = [ "n" ];
+        options = {
+          silent = true;
+        };
+      }
+    ];
+
     plugins = {
       # Nix Support for Vim
       nix.enable = true;
@@ -158,6 +169,10 @@
             '';
           }
         ];
+      };
+
+      neo-tree = {
+        enable = true;
       };
 
       noice = {
