@@ -156,6 +156,10 @@ let
   # Work-specific
   fileExists = path: if builtins.pathExists path then import path { inherit pkgs lib; } else {};
   workConfig = fileExists ./work/work.nix;
+
+  # Python Environments
+  pythonEnvs = import ./python/venvs.nix { inherit pkgs customPackages; };
+
 in
 {
   # Apply overlays globally
@@ -400,7 +404,31 @@ in
 
       # Fonts
       (nerdfonts.override { fonts = [ "CascadiaCode" ]; })
+
     ]) ++ (workConfig.home.packages or []);
+    
+    # Create symlinks to the Python venvs in ~/.virtualenvs
+    activation.buildPythonEnvs = lib.mkAfter ''
+      echo "Building Python environments..."
+      ${lib.concatStringsSep "\n" (map (env:
+        ''
+        VENV_DIR="${config.home.homeDirectory}/.virtualenvs/${env.name}"
+
+        # Ensure the environment directory exists
+        mkdir -p "$VENV_DIR"
+
+        # Remove any existing symlinks
+        find "$VENV_DIR" -maxdepth 1 -type l -exec rm -f {} \;
+
+        # Create a symlink to the Python environment
+        ln -sf ${env.pythonEnv} "$VENV_DIR"
+
+        # Create a symlink to the Python binary
+        mkdir -p "$VENV_DIR/bin"
+        ln -sf ${env.pythonEnv}/bin/python "$VENV_DIR/bin/python"
+        ''
+      ) pythonEnvs.envs)}
+    '';
 
     sessionVariables = {
       EDITOR = "nvim";
