@@ -498,6 +498,22 @@
       vim.keymap.set('i', '`', function()
         vim.api.nvim_feedkeys('``' .. vim.api.nvim_replace_termcodes('<Left>', true, false, true), 'n', true)
       end, { noremap = true })
+
+      -- Fix Python venvs
+      require('lspconfig').pyright.setup({
+        root_dir = function(fname)
+          return vim.loop.cwd()
+        end,
+        on_init = function(client)
+          local venv = os.getenv("VIRTUAL_ENV")
+          if venv then
+            client.config.settings.python.pythonPath = venv .. "/bin/python"
+          else
+            client.config.settings.python.pythonPath = vim.fn.exepath("python")
+          end
+          client.notify("workspace/didChangeConfiguration")
+        end
+      })
     '';
   };
 }
