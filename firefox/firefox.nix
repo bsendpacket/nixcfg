@@ -18,43 +18,6 @@ let
   ];
   firefoxBookmarks = [
     {
-      name = "Windows Internals";
-      bookmarks = [
-        {
-          name = "PE - Portable Executable";
-          url = "https://www.aldeid.com/wiki/PE-Portable-executable";
-        }
-        {
-          name = "TEB - Thread Environment Block";
-          url = "https://www.aldeid.com/wiki/TEB-Thread-Environment-Block";
-        }
-        {
-          name = "PEB - Process Environment Block";
-          url = "https://www.aldeid.com/wiki/PEB-Process-Environment-Block";
-        }
-        {
-          name = "PEB_LDR_DATA";
-          url = "https://www.aldeid.com/wiki/PEB_LDR_DATA";
-        }
-        {
-          name = "LDR_DATA_TABLE_ENTRY";
-          url = "https://www.aldeid.com/wiki/LDR_DATA_TABLE_ENTRY";
-        }
-        {
-          name = "LIST_ENTRY";
-          url = "https://www.aldeid.com/wiki/LIST_ENTRY";
-        }
-        {
-          name = "Structured Exception Handling (SEH)";
-          url = "https://www.aldeid.com/wiki/Category:Architecture/Windows/SEH-Structured-Exception-Handling";
-        }
-        {
-          name = "Virtual-Key Codes";
-          url = "https://www.aldeid.com/wiki/Virtual-Key-Codes";
-        }
-      ];
-    }
-    {
       name = "References";
       bookmarks = [
         {
@@ -74,8 +37,12 @@ let
           url = "https://malapi.io/";
         }
         {
-          name = "Windows Locales LANGID enum";
+          name = "Windows Locales LANGID Enum";
           url = "https://gist.github.com/herrcore/22e820f1e8a99238070cd7c5b350261e";
+        }
+        {
+          name = "Virtual Key Codes";
+          url = "https://www.aldeid.com/wiki/Virtual-Key-Codes";
         }
         {
           name = "Windows API & Malware Injection Cheatsheet";
@@ -109,6 +76,39 @@ let
         {
           name = "URLhaus";
           url = "https://urlhaus.abuse.ch/browse/";
+        }
+      ];
+    }
+    {
+      name = "Windows Structures";
+      bookmarks = [
+        {
+          name = "PE - Portable Executable";
+          url = "https://www.aldeid.com/wiki/PE-Portable-executable";
+        }
+        {
+          name = "TEB - Thread Environment Block";
+          url = "https://www.aldeid.com/wiki/TEB-Thread-Environment-Block";
+        }
+        {
+          name = "PEB - Process Environment Block";
+          url = "https://www.aldeid.com/wiki/PEB-Process-Environment-Block";
+        }
+        {
+          name = "PEB_LDR_DATA";
+          url = "https://www.aldeid.com/wiki/PEB_LDR_DATA";
+        }
+        {
+          name = "LDR_DATA_TABLE_ENTRY";
+          url = "https://www.aldeid.com/wiki/LDR_DATA_TABLE_ENTRY";
+        }
+        {
+          name = "LIST_ENTRY";
+          url = "https://www.aldeid.com/wiki/LIST_ENTRY";
+        }
+        {
+          name = "Structured Exception Handling (SEH)";
+          url = "https://www.aldeid.com/wiki/Category:Architecture/Windows/SEH-Structured-Exception-Handling";
         }
       ];
     }
