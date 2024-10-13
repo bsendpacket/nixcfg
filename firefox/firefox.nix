@@ -85,7 +85,7 @@ let
           ];
         }
         {
-          name = "Windows Structures"; # Nested folder
+          name = "Windows Structures";
           bookmarks = [
             {
               name = "PE - Portable Executable";
