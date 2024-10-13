@@ -70,6 +70,10 @@ let
           url = "https://www.aldeid.com/wiki";
         }
         {
+          name = "MalAPI.io";
+          url = "https://malapi.io/";
+        }
+        {
           name = "Windows Locales LANGID enum";
           url = "https://gist.github.com/herrcore/22e820f1e8a99238070cd7c5b350261e";
         }
