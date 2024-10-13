@@ -16,6 +16,236 @@ let
     privacy-badger
     clearurls
   ];
+  firefoxBookmarks = [
+    {
+      name = "Windows Internals";
+      bookmarks = [
+        {
+          name = "PE - Portable Executable";
+          url = "https://www.aldeid.com/wiki/PE-Portable-executable";
+        }
+        {
+          name = "TEB - Thread Environment Block";
+          url = "https://www.aldeid.com/wiki/TEB-Thread-Environment-Block";
+        }
+        {
+          name = "PEB - Process Environment Block";
+          url = "https://www.aldeid.com/wiki/PEB-Process-Environment-Block";
+        }
+        {
+          name = "PEB_LDR_DATA";
+          url = "https://www.aldeid.com/wiki/PEB_LDR_DATA";
+        }
+        {
+          name = "LDR_DATA_TABLE_ENTRY";
+          url = "https://www.aldeid.com/wiki/LDR_DATA_TABLE_ENTRY";
+        }
+        {
+          name = "LIST_ENTRY";
+          url = "https://www.aldeid.com/wiki/LIST_ENTRY";
+        }
+        {
+          name = "Structured Exception Handling (SEH)";
+          url = "https://www.aldeid.com/wiki/Category:Architecture/Windows/SEH-Structured-Exception-Handling";
+        }
+        {
+          name = "Virtual-Key Codes";
+          url = "https://www.aldeid.com/wiki/Virtual-Key-Codes";
+        }
+      ];
+    }
+    {
+      name = "References";
+      bookmarks = [
+        {
+          name = "MagnumDB Magic Number Lookup";
+          url = "https://www.magnumdb.com/";
+        }
+        {
+          name = "Unprotect Project";
+          url = "https://www.unprotect.it/map/";
+        }
+        {
+          name = "Aldeid Wiki";
+          url = "https://www.aldeid.com/wiki";
+        }
+        {
+          name = "Windows Locales LANGID enum";
+          url = "https://gist.github.com/herrcore/22e820f1e8a99238070cd7c5b350261e";
+        }
+        {
+          name = "Windows API & Malware Injection Cheatsheet";
+          url = "https://github.com/7etsuo/windows-api-function-cheatsheets";
+        }
+        {
+          name = "Anti-Debug Tricks";
+          url = "https://anti-debug.checkpoint.com/";
+        }
+        {
+          name = "Malware Analysis Cheatsheet";
+          url = "https://fareedfauzi.github.io/2022/08/08/Malware-analysis-cheatsheet.html";
+        }
+      ];
+    }
+    {
+      name = "Malware Research";
+      bookmarks = [
+        {
+          name = "Malpedia";
+          url = "https://malpedia.caad.fkie.fraunhofer.de/";
+        }
+        {
+          name = "VirusTotal";
+          url = "https://www.virustotal.com/";
+        }
+        {
+          name = "MalwareBazaar";
+          url = "https://bazaar.abuse.ch/browse/";
+        }
+        {
+          name = "URLhaus";
+          url = "https://urlhaus.abuse.ch/browse/";
+        }
+      ];
+    }
+    {
+      name = "Windows APIs";
+      bookmarks = [
+        {
+          name = "VirtualAlloc";
+          url = "https://www.aldeid.com/wiki/VirtualAlloc";
+        }
+        {
+          name = "VirtualAllocEx";
+          url = "https://www.aldeid.com/wiki/VirtualAllocEx";
+        }
+        {
+          name = "CreateRemoteThread";
+          url = "https://www.aldeid.com/wiki/CreateRemoteThread";
+        }
+        {
+          name = "CreateProcess";
+          url = "https://www.aldeid.com/wiki/CreateProcess";
+        }
+        {
+          name = "CoCreateInstance";
+          url = "https://www.aldeid.com/wiki/CoCreateInstance";
+        }
+        {
+          name = "CreateEvent";
+          url = "https://www.aldeid.com/wiki/CreateEvent";
+        }
+        {
+          name = "CreateFile";
+          url = "https://www.aldeid.com/wiki/CreateFile";
+        }
+        {
+          name = "CreateFileMapping";
+          url = "https://www.aldeid.com/wiki/CreateFileMapping";
+        }
+        {
+          name = "CreateMutex";
+          url = "https://www.aldeid.com/wiki/CreateMutex";
+        }
+        {
+          name = "CreatePipe";
+          url = "https://www.aldeid.com/wiki/CreatePipe";
+        }
+        {
+          name = "CreateThread";
+          url = "https://www.aldeid.com/wiki/CreateThread";
+        }
+        {
+          name = "CreateToolhelp32Snapshot";
+          url = "https://www.aldeid.com/wiki/CreateToolhelp32Snapshot";
+        }
+        {
+          name = "GlobalAlloc";
+          url = "https://www.aldeid.com/wiki/GlobalAlloc";
+        }
+        {
+          name = "HeapAlloc";
+          url = "https://www.aldeid.com/wiki/HeapAlloc";
+        }
+        {
+          name = "IsWow64Process";
+          url = "https://www.aldeid.com/wiki/IsWow64Process";
+        }
+        {
+          name = "LoadResource";
+          url = "https://www.aldeid.com/wiki/LoadResource";
+        }
+        {
+          name = "MapViewOfFile";
+          url = "https://www.aldeid.com/wiki/MapViewOfFile";
+        }
+        {
+          name = "NtQueryInformationProcess";
+          url = "https://www.aldeid.com/wiki/NtQueryInformationProcess";
+        }
+        {
+          name = "PeekNamedPipe";
+          url = "https://www.aldeid.com/wiki/PeekNamedPipe";
+        }
+        {
+          name = "Process32First";
+          url = "https://www.aldeid.com/wiki/Process32First";
+        }
+        {
+          name = "Process32Next";
+          url = "https://www.aldeid.com/wiki/Process32Next";
+        }
+        {
+          name = "QueueUserAPC";
+          url = "https://www.aldeid.com/wiki/QueueUserAPC";
+        }
+        {
+          name = "ReadProcessMemory";
+          url = "https://www.aldeid.com/wiki/ReadProcessMemory";
+        }
+        {
+          name = "RegOpenKey";
+          url = "https://www.aldeid.com/wiki/RegOpenKey";
+        }
+        {
+          name = "RegOpenKeyEx";
+          url = "https://www.aldeid.com/wiki/RegOpenKeyEx";
+        }
+        {
+          name = "ResumeThread";
+          url = "https://www.aldeid.com/wiki/ResumeThread";
+        }
+        {
+          name = "SetThreadContext";
+          url = "https://www.aldeid.com/wiki/SetThreadContext";
+        }
+        {
+          name = "ShellExecute";
+          url = "https://www.aldeid.com/wiki/ShellExecute";
+        }
+        {
+          name = "URLDownloadToFile";
+          url = "https://www.aldeid.com/wiki/URLDownloadToFile";
+        }
+        {
+          name = "WaitForSingleObject";
+          url = "https://www.aldeid.com/wiki/WaitForSingleObject";
+        }
+        {
+          name = "WaitForSingleObjectEx";
+          url = "https://www.aldeid.com/wiki/WaitForSingleObjectEx";
+        }
+        {
+          name = "WaitForMultipleObjectsEx";
+          url = "https://www.aldeid.com/wiki/WaitForMultipleObjectsEx";
+        }
+        {
+          name = "WriteProcessMemory";
+          url = "https://www.aldeid.com/wiki/WriteProcessMemory";
+        }
+      ];
+    }
+  ];
 in 
 {
   programs.firefox = {
@@ -27,7 +257,9 @@ in
         isDefault = true;
         settings = firefoxSettings;
         extensions = firefoxExtensions;
+        bookmarks = firefoxBookmarks;
       };
     };
   };
 }
+
