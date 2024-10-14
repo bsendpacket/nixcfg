@@ -111,15 +111,19 @@ let
   };
 
   customOverlay = self: super: {
+
+    # Innoextract with custom patch to allow for extracting CompiledCode.bin file
     innoextract = super.innoextract.overrideAttrs (oldAttrs: {
-      version = "1.10-dev";
+      version = "1.10-dev-patched";
 
       src = pkgs.fetchFromGitHub {
-        owner = "bsendpacket";
+        owner = "dscharrer";
         repo = "innoextract";
-        rev = "447ddfcba73d6f77d6a31aa3229513785d6b4fcd";
-        hash = "sha256-VFqFw3319T3fK8srP/mUxmWz5HrbewGwegu+vjqfUj8=";
-      };    
+        rev = "264c2fe6b84f90f6290c670e5f676660ec7b2387";
+        hash = "sha256-DLQ1gphCr4haaBppAJh+zyg0ObjHzO9xLFgHpRb1f0Y=";
+      };
+      
+      patches = [ ./innoextract/extract_compiled_code.patch ];
     });
   };
 
