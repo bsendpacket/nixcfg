@@ -19,11 +19,13 @@ stdenv.mkDerivation (finalAttrs: {
   # There are patches included in the upstream webcrack repo which I couldn't figure out how to apply without it all breaking in nix, as pnpm.fetchDeps attempts to auto-patch and fails.
   # For now, I've forked the repo and removed the patches and regenerated the lockfile
   src = fetchFromGitHub {
-    owner = "bsendpacket";
+    owner = "j4k0xb";
     repo = "webcrack";
-    rev = "1e4acf6c46703d881cae72da63db9bfe2662ec43";
-    hash = "sha256-NSmphq/vGIPrHTKSnFwKg+FB3TQXfGUHqv+YdLDbPYQ=";
+    rev = "241f9469e6401f3dabc6373233d85a5e76966b54";
+    hash = "sha256-K/acyMi+qlM+sipsJhHD4JyJXs8K0GkKDWncoKX1VP0=";
   };
+
+  patches = [ ./fix-dependency.patch ];
 
   # Download all pnpm packages declaratively based off the pnpm-lock.yaml file
   pnpmDeps = pnpm.fetchDeps {

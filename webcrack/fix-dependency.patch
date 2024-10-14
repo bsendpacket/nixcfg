@@ -1,0 +1,73 @@
+diff --git a/package.json b/package.json
+index f96f625..1acbe22 100644
+--- a/package.json
++++ b/package.json
+@@ -23,7 +23,6 @@
+   "packageManager": "pnpm@9.2.0",
+   "pnpm": {
+     "patchedDependencies": {
+-      "vite-plugin-monaco-editor@1.1.0": "patches/vite-plugin-monaco-editor@1.1.0.patch"
+     }
+   }
+ }
+diff --git a/patches/vite-plugin-monaco-editor@1.1.0.patch b/patches/vite-plugin-monaco-editor@1.1.0.patch
+deleted file mode 100644
+index 6412499..0000000
+--- a/patches/vite-plugin-monaco-editor@1.1.0.patch
++++ /dev/null
+@@ -1,12 +0,0 @@
+-diff --git a/dist/index.js b/dist/index.js
+-index 2ac6a0430a9e8d970d2e2fadf95401b368c6002f..c6f7456d1c65c2aef4f964b7eae9e15b9de78114 100644
+---- a/dist/index.js
+-+++ b/dist/index.js
+-@@ -102,6 +102,7 @@ function monacoEditorPlugin(options) {
+-                     esbuild.buildSync({
+-                         entryPoints: [resolveMonacoPath(work.entry)],
+-                         bundle: true,
+-+                        minify: true,
+-                         outfile: workerMiddleware_1.cacheDir + workerMiddleware_1.getFilenameByEntry(work.entry),
+-                     });
+-                 }
+diff --git a/pnpm-lock.yaml b/pnpm-lock.yaml
+index 8b490dd..489b6bd 100644
+--- a/pnpm-lock.yaml
++++ b/pnpm-lock.yaml
+@@ -4,11 +4,6 @@ settings:
+   autoInstallPeers: true
+   excludeLinksFromLockfile: false
+ 
+-patchedDependencies:
+-  vite-plugin-monaco-editor@1.1.0:
+-    hash: ml6vuvpbq2picjecjfyjy32u4e
+-    path: patches/vite-plugin-monaco-editor@1.1.0.patch
+-
+ importers:
+ 
+   .:
+@@ -72,7 +67,7 @@ importers:
+         version: 1.8.17
+       webcrack:
+         specifier: workspace:*
+-        version: link:../..
++        version: link:../../packages/webcrack
+     devDependencies:
+       '@types/babel__generator':
+         specifier: ^7.6.8
+@@ -106,7 +101,7 @@ importers:
+         version: 5.2.12(@types/node@20.14.2)
+       vite-plugin-monaco-editor:
+         specifier: ^1.1.0
+-        version: 1.1.0(patch_hash=ml6vuvpbq2picjecjfyjy32u4e)(monaco-editor@0.49.0)
++        version: 1.1.0(monaco-editor@0.49.0)
+       vite-plugin-node-polyfills:
+         specifier: ^0.22.0
+         version: 0.22.0(rollup@4.18.0)(vite@5.2.12(@types/node@20.14.2))
+@@ -5505,7 +5500,7 @@ snapshots:
+       - supports-color
+       - terser
+ 
+-  vite-plugin-monaco-editor@1.1.0(patch_hash=ml6vuvpbq2picjecjfyjy32u4e)(monaco-editor@0.49.0):
++  vite-plugin-monaco-editor@1.1.0(monaco-editor@0.49.0):
+     dependencies:
+       monaco-editor: 0.49.0
+ 
