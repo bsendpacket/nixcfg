@@ -1,9 +1,9 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, nixpkgs-unstable, nixpkgs-stable, ... }:
 
 with lib;
 
 let
-  yamlFormat = pkgs.formats.yaml { };
+  yamlFormat = nixpkgs-unstable.formats.yaml { };
 in
 {
   options = {
@@ -12,7 +12,7 @@ in
 
       package = mkOption {
         type = types.package;
-        default = pkgs.contour;
+        default = nixpkgs-stable.contour;
         description = "Contour terminal package to install.";
       };
 

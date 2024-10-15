@@ -1,9 +1,8 @@
-{ config, pkgs, ... }: {
+{ config, nixpkgs-unstable, nixpkgs-stable, ... }: {
 
   programs.rofi = {
     enable = true;
-    terminal = "${pkgs.contour}/bin/contour";
-    #terminal = "${pkgs.alacritty}/bin/alacritty";
+    terminal = "${nixpkgs-stable.contour}/bin/contour";
     theme = "${config.xdg.configHome}/home-manager/rofi/theme.rasi";
   };
 }

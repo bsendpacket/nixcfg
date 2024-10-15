@@ -1,4 +1,4 @@
-{ lib, pkgs, customPackages, workConfig, ... }: {
+{ lib, nixpkgs-unstable, customPackages, workConfig, ... }: {
 
   programs.zsh = {
     enable = true;
@@ -51,25 +51,25 @@
       lla = "ls -la";   # List Files (+ Hidden)
       lt = "ls --tree"; # List Files (Tree)
       y = "yy";         # Yazi
-      yara = "${pkgs.yara-x}/bin/yr";
+      yara = "${nixpkgs-unstable.yara-x}/bin/yr";
       kitty = "nixGL kitty";
       alacritty = "nixGL alacritty";
       contour = "nixGL contour";
       netreactorslayer = "${customPackages.net-reactor-slayer}/bin/NETReactorSlayer";
       rbat = "${customPackages.binary-refinery}/bin/bat";
-      goresym = "${pkgs.goresym}/bin/GoReSym";
-      ilspy = "${pkgs.avalonia-ilspy}/bin/ILSpy";
+      goresym = "${nixpkgs-unstable.goresym}/bin/GoReSym";
+      ilspy = "${nixpkgs-unstable.avalonia-ilspy}/bin/ILSpy";
     } // (workConfig.programs.zsh.shellAliases or {});
 
     plugins = [
       {
         name = "powerlevel10k";
-        src = pkgs.zsh-powerlevel10k;
+        src = nixpkgs-unstable.zsh-powerlevel10k;
         file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
       }
       {
         name = "zsh-fzf-history-search";
-        src = pkgs.zsh-fzf-history-search;
+        src = nixpkgs-unstable.zsh-fzf-history-search;
         file = "share/zsh-fzf-history-search/zsh-fzf-history-search.zsh";
       }
       {
@@ -79,7 +79,7 @@
       }
       {
         name = "zsh-fast-syntax-highlighting";
-        src = pkgs.zsh-fast-syntax-highlighting;
+        src = nixpkgs-unstable.zsh-fast-syntax-highlighting;
         file = "share/zsh/site-functions";
       }
     ];

@@ -1,4 +1,4 @@
-{ pkgs, colorscheme, ... }: {
+{ nixpkgs-unstable, colorscheme, ... }: {
 
   programs.alacritty = {
     enable = true;
@@ -55,7 +55,7 @@
       };
 
       shell = { 
-        program = "${pkgs.zsh}/bin/zsh";
+        program = "${nixpkgs-unstable.zsh}/bin/zsh";
       };
 
       cursor = {

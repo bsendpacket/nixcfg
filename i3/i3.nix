@@ -1,24 +1,24 @@
-{ pkgs, config, lib, shell, homeDirectory, isNixOS, ... }: 
+{ nixpkgs-unstable, nixpkgs-stable, config, lib, shell, homeDirectory, isNixOS, ... }: 
 let 
   modifier = "Mod1";
 in {
   xsession = {
     windowManager.i3 = {
       enable = true;
-      package = pkgs.i3;
+      package = nixpkgs-unstable.i3;
 
       config = {
 
         defaultWorkspace = "workspace number 1";
 
         terminal = if isNixOS then 
-          "${pkgs.contour}/bin/contour ${pkgs.tmux}/bin/tmux"
+          "${nixpkgs-stable.contour}/bin/contour ${nixpkgs-unstable.tmux}/bin/tmux"
         else 
-          "${homeDirectory}/.nix-profile/bin/nixGL ${pkgs.contour}/bin/contour ${pkgs.tmux}/bin/tmux";
+          "${homeDirectory}/.nix-profile/bin/nixGL ${nixpkgs-stable.contour}/bin/contour ${nixpkgs-unstable.tmux}/bin/tmux";
 
         bars = [{ 
-          command = "${pkgs.i3}/bin/i3bar";
-          statusCommand = "${pkgs.i3status-rust}/bin/i3status-rs ${config.xdg.configHome}/i3status-rust/config-i3bar.toml";
+          command = "${nixpkgs-unstable.i3}/bin/i3bar";
+          statusCommand = "${nixpkgs-unstable.i3status-rust}/bin/i3status-rs ${config.xdg.configHome}/i3status-rust/config-i3bar.toml";
           position = "top";
         }];
 
@@ -53,10 +53,10 @@ in {
           "${modifier}+Shift+k" = "move up";
           "${modifier}+Shift+l" = "move right";
 
-          "${modifier}+u" = "exec ${pkgs.chromium}/bin/chromium";
+          "${modifier}+u" = "exec ${nixpkgs-unstable.chromium}/bin/chromium";
 
           # Rofi
-          "${modifier}+d" = "exec --no-startup-id ${shell} -c 'LANG=en_US.UTF-8 LC_ALL=C ${pkgs.rofi}/bin/rofi -show run'";
+          "${modifier}+d" = "exec --no-startup-id ${shell} -c 'LANG=en_US.UTF-8 LC_ALL=C ${nixpkgs-unstable.rofi}/bin/rofi -show run'";
 
           # Floating window toggle
           "${modifier}+Escape" = "scratchpad show";

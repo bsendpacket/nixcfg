@@ -1,6 +1,6 @@
-{ pkgs }:
+{ nixpkgs-unstable }:
 let
-  pythonWithPackages = pkgs.python312.withPackages (ps: with ps; [
+  pythonWithPackages = nixpkgs-unstable.python312.withPackages (ps: with ps; [
     lxml
     httpx
     requests
@@ -9,9 +9,9 @@ let
     (callPackage ../binary-refinery/binary-refinery.nix {})
   ]); 
   fetchBinaryNinjaPlugin = { owner, repo, rev ? "main", name, sha256, folder ? "" }: 
-    pkgs.stdenv.mkDerivation {
+    nixpkgs-unstable.stdenv.mkDerivation {
       inherit name;
-      src = pkgs.fetchFromGitHub {
+      src = nixpkgs-unstable.fetchFromGitHub {
         inherit owner repo rev sha256;
       };
       installPhase = ''
@@ -110,15 +110,15 @@ let
     })
 
   ];
-  binaryNinjaConfigFiles = pkgs.stdenv.mkDerivation {
+  binaryNinjaConfigFiles = nixpkgs-unstable.stdenv.mkDerivation {
     name = "binary-ninja-config-files";
     src = ./config;
-    buildInputs = [ pkgs.coreutils ];
+    buildInputs = [ nixpkgs-unstable.coreutils ];
     installPhase = ''
       mkdir -p $out/.binaryninja
       cp -r * $out/.binaryninja/
       mkdir -p $out/.binaryninja/plugins
-      ${pkgs.lib.concatMapStrings (plugin: ''
+      ${nixpkgs-unstable.lib.concatMapStrings (plugin: ''
         cp -r ${plugin}/.binaryninja/plugins/* $out/.binaryninja/plugins/
       '') plugins}
     '';

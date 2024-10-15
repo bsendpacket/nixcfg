@@ -1,9 +1,9 @@
-{ pkgs, ... }: {
+{ nixpkgs-unstable, ... }: {
 
   programs.tmux = {
     enable = true;
 
-    shell = "${pkgs.zsh}/bin/zsh";
+    shell = "${nixpkgs-unstable.zsh}/bin/zsh";
 
     mouse = true;
     keyMode = "vi";

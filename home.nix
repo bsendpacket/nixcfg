@@ -1,169 +1,41 @@
 {
   config,
   lib,
+  nixpkgs-stable,
+  nixpkgs-unstable,
+  nur,
+  nixvim,
+  username,
+  homeDirectory,
+  shell,
+  isNixOS,
   ...
 }:
 let
-  username = builtins.getEnv "USER";
-  homeDirectory = builtins.getEnv "HOME";
-  shell = builtins.getEnv "SHELL";
-  isNixOS = builtins.pathExists "/etc/NIXOS";
-
-  nixvim = import (builtins.fetchGit {
-    url = "https://github.com/nix-community/nixvim";
-  });
-
   colorscheme = import ./colorscheme.nix;
 
-  # Force the same interpreter version
-  # Allows Python packages from stable to be used on unstable
-  pythonInterpreterOverlay = self: super: {
-    python312 = pkgs.python312;
-  };
-
-  stablePkgs = import <nixpkgs-stable> { 
-    overlays = [ pythonInterpreterOverlay ];
-  };
-
-  # Fix Python package issues
-  pythonOverlay = self: super: {
-    python312Packages = super.python312Packages.override {
-      overrides = pythonSelf: pythonSuper: {
-
-        # The NixPkg for angr uses protobuf4, although it works with protobuf5
-        # By forcing protobuf5 here, conflicts of multiple versions existing is prevented
-        protobuf = pythonSuper.protobuf5;
-
-        # Stable unicorn is required for angr at the moment
-        unicorn = stablePkgs.python312Packages.unicorn;
-
-        pyvex = pythonSuper.pyvex.overrideAttrs (oldAttrs: rec {
-          version = "9.2.120";
-
-          src = pythonSelf.fetchPypi {
-            pname = "pyvex";
-            version = version;
-            sha256 = "sha256-pMGjUHGu/cxFqQb0It8/ZRzy+l3zJ0r8vsCO5TMbvrY=";
-          };
-        });
-
-        archinfo = pythonSuper.archinfo.overrideAttrs (oldAttrs: rec {
-          version = "9.2.120";
-
-          src = pythonSelf.fetchPypi {
-            pname = "archinfo";
-            version = version;
-            sha256 = "sha256-zlXHn9sXqA460dOAjnq6tEaIsKPU/nh+IKHCPX9RVhY=";
-          };
-        });
-
-        claripy = pythonSuper.claripy.overrideAttrs (oldAttrs: rec {
-          version = "9.2.120";
-
-          src = pythonSelf.fetchPypi {
-            pname = "claripy";
-            version = version;
-            sha256 = "sha256-DTX7ktnreH4d8J+7e+vutZbvClxO4Hb4NuicM+enZjY=";
-          };
-        });
-          
-        cle = pythonSuper.cle.overrideAttrs (oldAttrs: rec {
-          version = "9.2.120";
-
-          src = pythonSelf.fetchPypi {
-            pname = "cle";
-            version = version;
-            sha256 = "sha256-FJ2nt3krfY8y24cukto3KeQrq6mJHJMiK9WEe4R65Wo=";
-          };
-        });
-
-        ailment = pythonSuper.ailment.overrideAttrs (oldAttrs: rec {
-          version = "9.2.120";
-
-          src = pythonSelf.fetchPypi {
-            pname = "ailment";
-            version = version;
-            sha256 = "sha256-B5aSEQYs3B6RzlQmkOeEnvdgrkSDlJIFC+KHU4eN/6k=";
-          };
-        });
-
-        # Fix version mismatch on NixPkgs Unstable and suppress broken state
-        angr = pythonSuper.angr.overrideAttrs (oldAttrs: rec {
-          version = "9.2.120";
-
-          src = pythonSelf.fetchPypi {
-            pname = "angr";
-            version = version;
-            sha256 = "sha256-CGHE2sJVPlAJ6mBcmtuR3k7MvMBkBgppOH4tVPmewuA=";
-          };
-
-          meta = oldAttrs.meta // {
-            broken = false;
-          };
-        });
-      };
-    };
-  };
-
-  # Some packages are broken in unstable, use the stable versions instead
-  stableOverlay = self: super: {
-    contour = stablePkgs.contour;
-  };
-
-  customOverlay = self: super: {
-
-    # Innoextract with custom patch to allow for extracting CompiledCode.bin file
-    innoextract = super.innoextract.overrideAttrs (oldAttrs: {
-      version = "1.10-dev-patched";
-
-      src = pkgs.fetchFromGitHub {
-        owner = "dscharrer";
-        repo = "innoextract";
-        rev = "264c2fe6b84f90f6290c670e5f676660ec7b2387";
-        hash = "sha256-DLQ1gphCr4haaBppAJh+zyg0ObjHzO9xLFgHpRb1f0Y=";
-      };
-      
-      patches = [ ./innoextract/extract_compiled_code.patch ];
-    });
-  };
-
-  pkgs = import <nixpkgs> {
-    overlays = [ pythonOverlay stableOverlay customOverlay ];
-    config = {
-      allowUnfree = true;
-      allowUnfreePredicate = _: true;
-
-      # Add NUR packages
-      packageOverrides = pkgs: {
-        nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
-          inherit pkgs;
-        };
-      };
-    };
-  };
-
   binaryNinjaURL = import ./binary-ninja/binary-ninja-url.nix;
-  binaryNinjaConfig = import ./binary-ninja/config.nix { inherit pkgs; };
+  binaryNinjaConfig = import ./binary-ninja/config.nix { inherit nixpkgs-unstable; };
 
   # Packages to build, as they are not on NixPkgs
   customPackages = {
-    jadx = pkgs.callPackage ./jadx/default.nix { };
-    de4dot = pkgs.callPackage ./de4dot/de4dot.nix { };
-    redress = pkgs.callPackage ./redress/redress.nix { };
-    webcrack = pkgs.callPackage ./webcrack/webcrack.nix { };
-    frida-tools = pkgs.callPackage ./dependencies/frida-tools.nix { };
-    decompylepp = pkgs.callPackage ./decompylepp/decompylepp.nix { };
-    detect-it-easy = pkgs.callPackage ./detect-it-easy/detect-it-easy.nix { };
-    net-reactor-slayer = pkgs.callPackage ./net-reactor-slayer/net-reactor-slayer.nix { };
+    jadx = nixpkgs-unstable.callPackage ./jadx/default.nix { };
+    de4dot = nixpkgs-unstable.callPackage ./de4dot/de4dot.nix { };
+    redress = nixpkgs-unstable.callPackage ./redress/redress.nix { };
+    webcrack = nixpkgs-unstable.callPackage ./webcrack/webcrack.nix { };
+    frida-tools = nixpkgs-unstable.callPackage ./dependencies/frida-tools.nix { };
+    decompylepp = nixpkgs-unstable.callPackage ./decompylepp/decompylepp.nix { };
+    detect-it-easy = nixpkgs-unstable.callPackage ./detect-it-easy/detect-it-easy.nix { };
+    net-reactor-slayer = nixpkgs-unstable.callPackage ./net-reactor-slayer/net-reactor-slayer.nix { };
 
     # Python Packages
-    capa = pkgs.callPackage ./capa/capa.nix { };
-    speakeasy = pkgs.callPackage ./speakeasy/speakeasy.nix { };
-    binary-refinery = pkgs.callPackage ./binary-refinery/binary-refinery.nix { };
-    donut-decryptor = pkgs.callPackage ./donut-decryptor/donut-decryptor.nix { };
-    dncil = pkgs.callPackage ./dependencies/dncil.nix { };
+    capa = nixpkgs-unstable.callPackage ./capa/capa.nix { };
+    speakeasy = nixpkgs-unstable.callPackage ./speakeasy/speakeasy.nix { };
+    binary-refinery = nixpkgs-unstable.callPackage ./binary-refinery/binary-refinery.nix { };
+    donut-decryptor = nixpkgs-unstable.callPackage ./donut-decryptor/donut-decryptor.nix { };
+    dncil = nixpkgs-unstable.callPackage ./dependencies/dncil.nix { };
 
-    binary-ninja = pkgs.callPackage ./binary-ninja/binary-ninja.nix { 
+    binary-ninja = nixpkgs-unstable.callPackage ./binary-ninja/binary-ninja.nix { 
       binaryNinjaUrl = binaryNinjaURL.binaryNinjaUrl;
       binaryNinjaHash = binaryNinjaURL.binaryNinjaHash;
       pythonEnv = binaryNinjaConfig.pythonEnv;
@@ -171,36 +43,33 @@ let
   };
 
   # Work-specific
-  fileExists = path: if builtins.pathExists path then import path { inherit pkgs lib; } else {};
+  fileExists = path: if builtins.pathExists path then import path { inherit nixpkgs-unstable lib; } else {};
   workConfig = fileExists ./work/work.nix;
 
   # Python Environments
-  pythonEnvs = import ./python/venvs.nix { inherit pkgs customPackages; };
+  pythonEnvs = import ./python/venvs.nix { inherit nixpkgs-unstable customPackages; };
 
 in
 {
-  # Apply overlays globally
-  nixpkgs.overlays = pkgs.overlays;
-
   imports = [
     nixvim.homeManagerModules.nixvim
 
     # Window Manager
-    (import ./i3/i3.nix { inherit pkgs config lib homeDirectory shell isNixOS; })
+    (import ./i3/i3.nix { inherit nixpkgs-unstable nixpkgs-stable config lib homeDirectory shell isNixOS; })
 
     # Git
     (import (if builtins.pathExists ./work/git/git.nix then ./work/git/git.nix else ./git/git.nix))
 
     # Terminal Setup 
-    (import ./tmux/tmux.nix { inherit pkgs; })
-    (import ./kitty/kitty.nix { inherit pkgs colorscheme; })
-    (import ./alacritty/alacritty.nix { inherit pkgs colorscheme; })
-    (import ./yazi/yazi.nix { inherit pkgs config colorscheme workConfig isNixOS; })
-    (import ./zsh/zsh.nix { inherit lib pkgs customPackages workConfig; })
-    (import ./neovim/neovim.nix { inherit pkgs homeDirectory; })
-    (import ./rofi/rofi.nix { inherit config pkgs; })
-    (import ./contour/settings.nix { inherit config lib pkgs; })
-    (import ./contour/contour.nix { inherit lib pkgs colorscheme; })
+    (import ./tmux/tmux.nix { inherit nixpkgs-unstable; })
+    (import ./kitty/kitty.nix { inherit nixpkgs-unstable colorscheme; })
+    (import ./alacritty/alacritty.nix { inherit nixpkgs-unstable colorscheme; })
+    (import ./yazi/yazi.nix { inherit nixpkgs-unstable nixpkgs-stable config colorscheme workConfig isNixOS; })
+    (import ./zsh/zsh.nix { inherit lib nixpkgs-unstable customPackages workConfig; })
+    (import ./neovim/neovim.nix { inherit nixpkgs-unstable homeDirectory; })
+    (import ./rofi/rofi.nix { inherit config nixpkgs-unstable nixpkgs-stable; })
+    (import ./contour/settings.nix { inherit config lib nixpkgs-unstable nixpkgs-stable; })
+    (import ./contour/contour.nix { inherit lib nixpkgs-unstable colorscheme; })
 
     ./zoxide/zoxide.nix
     ./zathura/zathura.nix
@@ -212,14 +81,14 @@ in
     binaryNinjaConfig.binaryNinjaConfig
 
     # Program Setup
-    (import ./firefox/firefox.nix { inherit pkgs lib; })
+    (import ./firefox/firefox.nix { inherit nixpkgs-unstable nur lib; })
   ];
 
   home = {
     username = username;
     homeDirectory = homeDirectory;
 
-    packages = (with pkgs // customPackages; [
+    packages = (with nixpkgs-unstable // customPackages; [
 
       # VM tools
       open-vm-tools
@@ -252,7 +121,7 @@ in
 
       kitty
       alacritty
-      contour
+      nixpkgs-stable.contour
 
       tmux
 
@@ -478,7 +347,7 @@ in
         [Desktop Entry]
         Name=i3
         Comment=improved dynamic tiling window manager
-        Exec=${pkgs.i3}/bin/i3
+        Exec=${nixpkgs-unstable.i3}/bin/i3
         Type=Application
       '';
       executable = false;
@@ -486,7 +355,7 @@ in
 
     file.".local/bin/DRAG_TO_VM" = {
       text = ''
-        #!${pkgs.zsh}/bin/zsh
+        #!${nixpkgs-unstable.zsh}/bin/zsh
         dragon --target | while read dst
         do
           cp "''${dst//file:\/\//}" .
