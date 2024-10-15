@@ -20,7 +20,6 @@
     let
       username = "twentyeight";
       homeDirectory = "/home/twentyeight";
-      shell = builtins.getEnv "SHELL";
       isNixOS = builtins.pathExists "/etc/NIXOS";
 
       # Overlays
@@ -139,7 +138,7 @@
           ];
 
           extraSpecialArgs = {
-            inherit nixpkgs-stable nixpkgs-unstable nur nixvim username homeDirectory shell isNixOS;
+            inherit nixpkgs-stable nixpkgs-unstable nur nixvim username homeDirectory isNixOS;
           };
         };
       };

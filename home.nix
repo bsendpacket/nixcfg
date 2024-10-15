@@ -7,7 +7,6 @@
   nixvim,
   username,
   homeDirectory,
-  shell,
   isNixOS,
   ...
 }:
@@ -55,7 +54,7 @@ in
     nixvim.homeManagerModules.nixvim
 
     # Window Manager
-    (import ./i3/i3.nix { inherit nixpkgs-unstable nixpkgs-stable config lib homeDirectory shell isNixOS; })
+    (import ./i3/i3.nix { inherit nixpkgs-unstable nixpkgs-stable config lib homeDirectory isNixOS; })
 
     # Git
     (import (if builtins.pathExists ./work/git/git.nix then ./work/git/git.nix else ./git/git.nix))

@@ -1,4 +1,4 @@
-{ nixpkgs-unstable, nixpkgs-stable, config, lib, shell, homeDirectory, isNixOS, ... }: 
+{ nixpkgs-unstable, nixpkgs-stable, config, lib, homeDirectory, isNixOS, ... }: 
 let 
   modifier = "Mod1";
 in {
@@ -56,7 +56,7 @@ in {
           "${modifier}+u" = "exec ${nixpkgs-unstable.chromium}/bin/chromium";
 
           # Rofi
-          "${modifier}+d" = "exec --no-startup-id ${shell} -c 'LANG=en_US.UTF-8 LC_ALL=C ${nixpkgs-unstable.rofi}/bin/rofi -show run'";
+          "${modifier}+d" = "exec --no-startup-id ${nixpkgs-unstable.zsh}/bin/zsh -c 'LANG=en_US.UTF-8 LC_ALL=C ${nixpkgs-unstable.rofi}/bin/rofi -show run'";
 
           # Floating window toggle
           "${modifier}+Escape" = "scratchpad show";
