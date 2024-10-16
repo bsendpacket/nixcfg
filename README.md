@@ -9,7 +9,8 @@
 2. Restart shell
 3. git clone https://github.com/bsendpacket/nixcfg ~/.config/home-manager && cd ~/.config/home-manager
 4. git update-index --assume-unchanged binary-ninja/binary-ninja-url.nix
-5. Add Binary Ninja information to binary-ninja/binary-ninja-url.nix
+5. git update-index --assume-unchanged git/git.nix
+5. Add information to binary-ninja.nix and git.nix
 6. nix-shell
 7. home-manager switch
 8. exit
