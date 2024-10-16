@@ -1,4 +1,4 @@
-{ lib, pkgs, colorscheme, ... }:
+{ channels, lib, colorscheme, ... }:
 
 {
   programs.contour = {
@@ -11,7 +11,7 @@
         escape_sandbox = true;
         copy_last_mark_range_offset = 0;
         initial_working_directory = "~";
-        shell = "${pkgs.zsh}/bin/zsh";
+        shell = "${channels.nixpkgs-unstable.zsh}/bin/zsh";
         show_title_bar = false;
         size_indicator_on_resize = false;
         fullscreen = false;

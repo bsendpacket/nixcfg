@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }: 
+{ channels, lib, ... }: 
 let
   firefoxSettings = {
     "browser.aboutConfig.showWarning" = false;
@@ -12,7 +12,7 @@ let
     "browser.newtabpage.activity-stream.showSponsored" = false;
     "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
   };
-  firefoxExtensions = with pkgs.nur.repos.rycee.firefox-addons; [
+  firefoxExtensions = with channels.nixpkgs-unstable.nur.repos.rycee.firefox-addons; [
     ublock-origin
     privacy-badger
     clearurls
@@ -262,7 +262,7 @@ in
   programs.firefox = {
     enable = true;
 
-    package = pkgs.wrapFirefox pkgs.firefox-unwrapped {
+    package = channels.nixpkgs-unstable.wrapFirefox channels.nixpkgs-unstable.firefox-unwrapped {
       extraPolicies = {
         DisableFirefoxStudies = true;
         DisablePocket = true;

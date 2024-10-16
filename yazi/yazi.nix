@@ -1,4 +1,4 @@
-{ pkgs, config, colorscheme, workConfig, isNixOS, ... }: 
+{ channels, config, colorscheme, workConfig, isNixOS, ... }: 
 let
   # To get a SHA-256 for a GitHub repo:
   # Use nurl <url>
@@ -26,7 +26,7 @@ in {
 
     plugins = {
       # Hex viewer
-      "hexyl" = pkgs.fetchFromGitHub {
+      "hexyl" = channels.nixpkgs-unstable.fetchFromGitHub {
         owner = "Reledia";
         repo = "hexyl.yazi";
         rev = "64daf93a67d75eff871befe52d9013687171ffad";
@@ -34,7 +34,7 @@ in {
       };
 
       # Preview Markdown files
-      "glow" = pkgs.fetchFromGitHub {
+      "glow" = channels.nixpkgs-unstable.fetchFromGitHub {
         owner = "Reledia";
         repo = "glow.yazi";
         rev = "536185a4e60ac0adc11d238881e78678fdf084ff";
@@ -42,7 +42,7 @@ in {
       };
 
       # Preview archives as a tree
-      "ouch" = pkgs.fetchFromGitHub {
+      "ouch" = channels.nixpkgs-unstable.fetchFromGitHub {
         owner = "ndtoan96";
         repo = "ouch.yazi";
         rev = "251da6930ca8b7ee0384810086c3bf644caede3e";
@@ -50,7 +50,7 @@ in {
       };
 
       # Search with fg / ff (content, fzf)
-      "fg" = pkgs.fetchFromGitHub {
+      "fg" = channels.nixpkgs-unstable.fetchFromGitHub {
         owner = "lpnh";
         repo = "fg.yazi";
         rev = "a9a79fc2be8622173aaab0daf90c0114d80e8347";
@@ -58,7 +58,7 @@ in {
       };
 
       # Vim-like relative motions
-      "relative-motions" = pkgs.fetchFromGitHub {
+      "relative-motions" = channels.nixpkgs-unstable.fetchFromGitHub {
         owner = "dedukun";
         repo = "relative-motions.yazi";
         rev = "73f554295f4b69756597c9fe3caf3750a321acea";
@@ -66,14 +66,14 @@ in {
       };
 
       # Preview media metadata information
-      "mediainfo" = pkgs.fetchFromGitHub {
+      "mediainfo" = channels.nixpkgs-unstable.fetchFromGitHub {
         owner = "Ape";
         repo = "mediainfo.yazi";
         rev = "c69314e80f5b45fe87a0e06a10d064ed54110439";
         sha256 = "sha256-8xdBPdKSiwB7iRU8DJdTHY+BjfR9D3FtyVtDL9tNiy4=";
       };
 
-      # "projects" = pkgs.fetchFromGitHub {
+      # "projects" = channels.nixpkgs-unstable.fetchFromGitHub {
       #   owner = "MasouShizuka";
       #   repo = "projects.yazi";
       #   rev = "7a1dc3729f0bc3f0d62214683117d490113c3007";
@@ -216,9 +216,9 @@ in {
 
       opener = {
         edit = if isNixOS then [
-          { run = "${pkgs.contour}/bin/contour nvim \"$@\""; orphan = true; }
+          { run = "${channels.nixpkgs-unstable.contour}/bin/contour nvim \"$@\""; orphan = true; }
         ] else [
-          { run = "nixGL ${pkgs.contour}/bin/contour nvim \"$@\""; orphan = true; }
+          { run = "nixGL ${channels.nixpkgs-unstable.contour}/bin/contour nvim \"$@\""; orphan = true; }
         ];
 
         # Open directories with nautilus (backup file manager)
@@ -228,7 +228,7 @@ in {
 
         # View JSON files with jless
         json = [
-          { run = "${pkgs.jless}/bin/jless $0"; desc = "View JSON with jless"; block = true; }
+          { run = "${channels.nixpkgs-unstable.jless}/bin/jless $0"; desc = "View JSON with jless"; block = true; }
         ];
 
         # Automatically triage PE files

@@ -1,4 +1,4 @@
-{ pkgs, colorscheme, ... }: {
+{ channels, colorscheme, ... }: {
 
   programs.kitty = {
     enable = true;
@@ -44,7 +44,7 @@
       enable_audio_bell = "false";
 
       # Set the shell to zsh
-      shell = "${pkgs.zsh}/bin/zsh";
+      shell = "${channels.nixpkgs-unstable.zsh}/bin/zsh";
 
       window_padding_width = 0;
     };

@@ -1,9 +1,9 @@
-{ pkgs, ... }: {
+{ channels, ... }: {
 
   programs.tmux = {
     enable = true;
 
-    shell = "${pkgs.zsh}/bin/zsh";
+    shell = "${channels.nixpkgs-unstable.zsh}/bin/zsh";
 
     mouse = true;
     keyMode = "vi";

@@ -1,24 +1,24 @@
-{ pkgs, config, lib, shell, homeDirectory, isNixOS, ... }: 
+{ channels, config, lib, shell, homeDirectory, isNixOS, ... }: 
 let 
   modifier = "Mod1";
 in {
   xsession = {
     windowManager.i3 = {
       enable = true;
-      package = pkgs.i3;
+      package = channels.nixpkgs-unstable.i3;
 
       config = {
 
         defaultWorkspace = "workspace number 1";
 
         terminal = if isNixOS then 
-          "${pkgs.contour}/bin/contour ${pkgs.tmux}/bin/tmux"
+          "${channels.nixpkgs-unstable.contour}/bin/contour ${channels.nixpkgs-unstable.tmux}/bin/tmux"
         else 
-          "${homeDirectory}/.nix-profile/bin/nixGL ${pkgs.contour}/bin/contour ${pkgs.tmux}/bin/tmux";
+          "${homeDirectory}/.nix-profile/bin/nixGL ${channels.nixpkgs-unstable.contour}/bin/contour ${channels.nixpkgs-unstable.tmux}/bin/tmux";
 
         bars = [{ 
-          command = "${pkgs.i3}/bin/i3bar";
-          statusCommand = "${pkgs.i3status-rust}/bin/i3status-rs ${config.xdg.configHome}/i3status-rust/config-i3bar.toml";
+          command = "${channels.nixpkgs-unstable.i3}/bin/i3bar";
+          statusCommand = "${channels.nixpkgs-unstable.i3status-rust}/bin/i3status-rs ${config.xdg.configHome}/i3status-rust/config-i3bar.toml";
           position = "top";
         }];
 
@@ -53,10 +53,10 @@ in {
           "${modifier}+Shift+k" = "move up";
           "${modifier}+Shift+l" = "move right";
 
-          "${modifier}+u" = "exec ${pkgs.chromium}/bin/chromium";
+          "${modifier}+u" = "exec ${channels.nixpkgs-unstable.chromium}/bin/chromium";
 
           # Rofi
-          "${modifier}+d" = "exec --no-startup-id ${shell} -c 'LANG=en_US.UTF-8 LC_ALL=C ${pkgs.rofi}/bin/rofi -show run'";
+          "${modifier}+d" = "exec --no-startup-id ${shell} -c 'LANG=en_US.UTF-8 LC_ALL=C ${channels.nixpkgs-unstable.rofi}/bin/rofi -show run'";
 
           # Floating window toggle
           "${modifier}+Escape" = "scratchpad show";
@@ -101,6 +101,8 @@ in {
 
   programs.i3status-rust = {
     enable = true;
+    package = channels.nixpkgs-unstable.i3status-rust;
+
     bars.i3bar = {
       icons = "awesome5";
       theme = "native";

@@ -1,4 +1,4 @@
-{ pkgs, homeDirectory, ... }: {
+{ channels, homeDirectory, ... }: {
 
   programs.nixvim = {
     enable = true;
@@ -408,9 +408,9 @@
 
       {
         # Theme
-        plugin = (pkgs.vimUtils.buildVimPlugin {
+        plugin = (channels.nixpkgs-unstable.vimUtils.buildVimPlugin {
           name = "moonfly";
-          src = pkgs.fetchFromGitHub {
+          src = channels.nixpkgs-unstable.fetchFromGitHub {
             owner = "bluz71";
             repo = "vim-moonfly-colors";
             rev = "3469ee3e54e676deafd9dc29beddfde3643b4d0d";
@@ -421,9 +421,9 @@
       } 
       {
         # Show LSP Function Signature
-        plugin = (pkgs.vimUtils.buildVimPlugin {
+        plugin = (channels.nixpkgs-unstable.vimUtils.buildVimPlugin {
           name = "lsp_signature";
-          src = pkgs.fetchFromGitHub {
+          src = channels.nixpkgs-unstable.fetchFromGitHub {
             owner = "ray-x";
             repo = "lsp_signature.nvim";
             rev = "e92b4e7073345b2a30a56b20db3d541a9aa2771e";
@@ -432,9 +432,9 @@
         });
       } 
       {
-        plugin = (pkgs.vimUtils.buildVimPlugin {
+        plugin = (channels.nixpkgs-unstable.vimUtils.buildVimPlugin {
           name = "nvim-lspimport";
-          src = pkgs.fetchFromGitHub {
+          src = channels.nixpkgs-unstable.fetchFromGitHub {
             owner = "stevanmilic";
             repo = "nvim-lspimport";
             rev = "4fef458b8853b1b90b55054ed6c3f98fff094cd1";
@@ -443,9 +443,9 @@
         });
       } 
       {
-        plugin = (pkgs.vimUtils.buildVimPlugin {
+        plugin = (channels.nixpkgs-unstable.vimUtils.buildVimPlugin {
           name = "markview";
-          src = pkgs.fetchFromGitHub {
+          src = channels.nixpkgs-unstable.fetchFromGitHub {
             owner = "OXY2DEV";
             repo = "markview.nvim";
             rev = "9e5275f3b7507da51deab9bc985e9154d0b6af28";
@@ -454,9 +454,9 @@
         });
       }
       {
-        plugin = (pkgs.vimUtils.buildVimPlugin {
+        plugin = (channels.nixpkgs-unstable.vimUtils.buildVimPlugin {
           name = "vim-syntax-yara";
-          src = pkgs.fetchFromGitHub {
+          src = channels.nixpkgs-unstable.fetchFromGitHub {
             owner = "s3rvac";
             repo = "vim-syntax-yara";
             rev = "7f163d489bb041fe74f8788662620a0bcd3c0025";
@@ -466,14 +466,14 @@
       }
       
       # Detect tabstop and shiftwidth automatically
-      pkgs.vimPlugins.vim-sleuth
+      channels.nixpkgs-unstable.vimPlugins.vim-sleuth
 
-      pkgs.vimPlugins.luasnip
+      channels.nixpkgs-unstable.vimPlugins.luasnip
 
-      pkgs.vimPlugins.nui-nvim
+      channels.nixpkgs-unstable.vimPlugins.nui-nvim
 
-      pkgs.vimPlugins.nvim-lspconfig
-      pkgs.vimPlugins.fidget-nvim
+      channels.nixpkgs-unstable.vimPlugins.nvim-lspconfig
+      channels.nixpkgs-unstable.vimPlugins.fidget-nvim
     ];
 
     extraConfigLua = ''

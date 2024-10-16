@@ -1,9 +1,9 @@
-{ config, pkgs, ... }: {
+{ channels, config, ... }: {
 
   programs.rofi = {
     enable = true;
-    terminal = "${pkgs.contour}/bin/contour";
-    #terminal = "${pkgs.alacritty}/bin/alacritty";
+    terminal = "${channels.nixpkgs-unstable.contour}/bin/contour";
+    #terminal = "${channels.nixpkgs-unstable.alacritty}/bin/alacritty";
     theme = "${config.xdg.configHome}/home-manager/rofi/theme.rasi";
   };
 }
