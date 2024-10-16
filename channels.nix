@@ -14,7 +14,7 @@ let
       sha256 = "1wn29537l343lb0id0byk0699fj0k07m1n2d7jx2n0ssax55vhwy";
     }) {
       system = "x86_64-linux";
-      overlays = [ pythonOverlay stableOverlay customOverlay ];
+      overlays = [ pythonOverlay stableOverlay customOverlay homeManagerPinOverlay ];
         
       config.allowUnfree = true;
       config.packageOverrides = pkgs: {
@@ -46,6 +46,12 @@ let
   # Some packages are broken in unstable, use the stable versions instead
   stableOverlay = self: super: {
     contour = channels.nixpkgs-stable.contour;
+  };
+
+  homeManagerPinOverlay = self: super: {
+    home-manager = super.home-manager.overrideAttrs (oldAttrs: {
+      src = channels.home-manager;
+    });
   };
 
   customOverlay = self: super: {

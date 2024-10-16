@@ -1,13 +1,10 @@
 { pkgs ? import <nixpkgs> {} }:
 let
   channels = (import ./channels.nix).channels;
-  home-manager = channels.nixpkgs-unstable.home-manager.overrideAttrs (oldAttrs: {
-    src = channels.home-manager;
-  });
 in
   pkgs.mkShell {
     buildInputs = [
-      home-manager
+      channels.nixpkgs-unstable.home-manager
     ];
 
     shellHook = ''

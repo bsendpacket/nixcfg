@@ -84,7 +84,7 @@ in
 
   programs.home-manager = {
     enable = true;
-    path = "${channels.home-manager}";
+    path = "${channels.nixpkgs-unstable.home-manager.src}";
   };
 
   home = {
