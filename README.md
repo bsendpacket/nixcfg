@@ -18,3 +18,15 @@
 11. sudo ln ~/.local/share/applications/i3.desktop /usr/share/xsessions/
 12. sudo reboot
 ```
+
+# Installation
+```
+1. curl -sSf -L https://install.lix.systems/lix | sh -s -- install
+2. Restart shell
+3. git clone https://github.com/bsendpacket/nixcfg ~/.config/home-manager && cd ~/.config/home-manager
+4. nix-shell
+5. home-manager switch
+6. exit
+7. sudo ln ~/.local/share/applications/i3.desktop /usr/share/xsessions/
+8. sudo reboot
+```

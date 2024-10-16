@@ -1,7 +1,7 @@
 let
   channels = {
     nixpkgs-stable = import (builtins.fetchTarball {
-      url = "https://github.com/NixOS/nixpkgs/archive/nixos-24.05.tar.gz";
+      url = "https://github.com/NixOS/nixpkgs/archive/c0b1da36f7c34a7146501f684e9ebdf15d2bebf8.tar.gz";
       sha256 = "0j15vhfz4na8wmvp532jya81y06g74qkr25ci58dp895bw7l9g2q";
     }) {
       system = "x86_64-linux";
@@ -10,8 +10,8 @@ let
     };
 
     nixpkgs-unstable = import (builtins.fetchTarball {
-      url = "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz";
-      sha256 = "1wn29537l343lb0id0byk0699fj0k07m1n2d7jx2n0ssax55vhwy";
+      url = "https://github.com/NixOS/nixpkgs/archive/d4f247e89f6e10120f911e2e2d2254a050d0f732.tar.gz";
+      sha256 = "0h7z2g4ysb6cnavragn20vhqf33vi5a89g6pydavwg5rivdlx40d";
     }) {
       system = "x86_64-linux";
         overlays = with overlays; [ 
@@ -29,18 +29,18 @@ let
     };
 
     home-manager = (builtins.fetchTarball {
-      url = "https://github.com/nix-community/home-manager/archive/master.tar.gz";
+      url = "https://github.com/nix-community/home-manager/archive/2a4fd1cfd8ed5648583dadef86966a8231024221.tar.gz";
       sha256 = "1lfjr640fkb7152djxvy2db1g9fqxj5hfrgjgri9b21xn3nq7992";
     });
 
     # NUR and nixvim overlays
     nur = import (builtins.fetchTarball {
-      url = "https://github.com/nix-community/NUR/archive/master.tar.gz";
-      sha256 = "0mdavhf8ing8f7s928xs796k2s1c64awh8cyv0gidj6k1zbcywq6";
+      url = "https://github.com/nix-community/NUR/archive/27913565fdb9db9c0f078aa36ccfab943a777ae3.tar.gz";
+      sha256 = "1d156ninl270mgy5ix89mx08qmk151ivxnr9c2m05ssi3l9wqx2s";
     }) { pkgs = channels.nixpkgs-unstable; };
 
     nixvim = import (builtins.fetchTarball {
-      url = "https://github.com/nix-community/nixvim/archive/main.tar.gz";
+      url = "https://github.com/nix-community/nixvim/archive/717e7060fafa2c3822a64e3f5bbfd4895577fdbf.tar.gz";
       sha256 = "0ww9hmimkfmnxj9ji8ik4s1rkidjfkwg4vxfrqmfrrqd8rpij3c1";
     });
   };
@@ -171,7 +171,7 @@ let
 
   nixglOverlay = self: super: {
     nixGL = super.callPackage (builtins.fetchTarball {
-      url = "https://github.com/nix-community/nixGL/archive/main.tar.gz";
+      url = "https://github.com/nix-community/nixGL/archive/310f8e49a149e4c9ea52f1adf70cdc768ec53f8a.tar.gz";
       sha256 = "1crnbv3mdx83xjwl2j63rwwl9qfgi2f1lr53zzjlby5lh50xjz4n";
     }) {};
   };
