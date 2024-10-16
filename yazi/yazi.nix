@@ -1,4 +1,4 @@
-{ channels, config, colorscheme, workConfig, isNixOS, ... }: 
+{ channels, config, colorscheme, workConfig, nixGLPrefix, ... }: 
 let
   # To get a SHA-256 for a GitHub repo:
   # Use nurl <url>
@@ -173,7 +173,7 @@ in {
           { on = [ "'" "4" "c" ]; run = "shell --confirm 'capa -j $@ | dump $@_info/capa'"; desc = "Run Capa"; }
           { on = [ "'" "4" "f" ]; run = "shell --confirm 'floss -j $@ | dump $@_info/floss'"; desc = "Run Floss"; }
           { on = [ "'" "4" "d" "d" ]; run = "shell --confirm 'ilspycmd -p -d -usepdb --no-dead-code --no-dead-stores -o $@_info/decompiled/ $@'"; desc = "[D]otNet [D]ecompile"; }
-          { on = [ "'" "4" "h" ]; run = "shell --confirm --orphan 'nixGL imhex $@'"; desc = "Open in ImHex"; }
+          { on = [ "'" "4" "h" ]; run = "shell --confirm --orphan '${nixGLPrefix}imhex $@'"; desc = "Open in ImHex"; }
           { on = [ "'" "4" "b" ]; run = "shell --confirm --orphan 'binaryninja $@'"; desc = "Open in Binary Ninja"; }
 
 
@@ -215,10 +215,8 @@ in {
       };
 
       opener = {
-        edit = if isNixOS then [
-          { run = "${channels.nixpkgs-unstable.contour}/bin/contour nvim \"$@\""; orphan = true; }
-        ] else [
-          { run = "nixGL ${channels.nixpkgs-unstable.contour}/bin/contour nvim \"$@\""; orphan = true; }
+        edit = [
+          { run = "${nixGLPrefix}${channels.nixpkgs-unstable.contour}/bin/contour nvim \"$@\""; orphan = true; }
         ];
 
         # Open directories with nautilus (backup file manager)

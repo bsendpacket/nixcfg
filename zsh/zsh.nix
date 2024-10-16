@@ -1,5 +1,5 @@
-{ channels, customPackages, workConfig, ... }: {
-
+{ channels, customPackages, workConfig, nixGLPrefix, ... }:
+{
   programs.zsh = {
     enable = true;
     autosuggestion.enable = true;
@@ -37,12 +37,7 @@
       EOF
     '';
 
-    shellAliases = (
-      if builtins.pathExists "/etc/NIXOS" then {
-        # NixOS Specific
-        nixGL = "";       # No-op nixGL on NixOS systems
-      } else {}
-    ) // {
+    shellAliases = {
       py = "python3";
       ls = "lsd";       # LSDeluxe
       cd = "z";         # Zoxide
@@ -52,13 +47,15 @@
       lt = "ls --tree"; # List Files (Tree)
       y = "yy";         # Yazi
       yara = "${channels.nixpkgs-unstable.yara-x}/bin/yr";
-      kitty = "nixGL kitty";
-      alacritty = "nixGL alacritty";
-      contour = "nixGL contour";
       netreactorslayer = "${customPackages.net-reactor-slayer}/bin/NETReactorSlayer";
       rbat = "${customPackages.binary-refinery}/bin/bat";
       goresym = "${channels.nixpkgs-unstable.goresym}/bin/GoReSym";
       ilspy = "${channels.nixpkgs-unstable.avalonia-ilspy}/bin/ILSpy";
+
+      # OpenGL Required
+      kitty = "${nixGLPrefix}kitty";
+      alacritty = "${nixGLPrefix}alacritty";
+      contour = "${nixGLPrefix}contour";
     } // (workConfig.programs.zsh.shellAliases or {});
 
     plugins = [
@@ -89,5 +86,4 @@
       plugins = [ "git" "thefuck" ];
     };
   };
-
 }

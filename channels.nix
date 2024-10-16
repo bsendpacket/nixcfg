@@ -18,7 +18,8 @@ let
           pythonPackagesOverlay 
           pinPackagesToStableOverlay 
           patchPackagesOverlay 
-          homeManagerPinOverlay 
+          homeManagerPinOverlay
+          nixglOverlay
         ];
         
       config.allowUnfree = true;
@@ -166,6 +167,13 @@ let
         };
       };
     };
+  };
+
+  nixglOverlay = self: super: {
+    nixGL = super.callPackage (builtins.fetchTarball {
+      url = "https://github.com/nix-community/nixGL/archive/main.tar.gz";
+      sha256 = "1crnbv3mdx83xjwl2j63rwwl9qfgi2f1lr53zzjlby5lh50xjz4n";
+    }) {};
   };
 in {
   channels = channels;

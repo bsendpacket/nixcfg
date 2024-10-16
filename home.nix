@@ -9,6 +9,7 @@ let
   shell = builtins.getEnv "SHELL";
   isNixOS = builtins.pathExists "/etc/NIXOS";
   colorscheme = import ./colorscheme.nix;
+  nixGLPrefix = if isNixOS then "" else "${channels.nixpkgs-unstable.nixGL.auto.nixGLDefault}/bin/nixGL ";
 
   channels = (import ./channels.nix).channels;
 
@@ -53,7 +54,7 @@ in
     channels.nixvim.homeManagerModules.nixvim
 
     # Window Manager
-    (import ./i3/i3.nix { inherit channels config lib homeDirectory shell isNixOS; })
+    (import ./i3/i3.nix { inherit channels config lib homeDirectory shell nixGLPrefix; })
 
     # Git
     (import (if builtins.pathExists ./work/git/git.nix then ./work/git/git.nix else ./git/git.nix))
@@ -62,8 +63,8 @@ in
     (import ./tmux/tmux.nix { inherit channels; })
     (import ./kitty/kitty.nix { inherit channels colorscheme; })
     (import ./alacritty/alacritty.nix { inherit channels colorscheme; })
-    (import ./yazi/yazi.nix { inherit channels config colorscheme workConfig isNixOS; })
-    (import ./zsh/zsh.nix { inherit lib channels customPackages workConfig; })
+    (import ./yazi/yazi.nix { inherit channels config colorscheme workConfig nixGLPrefix; })
+    (import ./zsh/zsh.nix { inherit lib channels customPackages workConfig nixGLPrefix; })
     (import ./neovim/neovim.nix { inherit channels homeDirectory; })
     (import ./rofi/rofi.nix { inherit channels config; })
     (import ./contour/settings.nix { inherit channels config lib; })
@@ -299,7 +300,7 @@ in
       # Fonts
       (nerdfonts.override { fonts = [ "CascadiaCode" ]; })
 
-    ]) ++ (workConfig.home.packages or []);
+    ]) ++ (workConfig.home.packages or []) ++ (if !isNixOS then [ channels.nixpkgs-unstable.nixGL.auto.nixGLDefault ] else []);
     
     # Create symlinks to the Python venvs in ~/.virtualenvs
     activation.buildPythonEnvs = lib.mkAfter ''

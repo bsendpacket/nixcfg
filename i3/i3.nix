@@ -1,4 +1,4 @@
-{ channels, config, lib, shell, homeDirectory, isNixOS, ... }: 
+{ channels, config, lib, shell, homeDirectory, nixGLPrefix, ... }: 
 let 
   modifier = "Mod1";
 in {
@@ -11,10 +11,7 @@ in {
 
         defaultWorkspace = "workspace number 1";
 
-        terminal = if isNixOS then 
-          "${channels.nixpkgs-unstable.contour}/bin/contour ${channels.nixpkgs-unstable.tmux}/bin/tmux"
-        else 
-          "${homeDirectory}/.nix-profile/bin/nixGL ${channels.nixpkgs-unstable.contour}/bin/contour ${channels.nixpkgs-unstable.tmux}/bin/tmux";
+        terminal = "${nixGLPrefix}${channels.nixpkgs-unstable.contour}/bin/contour ${channels.nixpkgs-unstable.tmux}/bin/tmux";
 
         bars = [{ 
           command = "${channels.nixpkgs-unstable.i3}/bin/i3bar";
