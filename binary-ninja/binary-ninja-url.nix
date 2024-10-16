@@ -1,0 +1,4 @@
+{
+  binaryNinjaUrl = "";
+  binaryNinjaHash = "";
+}
