@@ -1,4 +1,4 @@
-# Run this shell.nix with 'nix-shell' to obtain a TypeScript Frida dev environment
+# Run this shell.nix with 'nix-shell' to enter a TypeScript Frida dev environment
 {}:
 let
   channels = (import ../channels.nix).channels;
@@ -14,8 +14,7 @@ in
       npm install typescript
 
       echo "You are now ready to use Frida!"
-      echo "Make a .ts file, and put '/// <reference types="frida-gum" />' on the first line."
+      echo "Make a .ts file, and put '// <reference types="frida-gum" />' on the first line."
+      echo "You can then run 'frida -H 192.168.XXX.X:27042 -f C:\\<path_to_malware> -l <frida_script>.ts'"
     '';
   }
-
-
