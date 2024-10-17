@@ -193,6 +193,8 @@ in
 
       zig
       rustup
+      typescript
+      nodejs_22
 
       sqlitebrowser
 
