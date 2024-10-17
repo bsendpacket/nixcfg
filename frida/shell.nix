@@ -1,7 +1,7 @@
 # Run this shell.nix with 'nix-shell' to enter a TypeScript Frida dev environment
-{}:
+{ homeDir ? builtins.getEnv "HOME" }:
 let
-  channels = (import ../channels.nix).channels;
+  channels = (import "${homeDir}/.config/home-manager/channels.nix").channels;
 in
   channels.nixpkgs-unstable.mkShell {
     buildInputs = with channels.nixpkgs-unstable; [
