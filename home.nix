@@ -281,7 +281,7 @@ in
         unicorn
         capstone
 
-      ]))
+      ] ++ (workConfig.home.pythonPackages or [])))
 
       # qilling
       # mkyara (?)
