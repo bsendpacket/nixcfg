@@ -53,7 +53,8 @@ in {
           "${modifier}+u" = "exec ${channels.nixpkgs-unstable.chromium}/bin/chromium";
 
           # Rofi
-          "${modifier}+d" = "exec --no-startup-id ${shell} -c 'LANG=en_US.UTF-8 LC_ALL=C ${channels.nixpkgs-unstable.rofi}/bin/rofi -show run'";
+          "${modifier}+d" = "exec --no-startup-id ${shell} -c 'LANG=en_US.UTF-8 LC_ALL=C PATH=$PATH:~/.nix-profile/bin ${channels.nixpkgs-unstable.rofi}/bin/rofi -show run'";
+          "${modifier}+w" = "exec --no-startup-id ${shell} -c 'LANG=en_US.UTF-8 LC_ALL=C ${channels.nixpkgs-unstable.rofi}/bin/rofi -show window'";
 
           # Floating window toggle
           "${modifier}+Escape" = "scratchpad show";
