@@ -16,10 +16,12 @@
       export PYENV_ROOT="$HOME/.pyenv"
       export PATH="$PYENV_ROOT/bin:$HOME/idapro-8.4:$PATH"
 
+      ## PyEnv Setup
       if command -v pyenv &> /dev/null; then
         eval "$(pyenv init -)"
       fi
 
+      ## Binary Refinery Setup
       function alias-noglob {
           while read -r entrypoint; do
               alias $entrypoint="noglob $entrypoint"
@@ -35,6 +37,16 @@
       for ep_name in refinery_eps:
           print(ep_name)
       EOF
+
+      ## ZSH Vi Bindings
+      zvm_bindkey vicmd _ beginning-of-line
+      zvm_bindkey vicmd '^R' fzf_history_search
+      zvm_bindkey vicmd ':' undefined-key
+
+      zvm_bindkey viins '^[^?' backward-kill-word
+
+      ZVM_KEYTIMEOUT=0
+      ZVM_ESCAPE_KEYTIMEOUT=0
     '';
 
     shellAliases = {
@@ -70,14 +82,19 @@
         file = "share/zsh-fzf-history-search/zsh-fzf-history-search.zsh";
       }
       {
-        name = "powerlevel10k-config";
-        src = ./powerlevel10k;
-        file = "p10k.zsh";
+        name = "zsh-vi-mode";
+        src = channels.nixpkgs-unstable.zsh-vi-mode;
+        file = "share/zsh-vi-mode/zsh-vi-mode.plugin.zsh";
       }
       {
         name = "zsh-fast-syntax-highlighting";
         src = channels.nixpkgs-unstable.zsh-fast-syntax-highlighting;
         file = "share/zsh/site-functions";
+      }
+      {
+        name = "powerlevel10k-config";
+        src = ./powerlevel10k;
+        file = "p10k.zsh";
       }
     ];
 
