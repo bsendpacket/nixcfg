@@ -1,8 +1,8 @@
-{ pkgs ? import <nixpkgs> {} }:
+{}:
 let
   channels = (import ./channels.nix).channels;
 in
-  pkgs.mkShell {
+  channels.nixpkgs-unstable.mkShell {
     buildInputs = [
       channels.nixpkgs-unstable.home-manager
     ];
