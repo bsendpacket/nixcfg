@@ -147,6 +147,8 @@ in
       neofetch
       glow
 
+      obsidian
+
       lxqt.screengrab
 
       # RSS
@@ -191,8 +193,10 @@ in
       poetry
       flatpak # TODO: Make declarative
 
+      gcc
       zig
       rustup
+      rustlings
       typescript
       nodejs_22
 
