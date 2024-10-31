@@ -30,7 +30,7 @@ stdenv.mkDerivation (finalAttrs: {
   # Download all pnpm packages declaratively based off the pnpm-lock.yaml file
   pnpmDeps = pnpm.fetchDeps {
     inherit (finalAttrs) pname version src;
-    hash = "sha256-oa4BZCmlLvhcQbFNzxd+h8Wds5H88yabcA5pVeFpjGg=";
+    hash = "sha256-SnTxG3ABPy/nSAgFp4ez827b/UXoG0XIIzD7nxh1Exc=";
     optional = true;
   };
 
