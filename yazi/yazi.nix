@@ -19,6 +19,7 @@ in {
   programs.yazi = {
     enable = true;
     enableZshIntegration = true;
+    package = channels.nixpkgs-unstable.yazi;
 
     initLua = ''
       require("relative-motions"):setup({ show_numbers="relative", show_motion = true })

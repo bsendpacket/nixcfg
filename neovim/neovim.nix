@@ -251,7 +251,9 @@
       noice = {
         enable = true;
         # Handled by custom box in additional lua
-        lsp.signature.enabled = false;
+        settings = {
+          lsp.signature.enabled = false;
+        };
 
         # routes = [{
         #   view = "notify";
@@ -274,7 +276,13 @@
           lua_ls.enable = true;
 
           # Nix LSP
-          nixd.enable = true;
+          nixd = {
+            enable = true;
+            extraOptions = {
+              # https://github.com/nix-community/nixvim/issues/2390
+              offset_encoding = "utf-8";
+            };
+          };
 
           # Rust LSP
           rust_analyzer = {

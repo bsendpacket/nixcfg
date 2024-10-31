@@ -40,8 +40,8 @@ let
     }) { pkgs = channels.nixpkgs-unstable; };
 
     nixvim = import (builtins.fetchTarball {
-      url = "https://github.com/nix-community/nixvim/archive/029eafd70d6e28919a9ec01a94a46b51c4ccff40.tar.gz";
-      sha256 = "1fzf2jsgrsi75dgj2xgdk5nk4jp69jblgamn675v7xbhgqjvr93z";
+      url = "https://github.com/nix-community/nixvim/archive/42ea1626cb002fa759a6b1e2841bfc80a4e59615.tar.gz";
+      sha256 = "0ajfx35h4z3814p2cpbz4yh0ds948h9x8kgv7kbqnjjjlh72jgp7";
     });
   };
 

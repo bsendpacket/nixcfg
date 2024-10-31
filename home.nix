@@ -61,16 +61,16 @@ in
 
     # Terminal Setup 
     (import ./tmux/tmux.nix { inherit channels; })
-    (import ./kitty/kitty.nix { inherit channels colorscheme; })
-    (import ./alacritty/alacritty.nix { inherit channels colorscheme; })
+    # (import ./kitty/kitty.nix { inherit channels colorscheme; })
+    # (import ./alacritty/alacritty.nix { inherit channels colorscheme; })
     (import ./yazi/yazi.nix { inherit channels config colorscheme workConfig nixGLPrefix; })
     (import ./zsh/zsh.nix { inherit lib channels customPackages workConfig nixGLPrefix colorscheme; })
     (import ./neovim/neovim.nix { inherit channels homeDirectory; })
     (import ./rofi/rofi.nix { inherit channels config; })
     (import ./contour/settings.nix { inherit channels config lib; })
     (import ./contour/contour.nix { inherit channels lib colorscheme; })
+    (import ./zoxide/zoxide.nix { inherit channels; })
 
-    ./zoxide/zoxide.nix
     ./zathura/zathura.nix
     ./malwoverview/malwoverview.nix
 
@@ -122,8 +122,8 @@ in
       # Find pressed key
       xorg.xev
 
-      kitty
-      alacritty
+      # kitty
+      # alacritty
       contour
 
       tmux
