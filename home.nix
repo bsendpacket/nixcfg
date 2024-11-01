@@ -6,7 +6,6 @@
 let
   username = builtins.getEnv "USER";
   homeDirectory = builtins.getEnv "HOME";
-  shell = builtins.getEnv "SHELL";
   isNixOS = builtins.pathExists "/etc/NIXOS";
   colorscheme = import ./colorscheme.nix;
   nixGLPrefix = if isNixOS then "" else "${channels.nixpkgs-unstable.nixGL.auto.nixGLDefault}/bin/nixGL ";
@@ -54,7 +53,7 @@ in
     channels.nixvim.homeManagerModules.nixvim
 
     # Window Manager
-    (import ./i3/i3.nix { inherit channels config lib homeDirectory shell nixGLPrefix; })
+    (import ./i3/i3.nix { inherit channels config lib nixGLPrefix; })
 
     # Git
     (import (if builtins.pathExists ./work/git/git.nix then ./work/git/git.nix else ./git/git.nix))

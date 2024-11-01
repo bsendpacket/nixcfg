@@ -1,4 +1,4 @@
-{ channels, config, lib, shell, homeDirectory, nixGLPrefix, ... }: 
+{ channels, config, lib, nixGLPrefix, ... }: 
 let 
   modifier = "Mod1";
 in {
@@ -50,11 +50,11 @@ in {
           "${modifier}+Shift+k" = "move up";
           "${modifier}+Shift+l" = "move right";
 
-          "${modifier}+u" = "exec ${channels.nixpkgs-unstable.chromium}/bin/chromium";
+          "${modifier}+Shift+c" = "reload";
 
           # Rofi
-          "${modifier}+d" = "exec --no-startup-id ${shell} -c 'LANG=en_US.UTF-8 LC_ALL=C PATH=$PATH:~/.nix-profile/bin ${channels.nixpkgs-unstable.rofi}/bin/rofi -show run'";
-          "${modifier}+Shift+w" = "exec --no-startup-id ${shell} -c 'LANG=en_US.UTF-8 LC_ALL=C ${channels.nixpkgs-unstable.rofi}/bin/rofi -show window'";
+          "${modifier}+d" = "exec --no-startup-id ${channels.nixpkgs-unstable.zsh}/bin/zsh -c 'LANG=en_US.UTF-8 LC_ALL=C PATH=~/.nix-profile/bin:$PATH ${channels.nixpkgs-unstable.rofi}/bin/rofi -show run'";
+          "${modifier}+Shift+w" = "exec --no-startup-id ${channels.nixpkgs-unstable.zsh}/bin/zsh -c 'LANG=en_US.UTF-8 LC_ALL=C ${channels.nixpkgs-unstable.rofi}/bin/rofi -show window'";
 
           # Floating window toggle
           "${modifier}+Escape" = "scratchpad show";
