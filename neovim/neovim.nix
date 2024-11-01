@@ -107,7 +107,7 @@
         };
       }
       {
-        action = "<cmd>vim.lsp.buf.hover<CR>";
+        action = "<cmd>lua vim.lsp.buf.hover()<CR>";
         options.desc = "Hover Documentation";
         key = "K";
         mode = [ "n" ];
@@ -116,7 +116,7 @@
         };
       }
       {
-        action = "<cmd>vim.lsp.buf.signature_help<CR>";
+        action = "<cmd>lua vim.lsp.buf.signature_help()<CR>";
         options.desc = "Signature Documentation";
         key = "<C-k>";
         mode = [ "n" ];
@@ -290,6 +290,12 @@
             installCargo = true;
             installRustc = true;
             settings.check.command = "clippy";
+
+            rootDir = ''
+              function(fname)
+                return vim.loop.cwd()
+              end
+            '';
           };
 
           # Python LSP
