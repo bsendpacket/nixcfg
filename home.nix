@@ -257,7 +257,7 @@ in
       # IDR
 
       # Custom Python environment
-      (python312.withPackages (ps: with ps; [
+      (channels.nixpkgs-unstable.python312.withPackages (ps: with channels.nixpkgs-unstable.python312Packages; [
         pip
         setuptools
         wheel

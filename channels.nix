@@ -10,11 +10,12 @@ let
     };
 
     nixpkgs-unstable = import (builtins.fetchTarball {
-      url = "https://github.com/NixOS/nixpkgs/archive/2d2a9ddbe3f2c00747398f3dc9b05f7f2ebb0f53.tar.gz";
-      sha256 = "1v6gpivg8mj4qapdp0y5grapnlvlw8xyh5bjahq9i50iidjr3587";
+      url = "https://github.com/NixOS/nixpkgs/archive/807e9154dcb16384b1b765ebe9cd2bba2ac287fd.tar.gz";
+      sha256 = "1xc6bw4sa7bq34rinmbmz0rdnbr0lan5xvk53kbcjkyc8p1pfvlp";
     }) {
       system = "x86_64-linux";
         overlays = with overlays; [ 
+          pinPackagesToSpecificVersionOverlay
           pythonPackagesOverlay 
           pinPackagesToStableOverlay 
           patchPackagesOverlay 
@@ -70,6 +71,17 @@ let
       });
     };
 
+    pinPackagesToSpecificVersionOverlay = self: super: {
+      unicorn = super.unicorn.overrideAttrs (oldAttrs: {
+        src = super.fetchFromGitHub {
+          owner = "unicorn-engine";
+          repo = "unicorn";
+          rev = "2.0.1.post1";
+          hash = "sha256-Jz5C35rwnDz0CXcfcvWjkwScGNQO1uijF7JrtZhM7mI=";
+        };
+      });
+    };
+
     # This overlay is for when a package exists on NixPkgs, but a custom patch is required
     patchPackagesOverlay = self: super: {
 
@@ -97,69 +109,13 @@ let
           # By forcing protobuf5 here, conflicts of multiple versions existing is prevented
           protobuf = pythonSuper.protobuf5;
 
-          # Stable unicorn is required for angr at the moment
-          unicorn = channels.nixpkgs-stable.python312Packages.unicorn;
-
-          pyvex = pythonSuper.pyvex.overrideAttrs (oldAttrs: rec {
-            version = "9.2.120";
-
-            src = pythonSelf.fetchPypi {
-              pname = "pyvex";
-              version = version;
-              sha256 = "sha256-pMGjUHGu/cxFqQb0It8/ZRzy+l3zJ0r8vsCO5TMbvrY=";
-            };
+          # Unicorn v2.0.1 still requires setuptools+distutils
+          unicorn = pythonSuper.unicorn.overrideAttrs (oldAttrs: {
+            propagatedBuildInputs = with super.python312Packages; [ setuptools distutils ];
           });
 
-          archinfo = pythonSuper.archinfo.overrideAttrs (oldAttrs: rec {
-            version = "9.2.120";
-
-            src = pythonSelf.fetchPypi {
-              pname = "archinfo";
-              version = version;
-              sha256 = "sha256-zlXHn9sXqA460dOAjnq6tEaIsKPU/nh+IKHCPX9RVhY=";
-            };
-          });
-
-          claripy = pythonSuper.claripy.overrideAttrs (oldAttrs: rec {
-            version = "9.2.120";
-
-            src = pythonSelf.fetchPypi {
-              pname = "claripy";
-              version = version;
-              sha256 = "sha256-DTX7ktnreH4d8J+7e+vutZbvClxO4Hb4NuicM+enZjY=";
-            };
-          });
-            
-          cle = pythonSuper.cle.overrideAttrs (oldAttrs: rec {
-            version = "9.2.120";
-
-            src = pythonSelf.fetchPypi {
-              pname = "cle";
-              version = version;
-              sha256 = "sha256-FJ2nt3krfY8y24cukto3KeQrq6mJHJMiK9WEe4R65Wo=";
-            };
-          });
-
-          ailment = pythonSuper.ailment.overrideAttrs (oldAttrs: rec {
-            version = "9.2.120";
-
-            src = pythonSelf.fetchPypi {
-              pname = "ailment";
-              version = version;
-              sha256 = "sha256-B5aSEQYs3B6RzlQmkOeEnvdgrkSDlJIFC+KHU4eN/6k=";
-            };
-          });
-
-          # Fix version mismatch on NixPkgs Unstable and suppress broken state
-          angr = pythonSuper.angr.overrideAttrs (oldAttrs: rec {
-            version = "9.2.120";
-
-            src = pythonSelf.fetchPypi {
-              pname = "angr";
-              version = version;
-              sha256 = "sha256-CGHE2sJVPlAJ6mBcmtuR3k7MvMBkBgppOH4tVPmewuA=";
-            };
-
+          # Suppress broken state as the version of Unicorn is correctly pinned
+          angr = pythonSuper.angr.overrideAttrs (oldAttrs: {
             meta = oldAttrs.meta // {
               broken = false;
             };
