@@ -19,7 +19,6 @@ let
 
   # Packages to build, as they are not on NixPkgs
   customPackages = {
-    jadx = channels.nixpkgs-unstable.callPackage ./jadx/default.nix { };
     de4dot = channels.nixpkgs-unstable.callPackage ./de4dot/de4dot.nix { };
     redress = channels.nixpkgs-unstable.callPackage ./redress/redress.nix { };
     webcrack = channels.nixpkgs-unstable.callPackage ./webcrack/webcrack.nix { };
