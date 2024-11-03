@@ -1,10 +1,15 @@
-{ channels }:
+{ channels, binaryNinjaURL }:
 let
   pythonWithPackages = channels.nixpkgs-unstable.python312.withPackages (ps: with ps; [
+    rpyc
     lxml
     httpx
     requests
     flatbuffers
+    (callPackage ./binary-ninja-api.nix {
+      binaryNinjaUrl  = binaryNinjaURL.binaryNinjaUrl;
+      binaryNinjaHash = binaryNinjaURL.binaryNinjaHash;
+    })
     (callPackage ../dependencies/mkyara.nix {})
     (callPackage ../binary-refinery/binary-refinery.nix {})
   ]); 
@@ -109,7 +114,17 @@ let
       folder = "COMpanion";
     })
 
+    # Semi-headless setup for Binja
+    (fetchBinaryNinjaPlugin {
+      owner = "hugsy";
+      repo = "binja-headless";
+      rev = "7d9acc2874c574ecd528c45ab69715268ec2504e";
+      sha256 = "sha256-PXVwN59jbUiRJFz5v/cHdAd3QK0C/OCGL/BERg2WZwY=";
+      name = "binja_headless";
+      folder = "binja_headless";
+    })
   ];
+
   binaryNinjaConfigFiles = channels.nixpkgs-unstable.stdenv.mkDerivation {
     name = "binary-ninja-config-files";
     src = ./config;

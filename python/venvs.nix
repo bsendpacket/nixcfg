@@ -1,4 +1,4 @@
-{ channels, customPackages, ... }:
+{ channels, customPackages, binaryNinjaEnv, ... }:
 
 let
   # Helper to set up a Python venv
@@ -28,9 +28,15 @@ let
     ];
   };
 
+  binjaEnv = {
+    name = "binja";
+    pythonEnv = binaryNinjaEnv;
+  };
+
 in
 {
   envs = [
     speakeasyEnv
+    binjaEnv
   ];
 }

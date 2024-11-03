@@ -13,7 +13,9 @@ let
   channels = (import ./channels.nix).channels;
 
   binaryNinjaURL = import ./binary-ninja/binary-ninja-url.nix;
-  binaryNinjaConfig = import ./binary-ninja/config.nix { inherit channels; };
+  binaryNinjaConfig = import ./binary-ninja/config.nix { 
+    inherit channels binaryNinjaURL;
+  };
 
   # Packages to build, as they are not on NixPkgs
   customPackages = {
@@ -45,7 +47,7 @@ let
   workConfig = fileExists ./work/work.nix;
 
   # Python Environments
-  pythonEnvs = import ./python/venvs.nix { inherit channels customPackages; };
+  pythonEnvs = import ./python/venvs.nix { inherit channels customPackages; binaryNinjaEnv = binaryNinjaConfig.pythonEnv; };
 
 in
 {
