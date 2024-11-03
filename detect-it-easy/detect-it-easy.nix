@@ -11,11 +11,11 @@
 
 stdenv.mkDerivation rec {
   pname = "detect-it-easy";
-  version = "3.09";
+  version = "3.10";
 
   src = fetchurl {
-    url = "https://github.com/horsicq/DIE-engine/releases/download/3.09/die_sourcecode_3.09.tar.gz";
-    sha256 = "sha256-60WMX7w9BqvwTFUsog4NDPzzZUDC8JYv63ni9OplvBI=";
+    url = "https://github.com/horsicq/DIE-engine/releases/download/3.10/die_sourcecode_3.10.tar.gz";
+    sha256 = "sha256-TLQexBs6NDPf/AcczYr9kcvGnDP76lT53ZRwVaXsS1w=";
   };
 
   nativeBuildInputs = [
@@ -77,10 +77,11 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with lib; {
-    description = "Detect It Easy, or abbreviated 'DIE' is a program for determining types of files";
+    description = "Detect It Easy (DiE) is a powerful tool for file type identification, popular among malware analysts, cybersecurity experts, and reverse engineers worldwide.";
     homepage = "https://horsicq.github.io";
     license = licenses.mit;
-    platforms = platforms.linux;
-    maintainers = [ "bsendpacket" ];
+    platforms = platforms.unix;
+    mainProgram = "die";
+    maintainers = with maintainers; [ bsendpacket ];
   };
 }
