@@ -356,7 +356,7 @@ in
         [Desktop Entry]
         Name=i3
         Comment=improved dynamic tiling window manager
-        Exec=${channels.nixpkgs-unstable.i3}/bin/i3
+        Exec=${homeDirectory}/.nix-profile/bin/i3
         Type=Application
       '';
       executable = false;
