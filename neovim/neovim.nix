@@ -191,11 +191,11 @@
 
       # Navigation helper, toggle with :Navbuddy
       # Navic is required by Navbuddy.
-      # navic.enable = true;
-      # navbuddy = {
-      #   enable = true;
-      #   lsp.autoAttach = true;
-      # };
+      navic.enable = true;
+      navbuddy = {
+        enable = true;
+        lsp.autoAttach = true;
+      };
 
       # Purposefully makes nvim harder to use by adding timeouts to the basic movement keys
       # This is in order to train to utilize faster and better movement mechanisms
