@@ -2,8 +2,9 @@
 
   programs.rofi = {
     enable = true;
+    package = channels.nixpkgs-unstable.rofi;
+
     terminal = "${channels.nixpkgs-unstable.contour}/bin/contour";
-    #terminal = "${channels.nixpkgs-unstable.alacritty}/bin/alacritty";
     theme = "${config.xdg.configHome}/home-manager/rofi/theme.rasi";
   };
 }

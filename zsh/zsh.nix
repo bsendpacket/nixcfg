@@ -2,6 +2,8 @@
 {
   programs.zsh = {
     enable = true;
+    package = channels.nixpkgs-unstable.zsh;
+
     autosuggestion.enable = true;
     enableCompletion = true;
 
@@ -101,6 +103,8 @@
 
     oh-my-zsh = {
       enable = true;
+      package = channels.nixpkgs-unstable.oh-my-zsh;
+
       plugins = [ "git" "thefuck" ];
     };
   };

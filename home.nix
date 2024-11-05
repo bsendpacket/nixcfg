@@ -57,7 +57,7 @@ in
     (import ./i3/i3.nix { inherit channels config lib nixGLPrefix; })
 
     # Git
-    (import (if builtins.pathExists ./work/git/git.nix then ./work/git/git.nix else ./git/git.nix))
+    (import (if builtins.pathExists ./work/git/git.nix then ./work/git/git.nix else ./git/git.nix) { inherit channels; } )
 
     # Terminal Setup 
     (import ./tmux/tmux.nix { inherit channels; })
@@ -187,7 +187,7 @@ in
       file
       poppler
 
-      shared-mime-info
+      #shared-mime-info
 
       lazygit
       poetry

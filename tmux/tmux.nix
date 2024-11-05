@@ -2,6 +2,7 @@
 
   programs.tmux = {
     enable = true;
+    package = channels.nixpkgs-unstable.tmux;
 
     shell = "${channels.nixpkgs-unstable.zsh}/bin/zsh";
 
