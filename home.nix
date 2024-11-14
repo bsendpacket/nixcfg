@@ -75,7 +75,7 @@ in
     ./malwoverview/malwoverview.nix
 
     # Services
-    ./picom/picom.nix
+    (import ./picom/picom.nix { inherit channels; })
 
     binaryNinjaConfig.binaryNinjaConfig
 

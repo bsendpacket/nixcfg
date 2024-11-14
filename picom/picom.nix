@@ -1,7 +1,8 @@
-{ ... }: {
+{ channels, ... }: {
   # Enable Picom service to enable transparency and blur
   services.picom = {
     enable = true;
+    package = channels.nixpkgs-unstable.picom;
 
     backend = "glx";
 

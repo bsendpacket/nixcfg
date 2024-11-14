@@ -10,8 +10,8 @@ let
     };
 
     nixpkgs-unstable = import (builtins.fetchTarball {
-      url = "https://github.com/NixOS/nixpkgs/archive/807e9154dcb16384b1b765ebe9cd2bba2ac287fd.tar.gz";
-      sha256 = "1xc6bw4sa7bq34rinmbmz0rdnbr0lan5xvk53kbcjkyc8p1pfvlp";
+      url = "https://github.com/NixOS/nixpkgs/archive/3f9b169c4bff458f5b9462452fb048c207cd5fe2.tar.gz";
+      sha256 = "0nraxyxm7drzg55innailxg3lmlz7ndggrw34nky04lr7l0k5ma9";
     }) {
       system = "x86_64-linux";
         overlays = with overlays; [ 
@@ -30,8 +30,8 @@ let
     };
 
     home-manager = (builtins.fetchTarball {
-      url = "https://github.com/nix-community/home-manager/archive/2a4fd1cfd8ed5648583dadef86966a8231024221.tar.gz";
-      sha256 = "1lfjr640fkb7152djxvy2db1g9fqxj5hfrgjgri9b21xn3nq7992";
+      url = "https://github.com/nix-community/home-manager/archive/1d0862ee2d7c6f6cd720d6f32213fa425004be10.tar.gz";
+      sha256 = "0hqmxdp6wz8z305w7pb582ardsyn45wgr55mck2isk43jrjriba2";
     });
 
     # NUR and nixvim overlays
