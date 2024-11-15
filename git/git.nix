@@ -1,4 +1,4 @@
-{ channels ... }: {
+{ channels, ... }: {
 
   programs.git = {
     enable = true;
