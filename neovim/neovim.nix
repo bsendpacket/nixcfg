@@ -42,6 +42,10 @@
       maplocalleader = " ";
     };
 
+    extraConfigVim = ''
+      command! SortByLen :%!python3 -c 'import sys; print("".join(sorted(sys.stdin.readlines(), key=len)))'
+    '';
+
     keymaps = [
       {
         action = "<cmd>Neotree toggle<CR>";
