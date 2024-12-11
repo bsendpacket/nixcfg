@@ -293,7 +293,7 @@
             enable = true;
             installCargo = true;
             installRustc = true;
-            settings.check.command = "clippy";
+            # settings.check.command = "clippy";
 
             rootDir = ''
               function(fname)

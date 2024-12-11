@@ -1,2 +1,3 @@
 work/*
 binary-ninja/binary-ninja-url.nix
+git/git.nix
