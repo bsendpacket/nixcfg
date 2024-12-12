@@ -17,3 +17,13 @@
 9. sudo ln ~/.local/share/applications/i3.desktop /usr/share/xsessions/
 10. sudo reboot
 ```
+
+# FAQ
+- My i3 no longer shows up in my list of window managers!
+If i3 was updated, the hardlink may break, and you will have to recreate the link. Unfortunately, not all display managers support the use of a softlink- and thus, this is nessasary.
+To fix this, enter a TTY (Ctrl+Alt+F3, or whichever combination enters a TTY for your distro of choice) and enter the following commands:
+```
+sudo rm /usr/share/xsessions/i3.desktop
+sudo ln ~/.local/share/applications/i3.desktop /usr/share/xsessions/
+```
+You can then return to the login screen for most distros with Ctrl+Alt+F7.
