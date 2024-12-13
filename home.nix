@@ -33,6 +33,7 @@ let
     binary-refinery = channels.nixpkgs-unstable.callPackage ./binary-refinery/binary-refinery.nix { };
     donut-decryptor = channels.nixpkgs-unstable.callPackage ./donut-decryptor/donut-decryptor.nix { };
     dncil = channels.nixpkgs-unstable.callPackage ./dependencies/dncil.nix { };
+    pyja3 = channels.nixpkgs-unstable.callPackage ./dependencies/pyja3.nix { };
 
     binary-ninja = channels.nixpkgs-unstable.callPackage ./binary-ninja/binary-ninja.nix { 
       binaryNinjaUrl = binaryNinjaURL.binaryNinjaUrl;
@@ -271,6 +272,7 @@ in
         flask
         netifaces
         mitmproxy
+        pyja3
 
         # Binary Analysis
         binary-refinery
