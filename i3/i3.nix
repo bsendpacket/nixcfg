@@ -3,9 +3,12 @@ let
   tmuxWrapper = channels.nixpkgs-unstable.writeShellScriptBin "tmux-main" ''
     #!${channels.nixpkgs-unstable.bash}/bin/bash
     if ! ${channels.nixpkgs-unstable.tmux}/bin/tmux -2 has-session -t main 2>/dev/null; then
-      ${channels.nixpkgs-unstable.tmux}/bin/tmux -2 new-session -d -s main
+      # First time: create session and use its initial window
+      exec ${channels.nixpkgs-unstable.tmux}/bin/tmux -2 new-session -s main
     fi
-    exec ${channels.nixpkgs-unstable.tmux}/bin/tmux -2 attach -t main
+    # Not first time: create new window and use that
+    WINDOW_INDEX=$(${channels.nixpkgs-unstable.tmux}/bin/tmux -2 new-window -d -P -t main -F "#{window_index}")
+    exec ${channels.nixpkgs-unstable.tmux}/bin/tmux -2 new-session -t main \; select-window -t $WINDOW_INDEX
   '';
 
   scratchWrapper = channels.nixpkgs-unstable.writeShellScriptBin "tmux-scratch" ''
