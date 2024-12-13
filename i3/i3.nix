@@ -30,7 +30,7 @@ let
   newSessionCmd = ''${nixGLPrefix}${channels.nixpkgs-unstable.contour}/bin/contour ${channels.nixpkgs-unstable.tmux}/bin/tmux -2 new-session -s'';
 
   # Open a terminal with a given tmux session
-  attachSessionCmd = ''${nixGLPrefix}${channels.nixpkgs-unstable.contour}/bin/contour ${channels.nixpkgs-unstable.tmux}/bin/tmux -2 new-window -t'';
+  attachSessionCmd = ''${nixGLPrefix}${channels.nixpkgs-unstable.contour}/bin/contour ${channels.nixpkgs-unstable.tmux}/bin/tmux -2 attach -t'';
 in {
   xsession = {
     windowManager.i3 = {
