@@ -157,6 +157,7 @@ in {
       blocks = [
         {
           block = "focused_window";
+          format = " $title.str(max_w:75) |";
         }
         {
           alert = 10.0;
