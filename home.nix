@@ -236,7 +236,7 @@ in
       jadx
 
       # .NET
-      avalonia-ilspy
+      # avalonia-ilspy
       ilspycmd
       de4dot
       net-reactor-slayer
@@ -306,7 +306,7 @@ in
       # podman-compose
 
       # Fonts
-      (nerdfonts.override { fonts = [ "CascadiaCode" ]; })
+      pkgs.nerd-fonts.caskaydia-cove
 
     ]) ++ (workConfig.home.packages or []) ++ (if !isNixOS then [ channels.nixpkgs-unstable.nixGL.auto.nixGLDefault ] else []);
     

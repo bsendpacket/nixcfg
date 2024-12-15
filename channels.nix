@@ -10,8 +10,8 @@ let
     };
 
     nixpkgs-unstable = import (builtins.fetchTarball {
-      url = "https://github.com/NixOS/nixpkgs/archive/3f9b169c4bff458f5b9462452fb048c207cd5fe2.tar.gz";
-      sha256 = "0nraxyxm7drzg55innailxg3lmlz7ndggrw34nky04lr7l0k5ma9";
+      url = "https://github.com/NixOS/nixpkgs/archive/5a48e3c2e435e95103d56590188cfed7b70e108c.tar.gz";
+      sha256 = "0qgiha64bncgy711c9ym94k34ki4lc90p739g3qmf9warqp8fa67";
     }) {
       system = "x86_64-linux";
         overlays = with overlays; [ 
@@ -23,26 +23,33 @@ let
           nixglOverlay
         ];
         
-      config.allowUnfree = true;
-      config.packageOverrides = pkgs: {
-        nur = channels.nur;
+      config = {
+        allowUnfree = true;
+        packageOverrides = pkgs: {
+          nur = channels.nur;
+        };
+        # TEMPORARY
+        permittedInsecurePackages = [
+          "dotnet-sdk-6.0.428"
+          "dotnet-runtime-6.0.36"
+        ];
       };
     };
 
     home-manager = (builtins.fetchTarball {
-      url = "https://github.com/nix-community/home-manager/archive/1d0862ee2d7c6f6cd720d6f32213fa425004be10.tar.gz";
-      sha256 = "0hqmxdp6wz8z305w7pb582ardsyn45wgr55mck2isk43jrjriba2";
+      url = "https://github.com/nix-community/home-manager/archive/66c5d8b62818ec4c1edb3e941f55ef78df8141a8.tar.gz";
+      sha256 = "0bn15l9rnzqihmyhzx0dg1l0v5wg646wqrspjgnd1d8rjwd20b45";
     });
 
     # NUR and nixvim overlays
     nur = import (builtins.fetchTarball {
-      url = "https://github.com/nix-community/NUR/archive/27913565fdb9db9c0f078aa36ccfab943a777ae3.tar.gz";
-      sha256 = "1d156ninl270mgy5ix89mx08qmk151ivxnr9c2m05ssi3l9wqx2s";
+      url = "https://github.com/nix-community/NUR/archive/12bcdb7c86a2598761a7e2ada1b1e6cd7542197c.tar.gz";
+      sha256 = "1ncwyc8fzw317gzagkfda28rk1f1ws7pnk4363zds1rpp0cls2rx";
     }) { pkgs = channels.nixpkgs-unstable; };
 
     nixvim = import (builtins.fetchTarball {
-      url = "https://github.com/nix-community/nixvim/archive/42ea1626cb002fa759a6b1e2841bfc80a4e59615.tar.gz";
-      sha256 = "0ajfx35h4z3814p2cpbz4yh0ds948h9x8kgv7kbqnjjjlh72jgp7";
+      url = "https://github.com/nix-community/nixvim/archive/58d2a5ac9cc4ff987e6edb77f2b55d1dec05ce50.tar.gz";
+      sha256 = "0sk5njshf9pbr44bfpgvc3fv2a1xznhj763gwlrgwlwmn14z17dy";
     });
   };
 

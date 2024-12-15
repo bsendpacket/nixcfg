@@ -30,40 +30,40 @@ in {
       "hexyl" = channels.nixpkgs-unstable.fetchFromGitHub {
         owner = "Reledia";
         repo = "hexyl.yazi";
-        rev = "64daf93a67d75eff871befe52d9013687171ffad";
-        hash = "sha256-B2L3/Q1g0NOO6XEMIMGBC/wItbNgBVpbaMMhiXOYcrI=";
+        rev = "39d3d4e23ad7cec8888f648ddf55af4386950ce7";
+        hash = "sha256-nsnnL3GluKk/p1dQZTZ/RwQPlAmTBu9mQzHz1g7K0Ww=";
       };
 
       # Preview Markdown files
       "glow" = channels.nixpkgs-unstable.fetchFromGitHub {
         owner = "Reledia";
         repo = "glow.yazi";
-        rev = "536185a4e60ac0adc11d238881e78678fdf084ff";
-        sha256 = "sha256-NcMbYjek99XgWFlebU+8jv338Vk1hm5+oW5gwH+3ZbI=";
+        rev = "c2ed51ed8c4ba965b793adab5868a307ab375c8a";
+        sha256 = "sha256-hY390F6/bkQ6qN2FZEn0k+j+XfaERJiAo/E3xXYRB70=";
       };
 
       # Preview archives as a tree
       "ouch" = channels.nixpkgs-unstable.fetchFromGitHub {
         owner = "ndtoan96";
         repo = "ouch.yazi";
-        rev = "251da6930ca8b7ee0384810086c3bf644caede3e";
-        sha256 = "sha256-yLt9aY6hUIOdBI5bMdCs7VYFJGyD3WIkmPxvWKNCskA=";
+        rev = "b8698865a0b1c7c1b65b91bcadf18441498768e6";
+        sha256 = "sha256-eRjdcBJY5RHbbggnMHkcIXUF8Sj2nhD/o7+K3vD3hHY=";
       };
 
       # Search with fg / ff (content, fzf)
       "fg" = channels.nixpkgs-unstable.fetchFromGitHub {
         owner = "lpnh";
         repo = "fg.yazi";
-        rev = "a9a79fc2be8622173aaab0daf90c0114d80e8347";
-        hash = "sha256-g4ul6q0EHmBKxXsfMY567E7J5SDuNxZ29goCaTfVLtE=";
+        rev = "a7e1a828ef4dfb01ace5b03fe0691c909466a645";
+        hash = "sha256-QxtWyp91XcW8+PSYtER47Pcc1Y9i3LplJyTzeC5Gp2s=";
       };
 
       # Vim-like relative motions
       "relative-motions" = channels.nixpkgs-unstable.fetchFromGitHub {
         owner = "dedukun";
         repo = "relative-motions.yazi";
-        rev = "73f554295f4b69756597c9fe3caf3750a321acea";
-        sha256 = "sha256-jahJC6LXOnr974+zHEH9gqI+J1C68O+PvjSt8pelkP0=";
+        rev = "df97039a04595a40a11024f321a865b3e9af5092";
+        sha256 = "sha256-csX8T2a5f7k6g2mlR+08rm0qBeWdI4ABuja+klIvwqw=";
       };
 
       # Preview media metadata information
@@ -205,13 +205,13 @@ in {
         prepend_previewers = [
           { name = "*.md";                        run = "glow"; }
           { mime = "application/*zip";            run = "ouch"; }
-          { mime = "application/x-tar";           run = "ouch"; }
-          { mime = "application/x-bzip2";         run = "ouch"; }
-          { mime = "application/x-7z-compressed"; run = "ouch"; }
-          { mime = "application/x-rar";           run = "ouch"; }
-          { mime = "application/x-xz";            run = "ouch"; }
+          { mime = "application/tar";           run = "ouch"; }
+          { mime = "application/bzip2";         run = "ouch"; }
+          { mime = "application/7z-compressed"; run = "ouch"; }
+          { mime = "application/rar";           run = "ouch"; }
+          { mime = "application/xz";            run = "ouch"; }
           { mime = "{image,audio,video}/*";       run = "mediainfo"; }
-          { mime = "application/x-subrip";        run = "mediainfo"; }
+          { mime = "application/subrip";        run = "mediainfo"; }
         ];
       };
 
@@ -283,16 +283,16 @@ in {
           { mime = "application/json"; use = [ "json" ]; }
 
           { mime = "application/vnd.microsoft.portable-executable"; use = [ "triage_pe" ]; }
-          { mime = "application/x-msi"; use = [ "triage_msi" ]; }
+          { mime = "application/msi"; use = [ "triage_msi" ]; }
           { mime = "application/vnd.ms-cab-compressed"; use = [ "triage_cab" ]; }
 
-          { mime = "application/x-executable"; use = [ "triage_elf" ]; }
-          { mime = "application/x-pie-executable"; use = [ "triage_elf" ]; }
-          { mime = "application/x-sharedlib"; use = [ "triage_elf" ]; }
+          { mime = "application/executable"; use = [ "triage_elf" ]; }
+          { mime = "application/pie-executable"; use = [ "triage_elf" ]; }
+          { mime = "application/sharedlib"; use = [ "triage_elf" ]; }
 
-          { mime = "application/x-mach-binary"; use = [ "triage_macho" ]; }
+          { mime = "application/mach-binary"; use = [ "triage_macho" ]; }
 
-          { mime = "application/x-rar"; use = [ "extract_rar" ]; }
+          { mime = "application/rar"; use = [ "extract_rar" ]; }
         ];
       };
     };
@@ -364,33 +364,48 @@ in {
         border_symbol = "│";
         border_style = { fg = colorscheme.colors.bright_black; };
       };
-      
-      status = {
-        separator_open = "";
-        separator_close = "";
 
-        separator_style = {
-          fg = colorscheme.colors.black;
-          bg = colorscheme.colors.black;
-        };
-
-        mode_normal = {
+      mode = {
+        normal_main = {
           fg = colorscheme.colors.background;
           bg = colorscheme.colors.n_pink_4;
           bold = true;
         };
 
-        mode_select = {
+        normal_alt = {
+          fg = colorscheme.colors.n_pink_4;
+          bg = colorscheme.colors.background;
+          bold = true;
+        };
+
+        select_main = {
           fg = colorscheme.colors.background;
           bg = colorscheme.colors.bright_green;
           bold = true;
         };
 
-        mode_unset = {
+        select_alt = {
+          fg = colorscheme.colors.bright_green;
+          bg = colorscheme.colors.background;
+          bold = true;
+        };
+
+        unset_main = {
           fg = colorscheme.colors.background;
           bg = colorscheme.colors.bright_red;
           bold = true;
         };
+
+        unset_alt = {
+          fg = colorscheme.colors.bright_red;
+          bg = colorscheme.colors.background;
+          bold = true;
+        };
+      };
+
+      status = {
+        separator_open = "";
+        separator_close = "";
 
         progress_label = {
           fg = colorscheme.colors.bright_white;
@@ -407,11 +422,11 @@ in {
           bg = colorscheme.colors.black;
         };
 
-        permissions_t = { fg = colorscheme.colors.n_pink_4; };
-        permissions_r = { fg = colorscheme.colors.bright_yellow; };
-        permissions_w = { fg = colorscheme.colors.bright_red; };
-        permissions_x = { fg = colorscheme.colors.bright_green; };
-        permissions_s = { fg = colorscheme.colors.bright_black; };
+        perm_type = { fg = colorscheme.colors.n_pink_4; };
+        perm_read = { fg = colorscheme.colors.bright_yellow; };
+        perm_write = { fg = colorscheme.colors.bright_red; };
+        perm_exec = { fg = colorscheme.colors.bright_green; };
+        perm_sep = { fg = colorscheme.colors.bright_black; };
       };
 
       input = {
@@ -482,7 +497,7 @@ in {
       function M:calc_sha256()
               local child = Command('sha256sum')
                       :args({
-                              tostring(self.file.url)
+                              tostring(job.file.url)
                       })
                       :stdout(Command.PIPED)
                       :stderr(Command.PIPED)
@@ -501,7 +516,7 @@ in {
           local file1 = Command("file")
               :args({
                   "-b",
-                  tostring(self.file.url),
+                  tostring(job.file.url),
               })
               :stdout(Command.PIPED)
               :stderr(Command.PIPED)
@@ -514,21 +529,21 @@ in {
           return file_magic
       end
 
-      function M:peek()
+      function M:peek(job)
           local child = Command("hexyl")
               :args({
                   "--border",
                   "none",
                   "--terminal-width",
-                  tostring(self.area.w),
+                  tostring(job.w),
                   "--character-table", "ascii",
-                  tostring(self.file.url),
+                  tostring(job.url),
               })
               :stdout(Command.PIPED)
               :stderr(Command.PIPED)
               :spawn()
 
-          local limit = self.area.h
+          local limit = job.area.h
           local i, lines = 0, ""
           repeat
               local next, event = child:read_line()
@@ -539,75 +554,75 @@ in {
               end
 
               i = i + 1
-              if i > self.skip then
+              if i > job.skip then
                   lines = lines .. next
               end
-          until i >= self.skip + limit
+          until i >= job.skip + limit
 
           child:start_kill()
-          if self.skip > 0 and i < self.skip + limit then
+          if job.skip > 0 and i < job.skip + limit then
               ya.manager_emit(
                   "peek",
-                  { tostring(math.max(0, i - limit)), only_if = tostring(self.file.url), upper_bound = "" }
+                  { tostring(math.max(0, i - limit)), only_if = tostring(job.file.url), upper_bound = "" }
               )
           else
               -- Print hexdump
               magicArea = ui.Rect {
-                  x = self.area.x,
-                  y = self.area.y - 1,
-                  w = self.area.w,
+                  x = job.area.x,
+                  y = job.area.y - 1,
+                  w = job.area.w,
                   h = 1,
               }
 
               -- Print hexdump
               fileArea = ui.Rect {
-                  x = self.area.x,
-                  y = self.area.y,
-                  w = self.area.w,
+                  x = job.area.x,
+                  y = job.area.y,
+                  w = job.area.w,
                   h = 1,
               }
 
               sha256Area = ui.Rect {
-                  x = self.area.x,
-                  y = self.area.y + 1,
-                  w = self.area.w,
+                  x = job.area.x,
+                  y = job.area.y + 1,
+                  w = job.area.w,
                   h = 1,
               }
 
               hexdumpArea = ui.Rect {
-                  x = self.area.x,
-                  y = self.area.y + 3,
-                  w = self.area.w,
-                  h = self.area.h - 3,
+                  x = job.area.x,
+                  y = job.area.y + 3,
+                  w = job.area.w,
+                  h = job.area.h - 3,
               }
 
               lines = lines:gsub("\t", string.rep(" ", PREVIEW.tab_size))
               ya.preview_widgets(self, { 
-                  ui.Paragraph.parse(hexdumpArea, lines),
-                  ui.Paragraph.parse(fileArea, " File(1): " .. "Loading..."),
-                  ui.Paragraph.parse(sha256Area, " SHA256: " .. "Loading...")
+                  ui.Text.parse(hexdumpArea, lines),
+                  ui.Text.parse(fileArea, " File(1): " .. "Loading..."),
+                  ui.Text.parse(sha256Area, " SHA256: " .. "Loading...")
               })
 
               ya.preview_widgets(self, {
-                  ui.Paragraph.parse(hexdumpArea, lines), 
-                  ui.Paragraph.parse(fileArea, " File(1): " .. "Loading..."),
-                  ui.Paragraph.parse(sha256Area, " SHA256: " .. "Loading...")
+                  ui.Text.parse(hexdumpArea, lines), 
+                  ui.Text.parse(fileArea, " File(1): " .. "Loading..."),
+                  ui.Text.parse(sha256Area, " SHA256: " .. "Loading...")
               })
 
               local file1 = M:calc_file1()
 
               ya.preview_widgets(self, {
-                  ui.Paragraph.parse(hexdumpArea, lines), 
-                  ui.Paragraph.parse(fileArea, " File(1): " .. file1),
-                  ui.Paragraph.parse(sha256Area, " SHA256: " .. "Loading...")
+                  ui.Text.parse(hexdumpArea, lines), 
+                  ui.Text.parse(fileArea, " File(1): " .. file1),
+                  ui.Text.parse(sha256Area, " SHA256: " .. "Loading...")
               })
               
               local sha256 = M:calc_sha256()
               
               ya.preview_widgets(self, {
-                  ui.Paragraph.parse(hexdumpArea, lines), 
-                  ui.Paragraph.parse(fileArea, " File(1): " .. file1),
-                  ui.Paragraph.parse(sha256Area, " SHA256: " .. sha256)
+                  ui.Text.parse(hexdumpArea, lines), 
+                  ui.Text.parse(fileArea, " File(1): " .. file1),
+                  ui.Text.parse(sha256Area, " SHA256: " .. sha256)
               })
 
 
@@ -615,10 +630,10 @@ in {
           end
       end
 
-      function M:seek(units)
+      function M:seek(job)
           local h = cx.active.current.hovered
           if h and h.url == self.file.url then
-              local step = math.floor(units * self.area.h / 10)
+              local step = math.floor(job.units * job.area.h / 10)
               ya.manager_emit("peek", {
                   tostring(math.max(0, cx.active.preview.skip + step)),
                   only_if = tostring(self.file.url),
