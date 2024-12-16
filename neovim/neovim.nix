@@ -209,7 +209,7 @@
       intellitab.enable = true;
       
       # Show colors in-place for hex codes
-      nvim-colorizer.enable = true;
+      colorizer.enable = true;
 
       # LSP Formatter
       # lsp-format.enable = true;

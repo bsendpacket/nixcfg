@@ -26,14 +26,6 @@ in {
     '';
 
     plugins = {
-      # Hex viewer
-      "hexyl" = channels.nixpkgs-unstable.fetchFromGitHub {
-        owner = "Reledia";
-        repo = "hexyl.yazi";
-        rev = "39d3d4e23ad7cec8888f648ddf55af4386950ce7";
-        hash = "sha256-nsnnL3GluKk/p1dQZTZ/RwQPlAmTBu9mQzHz1g7K0Ww=";
-      };
-
       # Preview Markdown files
       "glow" = channels.nixpkgs-unstable.fetchFromGitHub {
         owner = "Reledia";
@@ -282,9 +274,9 @@ in {
           { mime = "inode/directory"; use = [ "directory" ]; }
           { mime = "application/json"; use = [ "json" ]; }
 
-          { mime = "application/vnd.microsoft.portable-executable"; use = [ "triage_pe" ]; }
+          { mime = "application/microsoft.portable-executable"; use = [ "triage_pe" ]; }
           { mime = "application/msi"; use = [ "triage_msi" ]; }
-          { mime = "application/vnd.ms-cab-compressed"; use = [ "triage_cab" ]; }
+          { mime = "application/ms-cab-compressed"; use = [ "triage_cab" ]; }
 
           { mime = "application/executable"; use = [ "triage_elf" ]; }
           { mime = "application/pie-executable"; use = [ "triage_elf" ]; }
@@ -494,26 +486,46 @@ in {
     text = ''
       local M = {}
 
-      function M:calc_sha256()
-              local child = Command('sha256sum')
-                      :args({
-                              tostring(job.file.url)
-                      })
-                      :stdout(Command.PIPED)
-                      :stderr(Command.PIPED)
-                      :spawn()
+      --[[
+        Function: calc_sha256
+        Description: Calculates the SHA256 hash of the specified file.
+        Parameters:
+          - job (table): Contains information about the current job, including the file URL.
+        Returns:
+          - sha256 (string): The SHA256 hash of the file.
+      --]]
+      function M.calc_sha256(job)
+          local child = Command('sha256sum')
+              :args({
+                  tostring(job.file.url)
+              })
+              :stdout(Command.PIPED)
+              :stderr(Command.PIPED)
+              :spawn()
 
-              local output = child:read_line()
+          local output = child:read_line()
+          if output then
               output = output:match("([a-z0-9]+)")
+          else
+              output = "N/A"
+          end
 
-              child:start_kill()
+          child:start_kill()
 
-              return output
+          return output
       end
 
-      function M:calc_file1()
-          -- Calulate File
-          local file1 = Command("file")
+      --[[
+        Function: calc_file1
+        Description: Determines the file type using the 'file' command.
+        Parameters:
+          - job (table): Contains information about the current job, including the file URL.
+        Returns:
+          - file_magic (string): The type of the file.
+      --]]
+      function M.calc_file1(job)
+          -- Calculate file type
+          local child = Command("file")
               :args({
                   "-b",
                   tostring(job.file.url),
@@ -522,121 +534,110 @@ in {
               :stderr(Command.PIPED)
               :spawn()
 
+          local file_magic = child:read_line()
+          if not file_magic then
+              file_magic = "Unknown"
+          end
 
-          file_magic = file1:read_line()
-          file1:start_kill()
+          child:start_kill()
 
           return file_magic
       end
 
+      --[[
+        Function: peek
+        Description: Generates a hexdump of the specified file using hexyl and updates the UI with the hexdump, file type, and SHA256 hash.
+        Parameters:
+          - job (table): Contains information about the current job, including the file URL, area dimensions, and skip count.
+      --]]
       function M:peek(job)
           local child = Command("hexyl")
               :args({
                   "--border",
                   "none",
                   "--terminal-width",
-                  tostring(job.w),
+                  tostring(job.area.w),
                   "--character-table", "ascii",
-                  tostring(job.url),
+                  tostring(job.file.url),
               })
               :stdout(Command.PIPED)
               :stderr(Command.PIPED)
               :spawn()
 
+          -- Ensure that the hexyl command was spawned successfully
+          if not child then
+              ya.err("Failed to spawn hexyl for file: " .. tostring(job.file.url))
+              return
+          end
+
           local limit = job.area.h
           local i, lines = 0, ""
           repeat
-              local next, event = child:read_line()
+              local next_line, event = child:read_line()
               if event == 1 then
-                  ya.err(tostring(event))
+                  ya.err("Hexyl error event: " .. tostring(event))
+                  break
               elseif event ~= 0 then
                   break
               end
 
               i = i + 1
               if i > job.skip then
-                  lines = lines .. next
+                  lines = lines .. next_line
               end
           until i >= job.skip + limit
 
           child:start_kill()
-          if job.skip > 0 and i < job.skip + limit then
-              ya.manager_emit(
-                  "peek",
-                  { tostring(math.max(0, i - limit)), only_if = tostring(job.file.url), upper_bound = "" }
-              )
-          else
-              -- Print hexdump
-              magicArea = ui.Rect {
-                  x = job.area.x,
-                  y = job.area.y - 1,
-                  w = job.area.w,
-                  h = 1,
-              }
 
-              -- Print hexdump
-              fileArea = ui.Rect {
+          if job.skip > 0 and i < job.skip + limit then
+              ya.manager_emit("peek", { 
+                  math.max(0, job.skip + i - limit), 
+                  only_if = tostring(job.file.url), 
+                  upper_bound = true 
+              })
+          else
+              lines = lines:gsub("\t", string.rep(" ", PREVIEW.tab_size))
+
+              -- Define display areas within the peek function
+              local hexdumpArea = ui.Rect {
+                  x = job.area.x,
+                  y = job.area.y + 3,
+                  w = job.area.w,
+                  h = job.area.h - 3,
+              }
+              local fileArea = ui.Rect {
                   x = job.area.x,
                   y = job.area.y,
                   w = job.area.w,
                   h = 1,
               }
-
-              sha256Area = ui.Rect {
+              local sha256Area = ui.Rect {
                   x = job.area.x,
                   y = job.area.y + 1,
                   w = job.area.w,
                   h = 1,
               }
 
-              hexdumpArea = ui.Rect {
-                  x = job.area.x,
-                  y = job.area.y + 3,
-                  w = job.area.w,
-                  h = job.area.h - 3,
-              }
+              -- Fetch file type and SHA256 hash
+              local file1 = M.calc_file1(job)
+              local sha256 = M.calc_sha256(job)
 
-              lines = lines:gsub("\t", string.rep(" ", PREVIEW.tab_size))
-              ya.preview_widgets(self, { 
-                  ui.Text.parse(hexdumpArea, lines),
-                  ui.Text.parse(fileArea, " File(1): " .. "Loading..."),
-                  ui.Text.parse(sha256Area, " SHA256: " .. "Loading...")
+              -- Update the UI with the hexdump and file information
+              ya.preview_widgets(job, {
+                  ui.Text.parse(lines):area(hexdumpArea),
+                  ui.Text.parse(" File(1): " .. file1):area(fileArea),
+                  ui.Text.parse(" SHA256: " .. sha256):area(sha256Area)
               })
-
-              ya.preview_widgets(self, {
-                  ui.Text.parse(hexdumpArea, lines), 
-                  ui.Text.parse(fileArea, " File(1): " .. "Loading..."),
-                  ui.Text.parse(sha256Area, " SHA256: " .. "Loading...")
-              })
-
-              local file1 = M:calc_file1()
-
-              ya.preview_widgets(self, {
-                  ui.Text.parse(hexdumpArea, lines), 
-                  ui.Text.parse(fileArea, " File(1): " .. file1),
-                  ui.Text.parse(sha256Area, " SHA256: " .. "Loading...")
-              })
-              
-              local sha256 = M:calc_sha256()
-              
-              ya.preview_widgets(self, {
-                  ui.Text.parse(hexdumpArea, lines), 
-                  ui.Text.parse(fileArea, " File(1): " .. file1),
-                  ui.Text.parse(sha256Area, " SHA256: " .. sha256)
-              })
-
-
-
           end
       end
 
       function M:seek(job)
           local h = cx.active.current.hovered
-          if h and h.url == self.file.url then
+          if h and h.url == job.file.url then
               local step = math.floor(job.units * job.area.h / 10)
               ya.manager_emit("peek", {
                   tostring(math.max(0, cx.active.preview.skip + step)),
-                  only_if = tostring(self.file.url),
+                  only_if = tostring(job.file.url),
               })
           end
       end
