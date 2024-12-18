@@ -272,7 +272,8 @@ in {
       open = {
         prepend_rules = [
           { mime = "inode/directory"; use = [ "directory" ]; }
-          { mime = "application/json"; use = [ "json" ]; }
+
+          { mime = "application/*json*"; use = [ "json" ]; }
 
           { mime = "application/microsoft.portable-executable"; use = [ "triage_pe" ]; }
           { mime = "application/msi"; use = [ "triage_msi" ]; }
