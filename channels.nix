@@ -10,8 +10,8 @@ let
     };
 
     nixpkgs-unstable = import (builtins.fetchTarball {
-      url = "https://github.com/NixOS/nixpkgs/archive/5a48e3c2e435e95103d56590188cfed7b70e108c.tar.gz";
-      sha256 = "0qgiha64bncgy711c9ym94k34ki4lc90p739g3qmf9warqp8fa67";
+      url = "https://github.com/NixOS/nixpkgs/archive/69b9a8c860bdbb977adfa9c5e817ccb717884182.tar.gz";
+      sha256 = "12ljkkjg3gicamvryxr2bnfcdb05qdlbc5wv4lcw9sxamszp4cp7";
     }) {
       system = "x86_64-linux";
         overlays = with overlays; [ 
@@ -48,8 +48,8 @@ let
     }) { pkgs = channels.nixpkgs-unstable; };
 
     nixvim = import (builtins.fetchTarball {
-      url = "https://github.com/nix-community/nixvim/archive/58d2a5ac9cc4ff987e6edb77f2b55d1dec05ce50.tar.gz";
-      sha256 = "0sk5njshf9pbr44bfpgvc3fv2a1xznhj763gwlrgwlwmn14z17dy";
+      url = "https://github.com/nix-community/nixvim/archive/3399ebfedd741456f45de6148fc36e7fcc74fcfa.tar.gz";
+      sha256 = "1skz21myaagbhdnj7cchlz2l6r6f2rrlsd8zbp1gg8bjig4dy3sm";
     });
   };
 

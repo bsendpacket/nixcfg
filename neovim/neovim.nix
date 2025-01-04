@@ -128,6 +128,87 @@
           silent = true;
         };
       }
+      {
+        action = "<cmd>lua require('dap').toggle_breakpoint()<CR>";
+        key = "<leader>db";
+        mode = [ "n" ];
+        options = {
+          desc = "Toggle Breakpoint";
+          silent = true;
+        };
+      }
+      {
+        action = "<cmd>lua require('dap').continue()<CR>";
+        key = "<leader>dc";
+        mode = [ "n" ];
+        options = {
+          desc = "Continue";
+          silent = true;
+        };
+      }
+      {
+        action = "<cmd>lua require('dap').repl.open()<CR>";
+        key = "<leader>dr";
+        mode = [ "n" ];
+        options = {
+          desc = "Open REPL";
+          silent = true;
+        };
+      }
+      {
+        action = "<cmd>lua require('dap').step_over()<CR>";
+        key = "<leader>do";
+        mode = [ "n" ];
+        options = {
+          desc = "Step Over";
+          silent = true;
+        };
+      }
+      {
+        action = "<cmd>lua require('dap').step_into()<CR>";
+        key = "<leader>di";
+        mode = [ "n" ];
+        options = {
+          desc = "Step Into";
+          silent = true;
+        };
+      }
+      {
+        action = "<cmd>lua require('dap').step_out()<CR>";
+        key = "<leader>du";
+        mode = [ "n" ];
+        options = {
+          desc = "Step Out";
+          silent = true;
+        };
+      }
+      {
+        action = "<cmd>lua require('dap').terminate()<CR>";
+        key = "<leader>dq";
+        mode = [ "n" ];
+        options = {
+          desc = "Terminate debugger";
+          silent = true;
+        };
+      }
+      {
+        action = "<cmd>lua require('dap.ui.widgets').hover()<CR>";
+        key = "<leader>de";
+        mode = [ "n" ];
+        options = {
+          desc = "Evaluate Expression";
+          silent = true;
+        };
+      }
+      {
+        action = "<cmd>lua require('dap.ui.widgets').hover()<CR>";
+        key = "<leader>dv";
+        mode = [ "n" ];
+        options = {
+          desc = "Inspect Variables";
+          silent = true;
+        };
+      }
     ];
 
     plugins = {
@@ -288,19 +369,19 @@
             };
           };
 
-          # Rust LSP
-          rust_analyzer = {
-            enable = true;
-            installCargo = true;
-            installRustc = true;
-            # settings.check.command = "clippy";
-
-            rootDir = ''
-              function(fname)
-                return vim.loop.cwd()
-              end
-            '';
-          };
+          # Rust LSP -- Must be disabled due to rustaceanvim
+          # rust_analyzer = {
+          #   enable = true;
+          #   installCargo = true;
+          #   installRustc = true;
+          #   # settings.check.command = "clippy";
+          #
+          #   rootDir = ''
+          #     function(fname)
+          #       return vim.loop.cwd()
+          #     end
+          #   '';
+          # };
 
           # Python LSP
           pyright = {
@@ -359,8 +440,102 @@
         };
       };
 
-      # LSP Additions to rust_analyzer
-      #rustaceanvim.enable = true;
+      # LSP Additions (automatically sets up rust_analyzer setup, + DAP for debugging)
+      rustaceanvim = {
+        enable = true;
+        settings = {
+          dap.autoloadConfigurations = true;
+          dap.adapter = 
+            let
+              code-lldb = channels.nixpkgs-unstable.vscode-extensions.vadimcn.vscode-lldb;
+            in {
+              executable.command = "${code-lldb}/share/vscode/extensions/vadimcn.vscode-lldb/adapter/codelldb";
+              executable.args = [
+                "--liblldb"
+                "${code-lldb}/share/vscode/extensions/vadimcn.vscode-lldb/lldb/lib/liblldb.so"
+                "--port"
+                "31337"
+              ];
+              type = "server";
+              port = "31337";
+              host = "127.0.0.1";
+            };
+
+          server = {
+            cmd = [
+              "rustup"
+              "run"
+              "stable"
+              "rust-analyzer"
+            ];
+            standalone = false;
+          };
+
+          rust-analyzer = {
+            check = {
+              command = "clippy";
+            };
+            inlayHints = {
+              lifetimeElisionHints = {
+                enable = "always";
+              };
+            };
+          };
+        };
+      };
+
+      dap = {
+        enable = true;
+
+        extensions = {
+          dap-virtual-text.enable = true;
+          dap-ui = {
+            enable = true;
+            layouts = [
+              {
+                elements = [
+                  {
+                    id = "console";
+                    size = 1.0;
+                  }
+                  # {
+                  #   id = "stacks";
+                  #   size = 0.25;
+                  # }
+                  # {
+                  #   id = "watches";
+                  #   size = 0.25;
+                  # }
+                ];
+                position = "left";
+                size = 80;
+              }
+              {
+                elements = [
+                  # {
+                  #   id = "repl";
+                  #   size = 0.5;
+                  # }
+                  # {
+                  #   id = "console";
+                  #   size = 0.5;
+                  # }
+                  {
+                    id = "scopes";
+                    size = 0.5;
+                  }
+                  {
+                    id = "breakpoints";
+                    size = 0.5;
+                  }
+                ];
+                position = "bottom";
+                size = 20;
+              }
+            ];
+          };
+        };
+      };
 
       # Highlight, edit, and navigate code
       treesitter = {
@@ -501,8 +676,8 @@
           src = channels.nixpkgs-unstable.fetchFromGitHub {
             owner = "OXY2DEV";
             repo = "markview.nvim";
-            rev = "9e5275f3b7507da51deab9bc985e9154d0b6af28";
-            hash = "sha256-UVkNZku50DfzYRwzQbaztDOy9EnDGH41pJrZNrPb0qo=";
+            rev = "72cd34279e94ee96ee33bdf30a87b00e6d45319d";
+            hash = "sha256-4D4jB9CmamMAdpEodw4MdDyJVU6EMsh8P4gLs7p4E40=";
           };
         });
       }
@@ -517,7 +692,18 @@
           };
         });
       }
-      
+      {
+        plugin = (channels.nixpkgs-unstable.vimUtils.buildVimPlugin {
+          name = "nvim-nio";
+          src = channels.nixpkgs-unstable.fetchFromGitHub {
+            owner = "nvim-neotest";
+            repo = "nvim-nio";
+            rev = "a428f309119086dc78dd4b19306d2d67be884eee";
+            hash = "sha256-i6imNTb1xrfBlaeOyxyIwAZ/+o6ew9C4/z34a7/BgFg=";
+          };
+        });
+      }
+
       # Detect tabstop and shiftwidth automatically
       channels.nixpkgs-unstable.vimPlugins.vim-sleuth
 
@@ -582,6 +768,20 @@
           client.notify("workspace/didChangeConfiguration")
         end
       })
+
+      -- DAP
+      local dap, dapui = require('dap'), require('dapui')
+
+      -- Automatically open and close dap-ui
+      dap.listeners.after.event_initialized["dapui_config"] = function()
+        dapui.open()
+      end
+      dap.listeners.before.event_terminated["dapui_config"] = function()
+        dapui.close()
+      end
+      dap.listeners.before.event_exited["dapui_config"] = function()
+        dapui.close()
+      end
     '';
   };
 }
