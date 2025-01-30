@@ -10,18 +10,33 @@ let
       binaryNinjaUrl  = binaryNinjaURL.binaryNinjaUrl;
       binaryNinjaHash = binaryNinjaURL.binaryNinjaHash;
     })
+    (callPackage ../dependencies/pysqlite3.nix {})
     (callPackage ../dependencies/mkyara.nix {})
     (callPackage ../binary-refinery/binary-refinery.nix {})
   ]); 
-  fetchBinaryNinjaPlugin = { owner, repo, rev ? "main", name, sha256, folder ? "" }: 
+
+  fetchBinaryNinjaPlugin = { name, folder ? "", sha256, url ? null, 
+    owner ? null, repo ? null, rev ? null, pluginPath ? ""
+  }: 
     channels.nixpkgs-unstable.stdenv.mkDerivation {
       inherit name;
-      src = channels.nixpkgs-unstable.fetchFromGitHub {
-        inherit owner repo rev sha256;
-      };
+      
+      src = if url != null 
+        then channels.nixpkgs-unstable.fetchzip {
+          inherit url sha256;
+          stripRoot = false;
+        }
+        else channels.nixpkgs-unstable.fetchFromGitHub {
+          inherit owner repo rev sha256;
+        };
+
       installPhase = ''
-        mkdir -p $out/.binaryninja/plugins/${folder}
-        cp -r . $out/.binaryninja/plugins/${folder}
+        mkdir -p $out/.binaryninja/plugins${if folder != "" then "/${folder}" else ""}
+        ${if pluginPath != "" then ''
+          cp ${pluginPath} $out/.binaryninja/plugins/
+        '' else ''
+          cp -r . $out/.binaryninja/plugins/${folder}
+        ''}
       '';
     };
 
@@ -123,6 +138,14 @@ let
       name = "binja_headless";
       folder = "binja_headless";
     })
+
+    # TODO: Figure out how to build this manually since the ABI used to build the plugin is outdated..
+    # (fetchBinaryNinjaPlugin {
+    #   name = "binexport";
+    #   url = "https://github.com/google/binexport/releases/download/v12-20240417-ghidra_11.0.3/BinExport-Linux.zip";
+    #   sha256 = "sha256-U59WFcICyW19yx0PWIYvzvremP/gnx2liHXByVNRLZ8=";
+    #   pluginPath = "binaryninja/binexport12_binaryninja.so";
+    # })
   ];
 
   binaryNinjaConfigFiles = channels.nixpkgs-unstable.stdenv.mkDerivation {

@@ -99,11 +99,17 @@ let
         src = channels.nixpkgs-unstable.fetchFromGitHub {
           owner = "dscharrer";
           repo = "innoextract";
-          rev = "264c2fe6b84f90f6290c670e5f676660ec7b2387";
-          hash = "sha256-DLQ1gphCr4haaBppAJh+zyg0ObjHzO9xLFgHpRb1f0Y=";
+          rev = "e58f295d80c3bbd18fb01c18983855064ebc361f";
+          hash = "sha256-nbemdwNnYABQb7rhJiztZdyVc2otLNfQBtPTaK+wdCY=";
         };
         
         patches = [ ./innoextract/extract_compiled_code.patch ];
+
+        # Enable debug flags
+        cmakeFlags = [
+          "-DDEVELOPER=1"
+          "-DCMAKE_BUILD_TYPE=Debug"
+        ];
       });
     };
 

@@ -71,7 +71,7 @@ in {
         keybindings = lib.mkOptionDefault {
 
           # Create new tmux session
-          "${modifier}+Shift+Return" = "exec ${channels.nixpkgs-unstable.rofi}/bin/rofi -dmenu -p 'New Session Name' | xargs -r ${newSessionCmd}";
+          "${modifier}+Shift+s" = "exec ${channels.nixpkgs-unstable.rofi}/bin/rofi -dmenu -p 'New Session Name' | xargs -r ${newSessionCmd}";
 
           # Attach to existing tmux session
           "${modifier}+s" = "exec ${channels.nixpkgs-unstable.tmux}/bin/tmux list-sessions | ${channels.nixpkgs-unstable.rofi}/bin/rofi -i -dmenu | cut -d: -f1 | xargs -r ${attachSessionCmd}";

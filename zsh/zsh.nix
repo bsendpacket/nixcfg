@@ -62,10 +62,10 @@
       lt = "ls --tree"; # List Files (Tree)
       y = "yy";         # Yazi
       yara = "${channels.nixpkgs-unstable.yara-x}/bin/yr";
-      #netreactorslayer = "${customPackages.net-reactor-slayer}/bin/NETReactorSlayer";
+      netreactorslayer = "${customPackages.net-reactor-slayer}/bin/NETReactorSlayer";
       rbat = "${customPackages.binary-refinery}/bin/bat";
       goresym = "${channels.nixpkgs-unstable.goresym}/bin/GoReSym";
-      #ilspy = "${channels.nixpkgs-unstable.avalonia-ilspy}/bin/ILSpy";
+      ilspy = "${channels.nixpkgs-unstable.avalonia-ilspy}/bin/ILSpy";
 
       # OpenGL Required
       kitty = "${nixGLPrefix}kitty";

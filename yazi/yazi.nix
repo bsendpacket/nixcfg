@@ -30,24 +30,24 @@ in {
       "glow" = channels.nixpkgs-unstable.fetchFromGitHub {
         owner = "Reledia";
         repo = "glow.yazi";
-        rev = "c2ed51ed8c4ba965b793adab5868a307ab375c8a";
-        sha256 = "sha256-hY390F6/bkQ6qN2FZEn0k+j+XfaERJiAo/E3xXYRB70=";
+        rev = "5ce76dc92ddd0dcef36e76c0986919fda3db3cf5";
+        hash = "sha256-UljcrXXO5DZbufRfavBkiNV3IGUNct31RxCujRzC9D4=";
       };
 
       # Preview archives as a tree
       "ouch" = channels.nixpkgs-unstable.fetchFromGitHub {
         owner = "ndtoan96";
         repo = "ouch.yazi";
-        rev = "b8698865a0b1c7c1b65b91bcadf18441498768e6";
-        sha256 = "sha256-eRjdcBJY5RHbbggnMHkcIXUF8Sj2nhD/o7+K3vD3hHY=";
+        rev = "083d5647345c8d2119d50860aabca57d292ab672";
+        hash = "sha256-zLAaJrcZGNWlG2HjsZtN4u8JZAN+GLl2RtP9qCt3T74=";
       };
 
       # Search with fg / ff (content, fzf)
       "fg" = channels.nixpkgs-unstable.fetchFromGitHub {
         owner = "lpnh";
         repo = "fg.yazi";
-        rev = "a7e1a828ef4dfb01ace5b03fe0691c909466a645";
-        hash = "sha256-QxtWyp91XcW8+PSYtER47Pcc1Y9i3LplJyTzeC5Gp2s=";
+        rev = "9bba7430dbcd30995deea600499b069fe6067a3e";
+        hash = "sha256-3VjTL/q4gSDIHyPXwUIQA/26bbhWya+01EZbxSKzzQo=";
       };
 
       # Vim-like relative motions
@@ -60,10 +60,10 @@ in {
 
       # Preview media metadata information
       "mediainfo" = channels.nixpkgs-unstable.fetchFromGitHub {
-        owner = "Ape";
+        owner = "boydaihungst";
         repo = "mediainfo.yazi";
-        rev = "c69314e80f5b45fe87a0e06a10d064ed54110439";
-        sha256 = "sha256-8xdBPdKSiwB7iRU8DJdTHY+BjfR9D3FtyVtDL9tNiy4=";
+        rev = "e2a7cfd750226ce4adc3acc42b4cf75c79fe9f0e";
+        hash = "sha256-MW0pawBT2S0rOoclCQahiYzLX5JZPuiALCG0ZzOqvM4=";
       };
 
       # "projects" = channels.nixpkgs-unstable.fetchFromGitHub {
@@ -280,6 +280,7 @@ in {
           { mime = "application/ms-cab-compressed"; use = [ "triage_cab" ]; }
 
           { mime = "application/executable"; use = [ "triage_elf" ]; }
+          { mime = "application/object"; use = [ "triage_elf" ]; }
           { mime = "application/pie-executable"; use = [ "triage_elf" ]; }
           { mime = "application/sharedlib"; use = [ "triage_elf" ]; }
 
