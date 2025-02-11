@@ -61,6 +61,10 @@ let
               name = "Malware Analysis Cheatsheet";
               url = "https://fareedfauzi.github.io/2022/08/08/Malware-analysis-cheatsheet.html";
             }
+            {
+              name = "Vergilius Project - Windows Kernel Structures";
+              url = "https://vergiliusproject.com";
+            }
           ];
         }
         {

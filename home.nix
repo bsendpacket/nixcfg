@@ -34,6 +34,7 @@ let
     donut-decryptor = channels.nixpkgs-unstable.callPackage ./donut-decryptor/donut-decryptor.nix { };
     dncil = channels.nixpkgs-unstable.callPackage ./dependencies/dncil.nix { };
     pyja3 = channels.nixpkgs-unstable.callPackage ./dependencies/pyja3.nix { };
+    ucutils = channels.nixpkgs-unstable.callPackage ./dependencies/ucutils.nix { };
 
     binary-ninja = channels.nixpkgs-unstable.callPackage ./binary-ninja/binary-ninja.nix { 
       binaryNinjaUrl = binaryNinjaURL.binaryNinjaUrl;
@@ -285,7 +286,9 @@ in
 
         # Emulation
         unicorn
+        ucutils
         capstone
+        keystone-engine
 
       ] ++ (workConfig.home.pythonPackages or [])))
 
