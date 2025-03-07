@@ -12,21 +12,21 @@ let
     };
 
   # Virtual Environment Setup
-  speakeasyEnv = makePythonEnv {
-    name = "speakeasy";
-    packages = ps: with ps; [
-      # Every venv _must_ have Python declared!
-      python
-
-      # Python packages from nixchannels.nixpkgs-unstable
-      requests
-      construct
-      urllib3
-
-      # Custom packages from home.nix
-      customPackages.speakeasy
-    ];
-  };
+  # speakeasyEnv = makePythonEnv {
+  #   name = "speakeasy";
+  #   packages = ps: with ps; [
+  #     # Every venv _must_ have Python declared!
+  #     python
+  #
+  #     # Python packages from nixchannels.nixpkgs-unstable
+  #     requests
+  #     construct
+  #     urllib3
+  #
+  #     # Custom packages from home.nix
+  #     customPackages.speakeasy
+  #   ];
+  # };
 
   binjaEnv = {
     name = "binja";
@@ -36,7 +36,7 @@ let
 in
 {
   envs = [
-    speakeasyEnv
+    # speakeasyEnv
     binjaEnv
   ];
 }

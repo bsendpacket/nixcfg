@@ -29,20 +29,20 @@ let
 
     # Python Packages
     capa = channels.nixpkgs-unstable.callPackage ./capa/capa.nix { };
-    speakeasy = channels.nixpkgs-unstable.callPackage ./speakeasy/speakeasy.nix { };
     binary-refinery = channels.nixpkgs-unstable.callPackage ./binary-refinery/binary-refinery.nix { };
     donut-decryptor = channels.nixpkgs-unstable.callPackage ./donut-decryptor/donut-decryptor.nix { };
     dncil = channels.nixpkgs-unstable.callPackage ./dependencies/dncil.nix { };
     pyja3 = channels.nixpkgs-unstable.callPackage ./dependencies/pyja3.nix { };
     ucutils = channels.nixpkgs-unstable.callPackage ./dependencies/ucutils.nix { };
     libtriton = channels.nixpkgs-unstable.callPackage ./dependencies/triton.nix { };
+    icicle-emu = channels.nixpkgs-unstable.callPackage ./dependencies/icicle-emu.nix { };
 
     binary-ninja = channels.nixpkgs-unstable.callPackage ./binary-ninja/binary-ninja.nix { 
       binaryNinjaUrl = binaryNinjaURL.binaryNinjaUrl;
       binaryNinjaHash = binaryNinjaURL.binaryNinjaHash;
       pythonEnv = binaryNinjaConfig.pythonEnv;
     };
-  };
+  }; 
 
   # Work-specific
   fileExists = path: if builtins.pathExists path then import path { inherit channels lib; } else {};
@@ -215,6 +215,7 @@ in
       binary-ninja
       frida-tools
       flare-floss
+      ghidra
       imhex
       capa
       upx
@@ -254,7 +255,11 @@ in
       apktool
 
       # Emulation
-      speakeasy
+      #speakeasy
+
+      # CFG Analysis
+      (hiPrio graphviz)
+      xdot
 
       # TODO
       # rustbinsign (+rustup) - This should be possible w/ poetry?
@@ -288,9 +293,11 @@ in
         # Emulation
         unicorn
         ucutils
+        icicle-emu
         capstone
         keystone-engine
         libtriton
+        miasm
 
       ] ++ (workConfig.home.pythonPackages or [])))
 
