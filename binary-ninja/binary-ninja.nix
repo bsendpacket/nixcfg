@@ -94,6 +94,7 @@ let
       "libQt6ShaderTools.so.6"
       "libQt6Qml.so.6"
       "libQt6PrintSupport.so.6"
+      "libQt6QuickVectorImageGenerator.so.6"
     ];
 
     meta = with pkgs.lib; {

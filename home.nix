@@ -35,6 +35,7 @@ let
     dncil = channels.nixpkgs-unstable.callPackage ./dependencies/dncil.nix { };
     pyja3 = channels.nixpkgs-unstable.callPackage ./dependencies/pyja3.nix { };
     ucutils = channels.nixpkgs-unstable.callPackage ./dependencies/ucutils.nix { };
+    libtriton = channels.nixpkgs-unstable.callPackage ./dependencies/triton.nix { };
 
     binary-ninja = channels.nixpkgs-unstable.callPackage ./binary-ninja/binary-ninja.nix { 
       binaryNinjaUrl = binaryNinjaURL.binaryNinjaUrl;
@@ -289,6 +290,7 @@ in
         ucutils
         capstone
         keystone-engine
+        libtriton
 
       ] ++ (workConfig.home.pythonPackages or [])))
 
