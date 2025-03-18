@@ -5,6 +5,7 @@ let
     lxml
     httpx
     requests
+    z3-solver
     flatbuffers
     (callPackage ./binary-ninja-api.nix {
       binaryNinjaUrl  = binaryNinjaURL.binaryNinjaUrl;
@@ -12,6 +13,7 @@ let
     })
     (callPackage ../dependencies/pysqlite3.nix {})
     (callPackage ../dependencies/mkyara.nix {})
+    (callPackage ../dependencies/icicle-emu.nix {})
     (callPackage ../binary-refinery/binary-refinery.nix {})
   ]); 
 
@@ -137,6 +139,42 @@ let
       sha256 = "sha256-PXVwN59jbUiRJFz5v/cHdAd3QK0C/OCGL/BERg2WZwY=";
       name = "binja_headless";
       folder = "binja_headless";
+    })
+
+    (fetchBinaryNinjaPlugin {
+      owner = "notpidgey";
+      repo = "iemu";
+      rev = "f34a92d5c4031cca12bf492599353693caa8c982";
+      sha256 = "sha256-1p+FO9KEXe8pBxWuwudZps4eorSA5zogz9Kruou8/nU=";
+      name = "iemu";
+      folder = "iemu";
+    })
+
+    (fetchBinaryNinjaPlugin {
+      owner = "borzacchiello";
+      repo = "seninja";
+      rev = "f8da9abc318755d0ff23e584d51a35734920839c";
+      sha256 = "sha256-da9QN4tViBeICPc6E0QYKLHgHv+vhzEsQ5XlmB53JJQ=";
+      name = "seninja";
+      folder = "seninja";
+    })
+
+    (fetchBinaryNinjaPlugin {
+      owner = "Vector35";
+      repo = "OpaquePredicatePatcher";
+      rev = "4458f6340ef1f363bcefa1c0705d63b3ed94cec2";
+      sha256 = "sha256-HOzP4HHBM+0toabMhcPdLzPwZu+3xsaLYZhs0P6yxfE=";
+      name = "OpaquePredicatePatcher";
+      folder = "OpaquePredicatePatcher";
+    })
+
+    (fetchBinaryNinjaPlugin {
+      owner = "cxiao";
+      repo = "rust_string_slicer";
+      rev = "0d611a38a19a46d924a176dcc481230dd3129afc";
+      sha256 = "sha256-lh65g/eaGrT6DIpa9Y72j2JaWwYlBG1eyzAeMnvauZ0=";
+      name = "rust_string_slicer";
+      folder = "rust_string_slicer";
     })
 
     # TODO: Figure out how to build this manually since the ABI used to build the plugin is outdated..

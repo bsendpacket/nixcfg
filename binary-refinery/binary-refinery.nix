@@ -3,15 +3,15 @@
 , fetchFromGitHub
 }:
 
-python312Packages.buildPythonPackage {
+python312Packages.buildPythonPackage rec {
   pname = "binary-refinery";
-  version = "0.8.2";
+  version = "0.8.5";
 
   src = fetchFromGitHub {
     owner = "binref";
     repo = "refinery";
-    rev = "21eb7fbf00d40e67488b7fac796f773ad72a7ae1";
-    hash = "sha256-kjavEk0SWknQCuhj03fQ3LKJ6fVp3ffAxEHV3nIZXz8=";
+    rev = "${version}";
+    hash = "sha256-hPc9FpPgA73lJ85l6Ax/aE6+L4cTNgwQ1dz5Co6ZVWk=";
   };
 
   nativeBuildInputs = with python312Packages; [
@@ -26,6 +26,8 @@ python312Packages.buildPythonPackage {
     (callPackage ../dependencies/pyonenote.nix {})
     (callPackage ../dependencies/pyzstd.nix {})
     (callPackage ../dependencies/pypcapkit.nix {})
+
+    (callPackage ../speakeasy/speakeasy_refined.nix {})
 
     python-magic
     distutils

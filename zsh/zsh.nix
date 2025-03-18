@@ -16,7 +16,7 @@
       unset QT_PLUGIN_PATH
 
       export PYENV_ROOT="$HOME/.pyenv"
-      export PATH="$PYENV_ROOT/bin:$HOME/idapro-8.4:$PATH"
+      export PATH="$PYENV_ROOT/bin:$HOME/ida-pro-9.0:$PATH"
 
       ## PyEnv Setup
       if command -v pyenv &> /dev/null; then
