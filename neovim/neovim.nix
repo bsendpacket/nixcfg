@@ -56,8 +56,17 @@
           silent = true;
         };
       }
+      # {
+      #   action = "<cmd>lua require('telescope.builtin').lsp_definitions()<CR>";
+      #   options.desc = "[G]oto [D]efinition";
+      #   key = "gd";
+      #   mode = [ "n" ];
+      #   options = {
+      #     silent = true;
+      #   };
+      # }
       {
-        action = "<cmd>lua require('telescope.builtin').lsp_definitions()<CR>";
+        action = "<cmd>Telescope lsp_definitions<CR>";
         options.desc = "[G]oto [D]efinition";
         key = "gd";
         mode = [ "n" ];
@@ -66,7 +75,7 @@
         };
       }
       {
-        action = "<cmd>lua require('telescope.builtin').lsp_references()<CR>";
+        action = "<cmd>Telescope lsp_references<CR>";
         options.desc = "[G]oto [R]eferences";
         key = "gr";
         mode = [ "n" ];
@@ -75,7 +84,7 @@
         };
       }
       {
-        action = "<cmd>lua require('telescope.builtin').lsp_implementations()<CR>";
+        action = "<cmd>Telescope lsp_implementations<CR>";
         options.desc = "[G]oto [I]mplementations";
         key = "gI";
         mode = [ "n" ];
@@ -84,7 +93,7 @@
         };
       }
       {
-        action = "<cmd>lua require('telescope.builtin').lsp_type_definitions()<CR>";
+        action = "<cmd>Telescope lsp_type_definitions<CR>";
         options.desc = "Type [D]efinitions";
         key = "<leader>D";
         mode = [ "n" ];
@@ -93,7 +102,7 @@
         };
       }
       {
-        action = "<cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>";
+        action = "<cmd>Telescope lsp_document_symbols<CR>";
         options.desc = "[D]ocument [S]ymbols";
         key = "<leader>ds";
         mode = [ "n" ];
@@ -102,7 +111,7 @@
         };
       }
       {
-        action = "<cmd>lua require('telescope.builtin').lsp_dynamic_workspace_symbols()<CR>";
+        action = "<cmd>Telescope lsp_dynamic_workspace_symbols<CR>";
         options.desc = "[W]orkspace [S]ymbols";
         key = "<leader>ws";
         mode = [ "n" ];
@@ -260,7 +269,7 @@
           };
           sources = [
             { name = "nvim_lsp"; }
-            { name = "calc"; }
+            #{ name = "calc"; }
             { name = "path"; }
           ];
         };
@@ -276,11 +285,11 @@
 
       # Navigation helper, toggle with :Navbuddy
       # Navic is required by Navbuddy.
-      navic.enable = true;
-      navbuddy = {
-        enable = true;
-        lsp.autoAttach = true;
-      };
+      # navic.enable = true;
+      # navbuddy = {
+      #   enable = true;
+      #   lsp.autoAttach = true;
+      # };
 
       # Purposefully makes nvim harder to use by adding timeouts to the basic movement keys
       # This is in order to train to utilize faster and better movement mechanisms
@@ -537,10 +546,29 @@
         };
       };
 
+      lz-n.enable = true;
+
       # Highlight, edit, and navigate code
       treesitter = {
         enable = true;
         
+        lazyLoad.settings = {
+          cmd = [
+            "TSInstall"
+            "TSUpdate"
+            "TSUpdateSync"
+          ];
+
+          event = [
+            "BufNewFile"
+            "BufReadPost"
+            "BufWritePost"
+            "DeferredUIEnter"
+          ];
+
+          lazy.__raw = "vim.fn.argc(-1) == 0";
+        };
+
         # folding = true;
         settings = {
           auto_install = true;
@@ -551,19 +579,20 @@
 
           highlight = {
             enable = true;
-            additional_vim_regex_highlighting = true;
-            custom_captures = { };
+            # additional_vim_regex_highlighting = true;
+            # custom_captures = { };
           };
 
-          incremental_selection = {
-            enable = true;
-            keymaps = {
-              init_selection = "gnn";
-              node_decremental = "grm";
-              node_incremental = "grn";
-              scope_incremental = "grc";
-            };
-          };
+          # incremental_selection = {
+          #   enable = true;
+          #   keymaps = {
+          #     init_selection = "gnn";
+          #     node_decremental = "grm";
+          #     node_incremental = "grn";
+          #     scope_incremental = "grc";
+          #   };
+          # };
+          incremental_selection.enable = false;
 
           indent = {
             enable = true;
@@ -613,11 +642,13 @@
       # Fuzzy Finder (files, lsp, etc)
       telescope = {
         enable = true;
+        lazyLoad.settings.cmd = "Telescope";
         keymaps = {
           "<leader>ff" = "find_files";
           "<leader>fg" = "live_grep";
           "<leader>fb" = "buffers";
           "<leader>fh" = "help_tags";
+          "<leader>fs" = "grep_string";
         };
       };
 
@@ -625,7 +656,14 @@
       web-devicons.enable = true;
 
       # Show possible next keypress based on currently pressed key
-      which-key.enable = true; 
+      which-key = {
+        enable = true;
+
+        lazyLoad.settings = {
+          cmd = "WhichKey";
+          event = "DeferredUIEnter";
+        };
+      };
     };
 
     extraPlugins = [
