@@ -7,10 +7,22 @@ let
     requests
     z3-solver
     flatbuffers
+
     (callPackage ./binary-ninja-api.nix {
       binaryNinjaUrl  = binaryNinjaURL.binaryNinjaUrl;
       binaryNinjaHash = binaryNinjaURL.binaryNinjaHash;
     })
+
+    (callPackage ../dependencies/triton.nix { 
+      z3 = channels.nixpkgs-unstable.z3;
+      boost = channels.nixpkgs-unstable.boost;
+      libffi = channels.nixpkgs-unstable.libffi;
+      libxml2 = channels.nixpkgs-unstable.libxml2;
+      bitwuzla = channels.nixpkgs-unstable.bitwuzla;
+      capstone = channels.nixpkgs-unstable.capstone;
+      llvmPackages_14 = channels.nixpkgs-unstable.llvmPackages_14;
+    })
+
     (callPackage ../dependencies/pysqlite3.nix {})
     (callPackage ../dependencies/mkyara.nix {})
     (callPackage ../dependencies/icicle-emu.nix {})
