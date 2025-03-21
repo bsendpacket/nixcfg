@@ -7,5 +7,6 @@
 	"ui.font.view.name" : "CaskaydiaCove Nerd Font Mono",
 	"ui.theme.name" : "Magic Darkest",
 	"ui.view.symbols.showImports" : false,
-	"ui.view.symbols.showFoldersFirst" : true
+	"ui.view.symbols.showFoldersFirst" : true,
+	"ui.tags.promptForBookmarkText": true
 }
