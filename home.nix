@@ -26,6 +26,7 @@ let
     decompylepp = channels.nixpkgs-unstable.callPackage ./decompylepp/decompylepp.nix { };
     detect-it-easy = channels.nixpkgs-unstable.callPackage ./detect-it-easy/detect-it-easy.nix { };
     net-reactor-slayer = channels.nixpkgs-unstable.callPackage ./net-reactor-slayer/net-reactor-slayer.nix { };
+    obfuscator-llvm = channels.nixpkgs-unstable.callPackage ./obfuscator-llvm/obfuscator-llvm.nix { };
 
     # Python Packages
     capa = channels.nixpkgs-unstable.callPackage ./capa/capa.nix { };
@@ -260,6 +261,8 @@ in
       # CFG Analysis
       (hiPrio graphviz)
       xdot
+
+      obfuscator-llvm
 
       # TODO
       # rustbinsign (+rustup) - This should be possible w/ poetry?

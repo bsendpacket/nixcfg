@@ -23,7 +23,7 @@ python312Packages.buildPythonPackage rec {
   cargoDeps = rustPlatform.fetchCargoTarball {
     inherit src;
     name = "${pname}-${version}";
-    hash = "sha256-NlGVqYVV4zXuS8r6OBKH5f6oUm3BWvq2pN8I91dkEEo=";
+    hash = "sha256-Y5sKSC1o5FoSvCtrR2LpTHBSHpEwn+T20LeNr83uoBg=";
   };
 
   build-system = with python312Packages; [

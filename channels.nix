@@ -87,6 +87,17 @@ let
           hash = "sha256-Jz5C35rwnDz0CXcfcvWjkwScGNQO1uijF7JrtZhM7mI=";
         };
       });
+
+      # zig = (super.zig.override {
+      #   llvmPackages = self.llvmPackages_19;
+      # }).overrideAttrs (oldAttrs: {
+      #   src = super.fetchFromGitHub {
+      #     owner = "ziglang";
+      #     repo = "zig";
+      #     rev = "fa86e09fb39c8007c7b63e70ed7db1afc7022476";
+      #     hash = "sha256-H6HoyWAdpoE0i+mAy78IHWgDm2JUR19wQzrX52v8p6Y=";
+      #   };
+      # });
     };
 
     # This overlay is for when a package exists on NixPkgs, but a custom patch is required
