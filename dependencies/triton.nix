@@ -9,7 +9,7 @@
   bitwuzla,
   libxml2,
   libffi,
-  llvmPackages_14,
+  llvmPackages_16,
 }:
 
 python312Packages.buildPythonPackage {
@@ -35,7 +35,7 @@ python312Packages.buildPythonPackage {
     bitwuzla
     libxml2
     libffi
-    llvmPackages_14.llvm
+    llvmPackages_16.llvm
   ];
 
   cmakeFlags = [
@@ -43,7 +43,7 @@ python312Packages.buildPythonPackage {
     "-DPYTHON_BINDINGS_AUTOCOMPLETE=ON"
     "-DLLVM_INTERFACE=ON"
     "-DBITWUZLA_INTERFACE=ON"
-    "-DCMAKE_PREFIX_PATH=${llvmPackages_14.llvm}"
+    "-DCMAKE_PREFIX_PATH=${llvmPackages_16.llvm}"
     "-DPYTHON_EXECUTABLE=${python312Packages.python.interpreter}"
     "-DBITWUZLA_INCLUDE_DIR=${bitwuzla}/include"
     "-DBITWUZLA_LIBRARY=${bitwuzla}/lib/libbitwuzla.so"

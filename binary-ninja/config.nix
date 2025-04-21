@@ -1,9 +1,11 @@
 { channels, binaryNinjaURL }:
 let
-  pythonWithPackages = channels.nixpkgs-unstable.python312.withPackages (ps: with ps; [
+
+  pythonWithPackages = channels.nixpkgs-unstable.python312.withPackages (ps: with channels.nixpkgs-unstable.python312Packages; [
     rpyc
     lxml
     httpx
+    qiling
     requests
     z3-solver
     flatbuffers
@@ -20,7 +22,7 @@ let
       libxml2 = channels.nixpkgs-unstable.libxml2;
       bitwuzla = channels.nixpkgs-unstable.bitwuzla;
       capstone = channels.nixpkgs-unstable.capstone;
-      llvmPackages_14 = channels.nixpkgs-unstable.llvmPackages_14;
+      llvmPackages_16 = channels.nixpkgs-unstable.llvmPackages_16;
     })
 
     (callPackage ../dependencies/pysqlite3.nix {})

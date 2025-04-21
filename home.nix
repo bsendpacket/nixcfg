@@ -34,7 +34,7 @@ let
     donut-decryptor = channels.nixpkgs-unstable.callPackage ./donut-decryptor/donut-decryptor.nix { };
     dncil = channels.nixpkgs-unstable.callPackage ./dependencies/dncil.nix { };
     pyja3 = channels.nixpkgs-unstable.callPackage ./dependencies/pyja3.nix { };
-    ucutils = channels.nixpkgs-unstable.callPackage ./dependencies/ucutils.nix { };
+    #ucutils = channels.nixpkgs-unstable.callPackage ./dependencies/ucutils.nix { };
     libtriton = channels.nixpkgs-unstable.callPackage ./dependencies/triton.nix { };
     icicle-emu = channels.nixpkgs-unstable.callPackage ./dependencies/icicle-emu.nix { };
 
@@ -293,14 +293,15 @@ in
         dnfile
         dncil
 
-        # Emulation
+        # Emulation / Symbolic Execution
         unicorn
-        ucutils
+        # ucutils
         icicle-emu
         capstone
         keystone-engine
         libtriton
         miasm
+        qiling
 
       ] ++ (workConfig.home.pythonPackages or [])))
 
