@@ -50,7 +50,7 @@
       ZVM_KEYTIMEOUT=0
       ZVM_ESCAPE_KEYTIMEOUT=0
       ZVM_VI_HIGHLIGHT_BACKGROUND=${colorscheme.colors.cursor}
-    '';
+    '' + (workConfig.programs.zsh.initExtra or "");
 
     shellAliases = {
       py = "python3";
