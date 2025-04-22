@@ -262,6 +262,7 @@ in
       (hiPrio graphviz)
       xdot
 
+      retdec
       obfuscator-llvm
 
       # TODO
