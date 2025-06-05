@@ -446,6 +446,21 @@
               end
             '';
           };
+
+          asm_lsp = {
+            enable = true;
+            autostart = true;
+            rootDir = ''
+              function(fname)
+                return vim.loop.cwd()
+              end
+            '';
+            settings = {
+              cmd = ["asm-lsp"];
+              filetypes = ["asm" "s" "S"];
+              root_markers = [".git" ".asm-lsp.toml"];
+            };
+          };
         };
       };
 
@@ -496,8 +511,7 @@
       dap = {
         enable = true;
 
-        extensions = {
-        };
+        extensions = {};
       };
 
       dap-ui = {

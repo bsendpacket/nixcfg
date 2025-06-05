@@ -155,6 +155,8 @@ in
 
       lxqt.screengrab
 
+      ffmpeg
+
       # RSS
       nom
 
@@ -259,11 +261,13 @@ in
       #speakeasy
 
       # CFG Analysis
-      (hiPrio graphviz)
       xdot
 
       retdec
       obfuscator-llvm
+
+      nasm
+      fasm
 
       # TODO
       # rustbinsign (+rustup) - This should be possible w/ poetry?
@@ -303,6 +307,12 @@ in
         libtriton
         miasm
         qiling
+
+        # CFG Analysis
+        (hiPrio graphviz)
+
+        # LLVM
+        llvmlite
 
       ] ++ (workConfig.home.pythonPackages or [])))
 
