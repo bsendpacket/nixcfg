@@ -8,5 +8,6 @@
 	"ui.theme.name" : "Magic Darkest",
 	"ui.view.symbols.showImports" : false,
 	"ui.view.symbols.showFoldersFirst" : true,
-	"ui.tags.promptForBookmarkText": true
+	"ui.tags.promptForBookmarkText": true,
+	"corePlugins.binexport": true
 }

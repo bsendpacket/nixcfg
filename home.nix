@@ -201,8 +201,8 @@ in
 
       gcc
       zig
-      rustup
-      rustlings
+      # rustup
+      # rustlings
       typescript
       nodejs_22
 
@@ -314,6 +314,8 @@ in
         # LLVM
         llvmlite
 
+        pefile
+        sqlite-utils
       ] ++ (workConfig.home.pythonPackages or [])))
 
       # qilling
@@ -324,8 +326,8 @@ in
       # innoump
 
       # Containers
-      dive
-      distrobox
+      #dive
+      #distrobox
 
       # podman is broken on nix at the moment, if not on NixOS
       # podman

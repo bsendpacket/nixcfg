@@ -281,6 +281,7 @@ in {
           { mime = "application/ms-cab-compressed"; use = [ "triage_cab" ]; }
 
           { mime = "application/executable"; use = [ "triage_elf" ]; }
+          { mime = "application/coredump"; use = [ "triage_elf" ]; }
           { mime = "application/object"; use = [ "triage_elf" ]; }
           { mime = "application/pie-executable"; use = [ "triage_elf" ]; }
           { mime = "application/sharedlib"; use = [ "triage_elf" ]; }

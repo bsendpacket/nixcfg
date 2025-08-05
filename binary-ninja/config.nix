@@ -5,6 +5,7 @@ let
     rpyc
     lxml
     httpx
+    miasm
     qiling
     requests
     z3-solver
@@ -26,6 +27,7 @@ let
     })
 
     (callPackage ../dependencies/pysqlite3.nix {})
+    (callPackage ../dependencies/msynth.nix {})
     (callPackage ../dependencies/mkyara.nix {})
     (callPackage ../dependencies/icicle-emu.nix {})
     (callPackage ../binary-refinery/binary-refinery.nix {})
@@ -61,8 +63,8 @@ let
     (fetchBinaryNinjaPlugin {
       owner = "cxiao";
       repo = "hashdb_bn";
-      rev = "cc5ef77c78b929aeee13ae0fcb02d0db2218fe62";
-      sha256 = "sha256-MgMICkc3c1ynINZOQB7WUvkr/1B5RQTaVTM3xpKb5+s=";
+      rev = "eb0ab0585135a6812cce7d793d54fdf05f19dd49";
+      sha256 = "sha256-lfrHRgPTepl0P98GsLKqY30i5ElSH/PDEm6faVeFrEc=";
       name = "hashdb";
       folder = "hashdb";
     })
@@ -106,21 +108,11 @@ let
       folder = "hex_integers";
     })
 
-    # Lookup MSDN docs with Ctrl-q / Ctrl-Q
-    (fetchBinaryNinjaPlugin {
-      owner = "riskydissonance";
-      repo = "binja-doc-lookup";
-      rev = "3883b41514ba9966427c57c0847fe5e12ef5d583";
-      sha256 = "sha256-+81wY/qXVtTrFQoYKhKHsKTfo4Efui2AkpBHGC6PXBg=";
-      name = "binja_doc_lookup";
-      folder = "binja_doc_lookup";
-    })
-
     (fetchBinaryNinjaPlugin {
       owner = "Vector35";
       repo = "snippets";
-      rev = "130636ae51c1cacc901e72f63941cbe904087cb6";
-      sha256 = "sha256-V3jOm8z0HUfBeUeHkMfOlAVIlzyS9XcZLkUKmGEdxl4=";
+      rev = "ceb917b3f4cb895d186691beff3740d9b17b8eb9";
+      sha256 = "sha256-+OIXGS4gK8LCcFegjeI9GNKGXsoEq+8l3gpQqELKoBE=";
       name = "binja_snippets";
       folder = "binja_snippets";
     })
@@ -165,15 +157,6 @@ let
     })
 
     (fetchBinaryNinjaPlugin {
-      owner = "borzacchiello";
-      repo = "seninja";
-      rev = "f8da9abc318755d0ff23e584d51a35734920839c";
-      sha256 = "sha256-da9QN4tViBeICPc6E0QYKLHgHv+vhzEsQ5XlmB53JJQ=";
-      name = "seninja";
-      folder = "seninja";
-    })
-
-    (fetchBinaryNinjaPlugin {
       owner = "Vector35";
       repo = "OpaquePredicatePatcher";
       rev = "4458f6340ef1f363bcefa1c0705d63b3ed94cec2";
@@ -191,13 +174,23 @@ let
       folder = "rust_string_slicer";
     })
 
-    # TODO: Figure out how to build this manually since the ABI used to build the plugin is outdated..
-    # (fetchBinaryNinjaPlugin {
-    #   name = "binexport";
-    #   url = "https://github.com/google/binexport/releases/download/v12-20240417-ghidra_11.0.3/BinExport-Linux.zip";
-    #   sha256 = "sha256-U59WFcICyW19yx0PWIYvzvremP/gnx2liHXByVNRLZ8=";
-    #   pluginPath = "binaryninja/binexport12_binaryninja.so";
-    # })
+    (fetchBinaryNinjaPlugin {
+      owner = "withzombies";
+      repo = "bnil-graph";
+      rev = "534f4102caabb590c4e1fa6713630172c97bcf32";
+      sha256 = "sha256-E0IkpZdUftEK1iS/vVrSH85bZtoECexhoML6TDpybz4=";
+      name = "bnil-graph";
+      folder = "bnil-graph";
+    })
+
+    (fetchBinaryNinjaPlugin {
+      owner = "mrphrazer";
+      repo = "obfuscation_detection";
+      rev = "ce459c864a16bf4b36270c12ae7f985055db6df8";
+      sha256 = "sha256-dRPGzBpPe4tWkpJ8GdnCYqA7/k0apcg/Bysu6/2TXZE=";
+      name = "obfuscation_detection";
+      folder = "obfuscation_detection";
+    })
   ];
 
   binaryNinjaConfigFiles = channels.nixpkgs-unstable.stdenv.mkDerivation {
