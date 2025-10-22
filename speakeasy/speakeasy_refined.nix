@@ -1,6 +1,6 @@
-{ lib, python312Packages, fetchFromGitHub }:
+{ lib, buildPythonPackage, callPackage, fetchFromGitHub, setuptools, wheel, unicorn, capstone, jsonschema, pefile, pycryptodome }:
 
-python312Packages.buildPythonPackage rec {
+buildPythonPackage rec {
   pname = "speakeasy";
   version = "1.5.11b0.post1";
 
@@ -11,12 +11,15 @@ python312Packages.buildPythonPackage rec {
     hash = "sha256-bgUODRW3VlZ4kdysjuu2VgwICw5b+GiQGH46fJPIhUA=";
   };
 
-  buildInputs = with python312Packages; [
+  pyproject = true;
+  build-system = [ setuptools ];
+
+  buildInputs = [
     setuptools
     wheel
   ];
 
-  propagatedBuildInputs = with python312Packages; [
+  propagatedBuildInputs = [
     (callPackage ../dependencies/lznt1.nix {})
 
     unicorn

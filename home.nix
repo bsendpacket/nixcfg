@@ -22,21 +22,21 @@ let
     de4dot = channels.nixpkgs-unstable.callPackage ./de4dot/de4dot.nix { };
     redress = channels.nixpkgs-unstable.callPackage ./redress/redress.nix { };
     webcrack = channels.nixpkgs-unstable.callPackage ./webcrack/webcrack.nix { };
-    frida-tools = channels.nixpkgs-unstable.callPackage ./dependencies/frida-tools.nix { };
     decompylepp = channels.nixpkgs-unstable.callPackage ./decompylepp/decompylepp.nix { };
     detect-it-easy = channels.nixpkgs-unstable.callPackage ./detect-it-easy/detect-it-easy.nix { };
     net-reactor-slayer = channels.nixpkgs-unstable.callPackage ./net-reactor-slayer/net-reactor-slayer.nix { };
     obfuscator-llvm = channels.nixpkgs-unstable.callPackage ./obfuscator-llvm/obfuscator-llvm.nix { };
 
     # Python Packages
-    capa = channels.nixpkgs-unstable.callPackage ./capa/capa.nix { };
-    binary-refinery = channels.nixpkgs-unstable.callPackage ./binary-refinery/binary-refinery.nix { };
-    donut-decryptor = channels.nixpkgs-unstable.callPackage ./donut-decryptor/donut-decryptor.nix { };
-    dncil = channels.nixpkgs-unstable.callPackage ./dependencies/dncil.nix { };
-    pyja3 = channels.nixpkgs-unstable.callPackage ./dependencies/pyja3.nix { };
+    frida-tools = channels.nixpkgs-unstable.python312Packages.callPackage ./dependencies/frida-tools.nix { };
+    capa = channels.nixpkgs-unstable.python312Packages.callPackage ./capa/capa.nix { };
+    binary-refinery = channels.nixpkgs-unstable-upstream.python312Packages.callPackage ./binary-refinery/binary-refinery.nix { };
+    donut-decryptor = channels.nixpkgs-unstable.python312Packages.callPackage ./donut-decryptor/donut-decryptor.nix { };
+    dncil = channels.nixpkgs-unstable.python312Packages.callPackage ./dependencies/dncil.nix { };
+    pyja3 = channels.nixpkgs-unstable.python312Packages.callPackage ./dependencies/pyja3.nix { };
     #ucutils = channels.nixpkgs-unstable.callPackage ./dependencies/ucutils.nix { };
-    libtriton = channels.nixpkgs-unstable.callPackage ./dependencies/triton.nix { };
-    icicle-emu = channels.nixpkgs-unstable.callPackage ./dependencies/icicle-emu.nix { };
+    # libtriton = channels.nixpkgs-unstable.python312Packages.callPackage ./dependencies/triton.nix { };
+    icicle-emu = channels.nixpkgs-unstable.python312Packages.callPackage ./dependencies/icicle-emu.nix { };
 
     binary-ninja = channels.nixpkgs-unstable.callPackage ./binary-ninja/binary-ninja.nix { 
       binaryNinjaUrl = binaryNinjaURL.binaryNinjaUrl;
@@ -274,7 +274,7 @@ in
       # IDR
 
       # Custom Python environment
-      (channels.nixpkgs-unstable.python312.withPackages (ps: with channels.nixpkgs-unstable.python312Packages; [
+      (channels.nixpkgs-unstable-upstream.python312.withPackages (ps: with channels.nixpkgs-unstable-upstream.python312Packages; [
         pip
         setuptools
         wheel
@@ -293,20 +293,22 @@ in
         binary-refinery
         frida-python
         construct
+        construct-typing
+        arrow
 
         # .NET
         dnfile
         dncil
 
         # Emulation / Symbolic Execution
-        unicorn
+        # unicorn
         # ucutils
-        icicle-emu
+        # icicle-emu
         capstone
         keystone-engine
-        libtriton
+        # libtriton
         miasm
-        qiling
+        # qiling
 
         # CFG Analysis
         (hiPrio graphviz)
@@ -315,6 +317,7 @@ in
         llvmlite
 
         pefile
+        lief
         sqlite-utils
       ] ++ (workConfig.home.pythonPackages or [])))
 

@@ -1,6 +1,6 @@
-{ lib, python312Packages, fetchPypi }:
+{ lib, fetchPypi, buildPythonPackage, setuptools }:
 
-python312Packages.buildPythonPackage rec {
+buildPythonPackage rec {
   pname = "dncil";
   version = "1.0.2";
 
@@ -9,7 +9,7 @@ python312Packages.buildPythonPackage rec {
     hash = "sha256-FVdnXC0TUdMmBQmIHP8DgzCfgc2klE7Sw/XMNSlTqhU=";
   };
 
-  nativeBuildInputs = with python312Packages; [
+  nativeBuildInputs = [
     setuptools
   ];
 

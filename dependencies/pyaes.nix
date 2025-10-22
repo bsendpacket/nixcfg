@@ -1,6 +1,6 @@
-{ lib, python312Packages, fetchPypi }:
+{ lib, fetchPypi, buildPythonPackage, setuptools }:
 
-python312Packages.buildPythonPackage rec {
+buildPythonPackage rec {
   pname = "pyaes";
   version = "1.6.1";
 
@@ -8,6 +8,9 @@ python312Packages.buildPythonPackage rec {
     inherit pname version;
     sha256 = "sha256-AsGxQFw408NwsIX7lS3YvqP63O5kEa2Z8xLMEpxTbY8=";
   };
+
+  pyproject = true;
+  build-system = [ setuptools ];
 
   meta = with lib; {
     description = "A pure-Python implementation of the AES (FIPS-197) block-cipher algorithm and common modes of operation (CBC, CFB, CTR, ECB, OFB) with no dependencies beyond standard Python libraries";

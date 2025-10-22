@@ -1,4 +1,4 @@
-{ lib, buildPythonPackage, python312Packages, fetchPypi }:
+{ lib, buildPythonPackage, fetchPypi, setuptools }:
 
 buildPythonPackage rec {
   pname = "networkx";
@@ -10,7 +10,7 @@ buildPythonPackage rec {
     hash = "sha256-3jRjNUCPhN4Orab/n6+v/5vNoR8KDfqpMRM967FGq2E=";
   };
 
-  nativeBuildInputs = with python312Packages; [
+  nativeBuildInputs = [
     setuptools
   ];
 

@@ -1,13 +1,16 @@
 {
   lib,
-  python312Packages,
+  buildPythonPackage,
   fetchFromGitHub,
   cargo,
   rustPlatform,
   rustc,
+  setuptools,
+  setuptools-rust,
+  wheel,
 }:
 
-python312Packages.buildPythonPackage rec {
+buildPythonPackage rec {
   pname = "icicle-python";
   version = "0.0.10";
   pyproject = true;
@@ -26,7 +29,7 @@ python312Packages.buildPythonPackage rec {
     hash = "sha256-Y5sKSC1o5FoSvCtrR2LpTHBSHpEwn+T20LeNr83uoBg=";
   };
 
-  build-system = with python312Packages; [
+  build-system = [
     cargo
     setuptools
     setuptools-rust
@@ -35,7 +38,7 @@ python312Packages.buildPythonPackage rec {
     rustc
   ];
 
-  dependencies = with python312Packages; [
+  dependencies = [
     setuptools
     setuptools-rust
     wheel

@@ -1,10 +1,15 @@
 {
   lib,
-  python312Packages,
+  buildPythonApplication,
   fetchPypi,
+  setuptools,
+  wheel,
+  callPackage,
+  typing,
+  typing-extensions,
 }:
 
-python312Packages.buildPythonApplication rec {
+buildPythonApplication rec {
   pname = "bpc-poseur";
   version = "0.4.3.post1";
   pyproject = true;
@@ -14,12 +19,12 @@ python312Packages.buildPythonApplication rec {
     hash = "sha256-k45/3xV7j9YJ9VEbEak7ZeSzuoAsY22VV1jloDEFrz4=";
   };
 
-  build-system = with python312Packages; [
+  build-system = [
     setuptools
     wheel
   ];
 
-  dependencies = with python312Packages; [
+  dependencies = [
     (callPackage ./bpc-f2format.nix {})
     (callPackage ./bpc-utils.nix {})
     (callPackage ./tbtrim.nix {})
@@ -27,28 +32,6 @@ python312Packages.buildPythonApplication rec {
     typing
     typing-extensions
   ];
-
-  optional-dependencies = with python312Packages; {
-    docs = [
-      sphinx
-      sphinx-autodoc-typehints
-      sphinxemoji
-    ];
-    lint = [
-      bandit
-      colorlabels
-      flake8
-      mypy
-      (callPackage ./parso-0_6_0.nix {})
-      pylint
-      vermin
-    ];
-    test = [
-      coverage
-      pytest
-      pytest-doctestplus
-    ];
-  };
 
   # pythonImportsCheck = [
   #   "bpc_poseur"

@@ -1,36 +1,36 @@
 { channels, binaryNinjaURL }:
 let
 
-  pythonWithPackages = channels.nixpkgs-unstable.python312.withPackages (ps: with channels.nixpkgs-unstable.python312Packages; [
+  pythonWithPackages = channels.nixpkgs-unstable-upstream.python312.withPackages (ps: with channels.nixpkgs-unstable-upstream.python312Packages; [
     rpyc
     lxml
     httpx
     miasm
-    qiling
+    # qiling
     requests
     z3-solver
     flatbuffers
 
-    (callPackage ./binary-ninja-api.nix {
+    (ps.callPackage ./binary-ninja-api.nix {
       binaryNinjaUrl  = binaryNinjaURL.binaryNinjaUrl;
       binaryNinjaHash = binaryNinjaURL.binaryNinjaHash;
     })
 
-    (callPackage ../dependencies/triton.nix { 
-      z3 = channels.nixpkgs-unstable.z3;
-      boost = channels.nixpkgs-unstable.boost;
-      libffi = channels.nixpkgs-unstable.libffi;
-      libxml2 = channels.nixpkgs-unstable.libxml2;
-      bitwuzla = channels.nixpkgs-unstable.bitwuzla;
-      capstone = channels.nixpkgs-unstable.capstone;
-      llvmPackages_16 = channels.nixpkgs-unstable.llvmPackages_16;
-    })
+    # (ps.callPackage ../dependencies/triton.nix { 
+    #   z3 = channels.nixpkgs-unstable.z3;
+    #   boost = channels.nixpkgs-unstable.boost;
+    #   libffi = channels.nixpkgs-unstable.libffi;
+    #   libxml2 = channels.nixpkgs-unstable.libxml2;
+    #   bitwuzla = channels.nixpkgs-unstable.bitwuzla;
+    #   capstone = channels.nixpkgs-unstable.capstone;
+    #   llvmPackages_16 = channels.nixpkgs-unstable.llvmPackages_16;
+    # })
 
-    (callPackage ../dependencies/pysqlite3.nix {})
-    (callPackage ../dependencies/msynth.nix {})
-    (callPackage ../dependencies/mkyara.nix {})
-    (callPackage ../dependencies/icicle-emu.nix {})
-    (callPackage ../binary-refinery/binary-refinery.nix {})
+    (ps.callPackage ../dependencies/pysqlite3.nix {})
+    (ps.callPackage ../dependencies/msynth.nix {})
+    (ps.callPackage ../dependencies/mkyara.nix {})
+    # (ps.callPackage ../dependencies/icicle-emu.nix {})
+    (ps.callPackage ../binary-refinery/binary-refinery.nix {})
   ]); 
 
   fetchBinaryNinjaPlugin = { name, folder ? "", sha256, url ? null, 

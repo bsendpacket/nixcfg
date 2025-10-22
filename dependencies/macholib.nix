@@ -1,6 +1,6 @@
-{ lib, fetchPypi, python312Packages }:
+{ lib, fetchPypi, buildPythonPackage, altgraph, setuptools }:
 
-python312Packages.buildPythonPackage rec {
+buildPythonPackage rec {
   pname = "macholib";
   version = "1.16.3";
 
@@ -9,10 +9,12 @@ python312Packages.buildPythonPackage rec {
     sha256 = "sha256-B66eFejkzZp4gBPYH1kIs2Cap2+bFCG66cTXYG7IajA=";
   };
 
+  pyproject = true;
+  build-system = [ setuptools ];
   # Disable tests, as they only work on macOS
   doCheck = false;
 
-  propagatedBuildInputs = with python312Packages; [
+  propagatedBuildInputs = [
     altgraph
   ];
 

@@ -1,10 +1,12 @@
 {
   lib,
-  python312Packages,
+  buildPythonApplication,
   fetchPypi,
+  setuptools,
+  wheel
 }:
 
-python312Packages.buildPythonApplication rec {
+buildPythonApplication rec {
   pname = "pysqlite3";
   version = "0.5.4";
   pyproject = true;
@@ -14,7 +16,7 @@ python312Packages.buildPythonApplication rec {
     hash = "sha256-+8ab/cDLQ6W63VQDsSbVFRNxtQN+A5e6mAK7RAxbACE=";
   };
 
-  build-system = with python312Packages; [
+  build-system = [
     setuptools
     wheel
   ];

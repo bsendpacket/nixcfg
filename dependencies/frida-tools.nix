@@ -1,6 +1,6 @@
-{ lib, fetchPypi, python312Packages }:
+{ lib, fetchPypi, buildPythonApplication, pygments, prompt-toolkit, colorama, frida-python }:
 
-python312Packages.buildPythonApplication rec {
+buildPythonApplication rec {
   pname = "frida-tools";
   version = "12.3.0";
 
@@ -9,7 +9,7 @@ python312Packages.buildPythonApplication rec {
     hash = "sha256-jtxn0a43kv9bLcY1CM3k0kf5K30Ne/FT10ohptWNwEU=";
   };
 
-  propagatedBuildInputs = with python312Packages; [
+  propagatedBuildInputs = [
     pygments
     prompt-toolkit
     colorama

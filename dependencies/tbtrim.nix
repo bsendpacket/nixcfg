@@ -1,12 +1,12 @@
 {
   lib,
-  python312Packages,
+  buildPythonPackage,
   fetchPypi,
   setuptools,
   wheel,
 }:
 
-python312Packages.buildPythonPackage rec {
+buildPythonPackage rec {
   pname = "tbtrim";
   version = "0.3.1";
   pyproject = true;

@@ -1,12 +1,15 @@
 {
   lib,
-  python312Packages,
+  buildPythonApplication,
   fetchPypi,
   setuptools,
   wheel,
+  callPackage,
+  typing,
+  typing-extensions,
 }:
 
-python312Packages.buildPythonApplication rec {
+buildPythonApplication rec {
   pname = "bpc-walrus";
   version = "0.1.5";
   pyproject = true;
@@ -21,7 +24,7 @@ python312Packages.buildPythonApplication rec {
     wheel
   ];
 
-  dependencies = with python312Packages; [
+  dependencies = [
     (callPackage ./bpc-f2format.nix {}) 
     (callPackage ./bpc-utils.nix {})
     (callPackage ./tbtrim.nix {})
@@ -29,28 +32,6 @@ python312Packages.buildPythonApplication rec {
     typing
     typing-extensions
   ];
-
-  optional-dependencies = with python312Packages; {
-    docs = [
-      sphinx
-      sphinx-autodoc-typehints
-      sphinxemoji
-    ];
-    lint = [
-      bandit
-      colorlabels
-      flake8
-      mypy
-      (callPackage ./parso-0_6_0.nix {})
-      pylint
-      vermin
-    ];
-    test = [
-      coverage
-      pytest
-      pytest-doctestplus
-    ];
-  };
 
   # pythonImportsCheck = [
   #   "bpc_walrus"

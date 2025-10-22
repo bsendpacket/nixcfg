@@ -1,11 +1,11 @@
 {
   lib,
-  python312Packages,
+  buildPythonPackage,
   fetchPypi,
   setuptools,
 }:
 
-python312Packages.buildPythonPackage rec {
+buildPythonPackage rec {
   pname = "pyzstd";
   version = "0.16.1";
   pyproject = true;

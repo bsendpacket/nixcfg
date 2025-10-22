@@ -1,10 +1,13 @@
 {
   lib,
-  python312Packages,
+  buildPythonPackage,
   fetchPypi,
+  setuptools,
+  wheel,
+  dpkt
 }:
 
-python312Packages.buildPythonPackage rec {
+buildPythonPackage rec {
   pname = "pyja3";
   version = "1.0.0";
   pyproject = true;
@@ -15,11 +18,11 @@ python312Packages.buildPythonPackage rec {
   };
 
   build-system = [
-    python312Packages.setuptools
-    python312Packages.wheel
+    setuptools
+    wheel
   ];
 
-  dependencies = with python312Packages; [
+  dependencies = [
     dpkt
   ];
 

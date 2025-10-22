@@ -1,10 +1,16 @@
 {
   lib,
-  python312Packages,
+  buildPythonPackage,
   fetchFromGitHub,
+  setuptools,
+  setuptools-scm,
+  capstone,
+  hexdump,
+  pefile,
+  unicorn
 }:
 
-python312Packages.buildPythonPackage rec {
+buildPythonPackage rec {
   pname = "ucutils";
   version = "0.3.1";
   pyproject = true;
@@ -16,35 +22,18 @@ python312Packages.buildPythonPackage rec {
     hash = "sha256-zu3HKkns5tFMhz6ba+yf8dsv3SQpq9FEhmOWeCOG4oM=";
   };
 
-  build-system = with python312Packages; [
+  build-system = [
     setuptools
     setuptools-scm
   ];
 
-  dependencies = with python312Packages; [
+  dependencies = [
     capstone
     hexdump
     pefile
     setuptools
     unicorn
   ];
-
-  optional-dependencies = with python312Packages; {
-    build = [
-      build
-      setuptools
-    ];
-    dev = [
-      black
-      isort
-      mypy
-      pycodestyle
-      pytest
-      pytest-instafail
-      pytest-sugar
-      types-setuptools
-    ];
-  };
 
   pythonImportsCheck = [
     "ucutils"

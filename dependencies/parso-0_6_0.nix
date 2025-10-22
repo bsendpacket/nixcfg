@@ -1,12 +1,12 @@
 {
   lib,
-  python312Packages,
+  buildPythonPackage,
   fetchPypi,
   setuptools,
   wheel,
 }:
 
-python312Packages.buildPythonPackage rec {
+buildPythonPackage rec {
   pname = "parso";
   version = "0.6.0";
   pyproject = true;
@@ -20,18 +20,6 @@ python312Packages.buildPythonPackage rec {
     setuptools
     wheel
   ];
-
-  optional-dependencies = with python312Packages; {
-    qa = [
-      flake8
-      mypy
-      types-setuptools
-    ];
-    testing = [
-      docopt
-      pytest
-    ];
-  };
 
   pythonImportsCheck = [
     "parso"

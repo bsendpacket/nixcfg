@@ -1,4 +1,4 @@
-{ pkgs, lib, stdenv, python312Packages, fetchFromGitHub, cmake }:
+{ pkgs, lib, stdenv, buildPythonPackage, fetchFromGitHub, cmake, python, setuptools, distutils }:
 
 let
   unicorn-emu = stdenv.mkDerivation rec {
@@ -32,7 +32,7 @@ let
     };
   };
 in
-python312Packages.buildPythonPackage rec {
+buildPythonPackage rec {
   pname = "unicorn";
   version = unicorn-emu.version;
 
@@ -42,18 +42,18 @@ python312Packages.buildPythonPackage rec {
   nativeBuildInputs = [ pkgs.pkg-config ];
   buildInputs = [ unicorn-emu ];
 
-  propagatedBuildInputs = with python312Packages; [ setuptools distutils ];
+  propagatedBuildInputs = [ setuptools distutils ];
 
   preBuild = ''
     export UNICORN_QEMU_FLAGS="--python"
-    export LIBUNICORN_PATH=$out/${python312Packages.python.sitePackages}/unicorn/
+    export LIBUNICORN_PATH=$out/${python.sitePackages}/unicorn/
     export UNICORN_INCLUDE_PATH=${unicorn-emu}/include
   '';
 
   postInstall = ''
     # Ensure the Unicorn shared library is in the same directory as the Python module
-    mkdir $out/${python312Packages.python.sitePackages}/unicorn/lib
-    cp ${unicorn-emu}/lib/libunicorn${stdenv.hostPlatform.extensions.sharedLibrary}.1 $out/${python312Packages.python.sitePackages}/unicorn/lib/libunicorn${stdenv.hostPlatform.extensions.sharedLibrary}
+    mkdir $out/${python.sitePackages}/unicorn/lib
+    cp ${unicorn-emu}/lib/libunicorn${stdenv.hostPlatform.extensions.sharedLibrary}.1 $out/${python.sitePackages}/unicorn/lib/libunicorn${stdenv.hostPlatform.extensions.sharedLibrary}
   '';
 
   # Prevent setuptools from trying to fetch dependencies

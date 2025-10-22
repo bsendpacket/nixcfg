@@ -2,9 +2,10 @@
   lib,
   buildPythonPackage,
   fetchFromGitHub,
-  python312Packages,
   setuptools,
   wheel,
+  capstone,
+  yara-python
 }:
 
 buildPythonPackage rec {
@@ -19,7 +20,7 @@ buildPythonPackage rec {
     hash = "sha256-QIqFXAPEly+oxUntLNAqCbtlrwafUmeon6TVQ76hGTI=";
   };
 
-  propagatedBuildInputs = with python312Packages; [
+  propagatedBuildInputs = [
     capstone
     yara-python
   ];

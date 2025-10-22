@@ -1,6 +1,6 @@
-{ lib, fetchPypi, poetry-core, setuptools, wheel, python312Packages }:
+{ lib, fetchPypi, poetry-core, setuptools, wheel, buildPythonPackage, pygments, callPackage}:
 
-python312Packages.buildPythonPackage rec {
+buildPythonPackage rec {
   pname = "k2l";
   version = "2.0.0";
   format = "pyproject";
@@ -16,7 +16,7 @@ python312Packages.buildPythonPackage rec {
     wheel
   ];
 
-  propagatedBuildInputs = with python312Packages; [
+  propagatedBuildInputs = [
     pygments
     (callPackage ./kimg4.nix {})
     (callPackage ./pyaes.nix {})

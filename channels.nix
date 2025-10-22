@@ -36,6 +36,33 @@ let
       };
     };
 
+    nixpkgs-unstable-upstream = import (builtins.fetchTarball {
+      url = "https://github.com/NixOS/nixpkgs/archive/cb82756ecc37fa623f8cf3e88854f9bf7f64af93.tar.gz";
+      sha256 = "1a28dlvrh2y1mps04f0mzb56syhkjd60zvr60brirvsgbrmcx46h";
+    }) {
+      system = "x86_64-linux";
+        overlays = with overlays; [ 
+          pinPackagesToSpecificVersionOverlay
+          pythonPackagesOverlay 
+          pinPackagesToStableOverlay 
+          patchPackagesOverlay 
+          homeManagerPinOverlay
+          nixglOverlay
+        ];
+        
+      config = {
+        allowUnfree = true;
+        packageOverrides = pkgs: {
+          nur = channels.nur;
+        };
+        # TEMPORARY
+        permittedInsecurePackages = [
+          "dotnet-sdk-6.0.428"
+          "dotnet-runtime-6.0.36"
+        ];
+      };
+    };
+
     home-manager = (builtins.fetchTarball {
       url = "https://github.com/nix-community/home-manager/archive/66c5d8b62818ec4c1edb3e941f55ef78df8141a8.tar.gz";
       sha256 = "0bn15l9rnzqihmyhzx0dg1l0v5wg646wqrspjgnd1d8rjwd20b45";
@@ -63,7 +90,7 @@ let
     # By pinning Stable's Python to Unstable's Python, 
     # the build process and subsequent Python packages will not cause this hash collision.
     pythonInterpreterOverlay = self: super: {
-      python312 = channels.nixpkgs-unstable.python312;
+      python312 = channels.nixpkgs-unstable-upstream.python312;
     };
 
     # Some packages are broken in unstable, use the stable versions instead
@@ -86,7 +113,12 @@ let
           rev = "2.0.1.post1";
           hash = "sha256-Jz5C35rwnDz0CXcfcvWjkwScGNQO1uijF7JrtZhM7mI=";
         };
+
+        cmakeFlags = (oldAttrs.cmakeFlags or []) ++ [
+          "-DCMAKE_POLICY_VERSION_MINIMUM=3.5"
+        ];
       });
+
 
       # zig = (super.zig.override {
       #   llvmPackages = self.llvmPackages_19;

@@ -1,6 +1,6 @@
-{ lib, python312Packages, fetchPypi }:
+{ lib, buildPythonPackage, fetchPypi, setuptools }:
 
-python312Packages.buildPythonPackage rec {
+buildPythonPackage rec {
   pname = "cabarchive";
   version = "0.2.4";
 
@@ -11,6 +11,8 @@ python312Packages.buildPythonPackage rec {
 
   # Disable tests, as they require additional files
   doCheck = false;
+  pyproject = true;
+  build-system = [ setuptools ];
 
   meta = with lib; {
     description = "A pure-python library for creating and extracting cab files";

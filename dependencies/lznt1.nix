@@ -1,11 +1,11 @@
 { lib
-, python312Packages 
+, buildPythonPackage
 , fetchPypi
 , setuptools
 , wheel
 }:
 
-python312Packages.buildPythonPackage rec {
+buildPythonPackage rec {
   pname = "lznt1";
   version = "0.2";
   pyproject = true;

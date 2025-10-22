@@ -1,7 +1,7 @@
 {
   lib,
   fetchFromGitHub,
-  python312Packages,
+  buildPythonPackage,
   cmake,
   capstone,
   boost,
@@ -10,9 +10,10 @@
   libxml2,
   libffi,
   llvmPackages_16,
+  python
 }:
 
-python312Packages.buildPythonPackage {
+buildPythonPackage {
   pname = "triton";
   version = "unstable-2025-02-15";
   format = "other";
@@ -44,7 +45,7 @@ python312Packages.buildPythonPackage {
     "-DLLVM_INTERFACE=ON"
     "-DBITWUZLA_INTERFACE=ON"
     "-DCMAKE_PREFIX_PATH=${llvmPackages_16.llvm}"
-    "-DPYTHON_EXECUTABLE=${python312Packages.python.interpreter}"
+    "-DPYTHON_EXECUTABLE=${python.interpreter}"
     "-DBITWUZLA_INCLUDE_DIR=${bitwuzla}/include"
     "-DBITWUZLA_LIBRARY=${bitwuzla}/lib/libbitwuzla.so"
   ];
@@ -55,10 +56,10 @@ python312Packages.buildPythonPackage {
   '';
 
   installPhase = ''
-    mkdir -p $out/${python312Packages.python.sitePackages}
-    cp -r $src/src/libtriton/bindings/python/* $out/${python312Packages.python.sitePackages}/
-    cp ./doc/triton_autocomplete/triton.pyi $out/${python312Packages.python.sitePackages}/
-    cp ./src/libtriton/libtriton.so $out/${python312Packages.python.sitePackages}/triton.so
+    mkdir -p $out/${python.sitePackages}
+    cp -r $src/src/libtriton/bindings/python/* $out/${python.sitePackages}/
+    cp ./doc/triton_autocomplete/triton.pyi $out/${python.sitePackages}/
+    cp ./src/libtriton/libtriton.so $out/${python.sitePackages}/triton.so
   '';
 
   meta = with lib; {

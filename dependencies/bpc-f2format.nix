@@ -1,10 +1,14 @@
 {
   lib,
-  python312Packages,
+  buildPythonApplication,
   fetchPypi,
+  callPackage,
+  setuptools,
+  wheel,
+  typing-extensions
 }:
 
-python312Packages.buildPythonApplication rec {
+buildPythonApplication rec {
   pname = "bpc-f2format";
   version = "0.8.7";
   pyproject = true;
@@ -14,12 +18,12 @@ python312Packages.buildPythonApplication rec {
     hash = "sha256-XCr/32SbnGNwkUb/9CrUSl9rCpXmw2yQdA03MDO1ERw=";
   };
 
-  build-system = with python312Packages; [
+  build-system = [
     setuptools
     wheel
   ];
 
-  dependencies = with python312Packages; [
+  dependencies = [
     (callPackage ./bpc-utils.nix {})
     (callPackage ./tbtrim.nix {})
     (callPackage ./parso-0_6_0.nix {})

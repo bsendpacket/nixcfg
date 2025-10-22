@@ -1,11 +1,12 @@
 {
   lib,
-  python312Packages,
+  buildPythonPackage,
   fetchPypi,
   setuptools,
+  typing-extensions
 }:
 
-python312Packages.buildPythonPackage rec {
+buildPythonPackage rec {
   pname = "dictdumper";
   version = "0.8.4.post3";
   pyproject = true;
@@ -19,19 +20,9 @@ python312Packages.buildPythonPackage rec {
     setuptools
   ];
 
-  dependencies = with python312Packages; [
+  dependencies = [
     typing-extensions
   ];
-
-  optional-dependencies = with python312Packages; {
-    docs = [
-      furo
-      sphinx
-      sphinx-autodoc-typehints
-      sphinx-copybutton
-      sphinx-opengraph
-    ];
-  };
 
   pythonImportsCheck = [
     "dictdumper"

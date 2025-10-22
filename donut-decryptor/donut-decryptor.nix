@@ -1,6 +1,6 @@
-{ python312Packages, fetchFromGitHub }:
+{ buildPythonApplication, fetchFromGitHub, setuptools, callPackage, yara-python }:
 
-python312Packages.buildPythonApplication {
+buildPythonApplication {
   pname = "donut-decryptor";
   version = "0.0.9";
 
@@ -11,11 +11,14 @@ python312Packages.buildPythonApplication {
     hash = "sha256-numLXWOm8fE0MSu0cnzWL4Vqtm0gM/VARtP7rDCtj+Q=";
   };
 
-  nativeBuildInputs = with python312Packages; [
+  pyproject = true;
+  build-system = [ setuptools ];
+
+  nativeBuildInputs = [
     setuptools
   ];
 
-  propagatedBuildInputs = with python312Packages; [
+  propagatedBuildInputs = [
     (callPackage ../dependencies/chaskey-lts.nix {})
     (callPackage ../dependencies/aplib.nix {})
     (callPackage ../dependencies/lznt1.nix {})

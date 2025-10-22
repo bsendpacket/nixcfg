@@ -1,10 +1,21 @@
 {
   lib,
-  python312Packages,
+  buildPythonApplication,
   fetchPypi,
+  setuptools,
+  aenum,
+  callPackage,
+  beautifulsoup4,
+  chardet,
+  emoji,
+  dpkt,
+  pathlib2,
+  pyshark,
+  typing-extensions,
+  scapy,
 }:
 
-python312Packages.buildPythonApplication rec {
+buildPythonApplication rec {
   pname = "pypcapkit";
   version = "1.3.1.post21";
   pyproject = true;
@@ -14,14 +25,14 @@ python312Packages.buildPythonApplication rec {
     hash = "sha256-JEjc2Ffv+eWxg/F1XhFRWotNlYQKNZYOZsPWhuhBV0M=";
   };
 
-  build-system = with python312Packages; [
+  build-system = [
     (callPackage ./bpc-f2format.nix {}) 
     (callPackage ./bpc-poseur.nix {}) 
     (callPackage ./bpc-walrus.nix {}) 
     setuptools
   ];
 
-  dependencies = with python312Packages; [
+  dependencies = [
     (callPackage ./dictdumper.nix {})
     (callPackage ./tbtrim.nix {})
     aenum
@@ -34,22 +45,6 @@ python312Packages.buildPythonApplication rec {
     typing-extensions
     scapy
   ];
-
-  optional-dependencies = with python312Packages; {
-    docs = [
-      furo
-      mypy-extensions
-      sphinx
-      sphinx-autodoc-typehints
-      sphinx-copybutton
-      sphinx-opengraph
-      typing-extensions
-    ];
-    vendor = [
-      beautifulsoup4
-      requests
-    ];
-  };
 
   pythonImportsCheck = [
     "pcapkit"

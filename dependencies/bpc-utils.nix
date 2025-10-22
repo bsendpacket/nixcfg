@@ -1,10 +1,15 @@
 {
   lib,
-  python312Packages,
+  buildPythonPackage,
+  callPackage,
   fetchPypi,
+  setuptools,
+  wheel,
+  typing,
+  typing-extensions
 }:
 
-python312Packages.buildPythonPackage rec {
+buildPythonPackage rec {
   pname = "bpc-utils";
   version = "0.10.1";
   pyproject = true;
@@ -14,37 +19,16 @@ python312Packages.buildPythonPackage rec {
     hash = "sha256-CVQoLpR+cSFStjlvewRIfCjizf735FOEU8sTZi+qfTM=";
   };
 
-  build-system = with python312Packages; [
+  build-system = [
     setuptools
     wheel
   ];
 
-  dependencies = with python312Packages; [
+  dependencies = [
     (callPackage ./parso-0_6_0.nix {}) 
     typing
     typing-extensions
   ];
-
-  optional-dependencies = with python312Packages; {
-    docs = [
-      sphinx
-      sphinx-autodoc-typehints
-    ];
-    lint = [
-      bandit
-      colorlabels
-      flake8
-      mypy
-      (callPackage ./parso-0_6_0.nix {}) 
-      pylint
-      vermin
-    ];
-    test = [
-      coverage
-      pytest
-      pytest-doctestplus
-    ];
-  };
 
   # pythonImportsCheck = [
   #   "bpc_utils"
