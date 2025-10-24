@@ -31,18 +31,28 @@ let
     frida-tools = channels.nixpkgs-unstable.python312Packages.callPackage ./dependencies/frida-tools.nix { };
     capa = channels.nixpkgs-unstable.python312Packages.callPackage ./capa/capa.nix { };
     binary-refinery = channels.nixpkgs-unstable-upstream.python312Packages.callPackage ./binary-refinery/binary-refinery.nix { };
-    donut-decryptor = channels.nixpkgs-unstable.python312Packages.callPackage ./donut-decryptor/donut-decryptor.nix { };
+    donut-decryptor = channels.nixpkgs-unstable-upstream.python312Packages.callPackage ./donut-decryptor/donut-decryptor.nix { };
     dncil = channels.nixpkgs-unstable.python312Packages.callPackage ./dependencies/dncil.nix { };
     pyja3 = channels.nixpkgs-unstable.python312Packages.callPackage ./dependencies/pyja3.nix { };
     #ucutils = channels.nixpkgs-unstable.callPackage ./dependencies/ucutils.nix { };
-    # libtriton = channels.nixpkgs-unstable.python312Packages.callPackage ./dependencies/triton.nix { };
-    icicle-emu = channels.nixpkgs-unstable.python312Packages.callPackage ./dependencies/icicle-emu.nix { };
+    icicle-emu = channels.nixpkgs-unstable-upstream.python312Packages.callPackage ./dependencies/icicle-emu.nix { };
 
-    binary-ninja = channels.nixpkgs-unstable.callPackage ./binary-ninja/binary-ninja.nix { 
+    binary-ninja = channels.nixpkgs-unstable-upstream.callPackage ./binary-ninja/binary-ninja.nix { 
       binaryNinjaUrl = binaryNinjaURL.binaryNinjaUrl;
       binaryNinjaHash = binaryNinjaURL.binaryNinjaHash;
       pythonEnv = binaryNinjaConfig.pythonEnv;
     };
+
+    libtriton = channels.nixpkgs-unstable-upstream.python312Packages.callPackage ./dependencies/triton.nix { 
+      z3 = channels.nixpkgs-unstable-upstream.z3;
+      boost = channels.nixpkgs-unstable-upstream.boost;
+      libffi = channels.nixpkgs-unstable-upstream.libffi;
+      libxml2 = channels.nixpkgs-unstable-upstream.libxml2;
+      bitwuzla = channels.nixpkgs-unstable-upstream.bitwuzla;
+      capstone = channels.nixpkgs-unstable-upstream.capstone;
+      llvmPackages_16 = channels.nixpkgs-unstable.llvmPackages_16;
+    };
+
   }; 
 
   # Work-specific
@@ -306,7 +316,7 @@ in
         # icicle-emu
         capstone
         keystone-engine
-        # libtriton
+        libtriton
         miasm
         # qiling
 

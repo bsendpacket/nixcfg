@@ -166,9 +166,9 @@ let
           protobuf = pythonSuper.protobuf5;
 
           # Unicorn v2.0.1 still requires setuptools+distutils
-          unicorn = pythonSuper.unicorn.overrideAttrs (oldAttrs: {
-            propagatedBuildInputs = with super.python312Packages; [ setuptools distutils ];
-          });
+          # unicorn = pythonSuper.unicorn.overrideAttrs (oldAttrs: {
+          #   propagatedBuildInputs = with super.python312Packages; [ setuptools distutils ];
+          # });
 
           # Suppress broken state as the version of Unicorn is correctly pinned
           angr = pythonSuper.angr.overrideAttrs (oldAttrs: {

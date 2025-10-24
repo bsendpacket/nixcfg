@@ -43,10 +43,12 @@ let
       libxkbcommon
       fontconfig
       freetype
+      libxml2_13
       libpng
       zlib
       xorg.libXi
       dbus
+      stdenv.cc.cc.lib
       
       # Not sure if this actually works on Wayland currently
       wayland 
@@ -55,7 +57,7 @@ let
       qt6.qtshadertools
       qt6.qtdeclarative
       qt6.qtwayland
-      stdenv.cc.cc.lib
+
       pythonEnv
     ];
 
