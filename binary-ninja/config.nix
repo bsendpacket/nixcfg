@@ -2,6 +2,8 @@
 let
 
   pythonWithPackages = channels.nixpkgs-unstable-upstream.python312.withPackages (ps: with channels.nixpkgs-unstable-upstream.python312Packages; [
+    python
+
     rpyc
     lxml
     httpx
@@ -16,15 +18,15 @@ let
       binaryNinjaHash = binaryNinjaURL.binaryNinjaHash;
     })
 
-    # (ps.callPackage ../dependencies/triton.nix { 
-    #   z3 = channels.nixpkgs-unstable.z3;
-    #   boost = channels.nixpkgs-unstable.boost;
-    #   libffi = channels.nixpkgs-unstable.libffi;
-    #   libxml2 = channels.nixpkgs-unstable.libxml2;
-    #   bitwuzla = channels.nixpkgs-unstable.bitwuzla;
-    #   capstone = channels.nixpkgs-unstable.capstone;
-    #   llvmPackages_16 = channels.nixpkgs-unstable.llvmPackages_16;
-    # })
+    (ps.callPackage ../dependencies/triton.nix { 
+      z3 = channels.nixpkgs-unstable-upstream.z3;
+      boost = channels.nixpkgs-unstable-upstream.boost;
+      libffi = channels.nixpkgs-unstable-upstream.libffi;
+      libxml2 = channels.nixpkgs-unstable-upstream.libxml2;
+      bitwuzla = channels.nixpkgs-unstable-upstream.bitwuzla;
+      capstone = channels.nixpkgs-unstable-upstream.capstone;
+      llvmPackages_16 = channels.nixpkgs-unstable.llvmPackages_16;
+    })
 
     (ps.callPackage ../dependencies/pysqlite3.nix {})
     (ps.callPackage ../dependencies/msynth.nix {})

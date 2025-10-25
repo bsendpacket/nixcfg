@@ -4,7 +4,7 @@ let
   # Helper to set up a Python venv
   makePythonEnv = { name, packages }:
     let
-      pythonEnv = channels.nixpkgs-unstable.python312.withPackages (ps: packages ps);
+      pythonEnv = channels.nixpkgs-unstable-upstream.python312.withPackages (ps: packages ps);
     in
     {
       name = name;
