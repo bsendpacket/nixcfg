@@ -10,19 +10,23 @@
 , nodePackages
 }:
 
-# This derivation was the worst to make so far by a long shot. 
-# If anybody good at Nix comes across this and knows how to make it better, please feel free to reach out, I'd really appreciate it
+# To update:
+# 1) Clone the repo
+# 2) Remake the patch diffs
+# 3) nix-shell -p pnpm
+# 4) pnpm install --no-frozen-lockfile
+# 5) git add *
+# 6) git diff --staged > ./fix-dependency.patch
+# 7) Ensure esbuild version matches
 stdenv.mkDerivation (finalAttrs: {
   pname = "webcrack";
-  version = "2.14.0";
+  version = "2.15.1";
 
-  # There are patches included in the upstream webcrack repo which I couldn't figure out how to apply without it all breaking in nix, as pnpm.fetchDeps attempts to auto-patch and fails.
-  # For now, I've forked the repo and removed the patches and regenerated the lockfile
   src = fetchFromGitHub {
     owner = "j4k0xb";
     repo = "webcrack";
-    rev = "241f9469e6401f3dabc6373233d85a5e76966b54";
-    hash = "sha256-K/acyMi+qlM+sipsJhHD4JyJXs8K0GkKDWncoKX1VP0=";
+    rev = "32cbd0604af9ba4930f4594cdcfea799d6cf1e81";
+    hash = "sha256-1tsVu/uXtX6p+ZhwKiJoa6AoXIBdeK0XcMYcHGaScRU=";
   };
 
   patches = [ ./fix-dependency.patch ];
@@ -30,7 +34,8 @@ stdenv.mkDerivation (finalAttrs: {
   # Download all pnpm packages declaratively based off the pnpm-lock.yaml file
   pnpmDeps = pnpm.fetchDeps {
     inherit (finalAttrs) pname version src;
-    hash = "sha256-SnTxG3ABPy/nSAgFp4ez827b/UXoG0XIIzD7nxh1Exc=";
+    hash = "sha256-B2QFlEf4t4XenxfwDyl7waVV7VXEkIMLmHh+sArfu0E=";
+    fetcherVersion = 2;
     optional = true;
   };
 
@@ -42,26 +47,27 @@ stdenv.mkDerivation (finalAttrs: {
     nodePackages.node-gyp # Required for isolated-vm build
   ];
 
-  # We specifically need version 0.21.4 of esbuild
-  # NixPkgs only hosts a newer build (0.23.0) at this time
-  env.ESBUILD_BINARY_PATH = "${lib.getExe (
-    esbuild.override {
-      buildGoModule =
-        args:
-        buildGoModule (
-          args
-          // rec {
-            version = "0.21.4";
-            src = fetchFromGitHub {
-              owner = "evanw";
-              repo = "esbuild";
-              rev = "v${version}";
-              hash = "sha256-T/qbf6nMORVWD2G/hJtAlUlg7xep7Bw5zZnBvYoL5cQ=";
-            };
-          }
-        );
-    }
-  )}";
+  # We specifically need version 0.25.2 of esbuild
+  env = {
+    ESBUILD_BINARY_PATH = "${lib.getExe (
+      esbuild.override {
+        buildGoModule =
+          args:
+          buildGoModule (
+            args
+            // rec {
+              version = "0.25.2";
+              src = fetchFromGitHub {
+                owner = "evanw";
+                repo = "esbuild";
+                rev = "v${version}";
+                hash = "sha256-aDxheDMeQYqCT9XO3In6RbmzmXVchn+bjgf3nL3VE4I=";
+              };
+            }
+          );
+      }
+    )}";
+  };
 
   # Ignore scripts in order to prevent esbuild from failing
   configurePhase = ''
@@ -98,12 +104,18 @@ stdenv.mkDerivation (finalAttrs: {
   installPhase = ''
     runHook preInstall
     mkdir -p $out/lib/webcrack $out/bin
-    cp -r packages/webcrack/{dist,package.json} $out/lib/webcrack/
-    cp -r node_modules $out/lib/webcrack/
+
+    # Copy the built package
+    cp -r packages/webcrack/dist $out/lib/webcrack/
+    cp packages/webcrack/package.json $out/lib/webcrack/
+
+    # Copy production node_modules
+    cp -rL node_modules $out/lib/webcrack/
 
     makeWrapper ${nodejs}/bin/node $out/bin/webcrack \
       --set NODE_PATH "$out/lib/webcrack/node_modules" \
       --add-flags "$out/lib/webcrack/dist/cli.js"
+
     runHook postInstall
   '';
 

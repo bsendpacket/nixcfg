@@ -8,6 +8,8 @@
 buildPythonPackage rec {
   pname = "dncil";
   version = "1.0.2";
+  pyproject = true;
+  build-system = [ setuptools ];
 
   src = fetchPypi {
     inherit pname version;

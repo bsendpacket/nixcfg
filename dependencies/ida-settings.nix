@@ -1,8 +1,18 @@
-{ lib, buildPythonPackage, fetchPypi, pip, callPackage, six }:
+{ 
+  lib, 
+  buildPythonPackage, 
+  fetchPypi, 
+  setuptools,
+  pip, 
+  callPackage, 
+  six 
+}:
 
 buildPythonPackage rec {
   pname = "ida-settings";
   version = "2.1.0";
+  pyproject = true;
+  build-system = [ setuptools ];
 
   src = fetchPypi {
     inherit pname version;

@@ -141,37 +141,36 @@ in
       ## Malware Analysis
         
       # Binary Analysis
-      #detect-it-easy
-      #flare-floss
-      #ghidra
-      #imhex
-      #capa
-      #upx
+      detect-it-easy
+      flare-floss
+      ghidra
+      imhex
+      capa
+      upx
 
-      #yara-x
-      #yaralyzer
+      yara-x
+      yaralyzer
 
       # Networking
-      #wireshark
+      wireshark
 
       # JavaScript
-      #webcrack
+      webcrack
 
       # Java
-      #jadx
+      jadx
 
       # .NET
-      #ilspycmd
+      ilspycmd
 
       # Go
-      #goresym
-      #redress
+      goresym
 
       # Python
-      #decompylepp
+      decompylepp
 
       # Android
-      #apktool
+      apktool
 
       # Custom Python environment
       (channels.nixpkgs-unstable.python312.withPackages (ps: with channels.nixpkgs-unstable.python312Packages; [
@@ -186,14 +185,11 @@ in
 
         # Binary Analysis
         binary-refinery
-        frida-python
         construct
         construct-typing
-        #arrow
 
         capstone
         keystone-engine
-        miasm
 
         lief
       ] ++ (workConfig.home.pythonPackages or [])))

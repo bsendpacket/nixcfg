@@ -20,8 +20,8 @@ let
     };
 
     nixpkgs-unstable = import (builtins.fetchTarball {
-      url = "https://github.com/NixOS/nixpkgs/archive/730ad931c6c8a5f95c965490b480fecee3d9b184.tar.gz";
-      sha256 = "sha256-NJ4HOFwcP50ozvoeul2Y3C6nxsnICSkKmNEPa5THqYY=";
+      url = "https://github.com/NixOS/nixpkgs/archive/201c9d5bf2996f95d635545364614ad27262b525.tar.gz";
+      sha256 = "sha256-NbqeppjwBFamZ80XAPTuB8KesUIQytcu9+plXUvTPDg=";
     }) {
       system = "x86_64-linux";
         overlays = with overlays; [ 
@@ -127,28 +127,30 @@ let
       python312Packages = super.python312Packages.override {
         overrides = pythonSelf: pythonSuper: {
 
-          # The NixPkg for angr uses protobuf4, although it works with protobuf5
-          # By forcing protobuf5 here, conflicts of multiple versions existing is prevented
-          protobuf = pythonSuper.protobuf5;
-
           # Unicorn v2.0.1 still requires setuptools+distutils
           # unicorn = pythonSuper.unicorn.overrideAttrs (oldAttrs: {
           #   propagatedBuildInputs = with super.python312Packages; [ setuptools distutils ];
           # });
 
+	  ## The following issues are mostly resolved, and are unnessasary now, however,
+	  ## they are here for examples as to what may be required:
+
+          # The NixPkg for angr uses protobuf4, although it works with protobuf5
+          # By forcing protobuf5 here, conflicts of multiple versions existing is prevented
+          # protobuf = pythonSuper.protobuf5;
+
           # Suppress broken state as the version of Unicorn is correctly pinned
-          angr = pythonSuper.angr.overrideAttrs (oldAttrs: {
-            meta = oldAttrs.meta // {
-              broken = false;
-            };
-          });
+          # angr = pythonSuper.angr.overrideAttrs (oldAttrs: {
+          #  meta = oldAttrs.meta // {
+          #    broken = false;
+          #  };
+          # });
 
           # Upstream currently lacks pyproject + build-system, which is required.
-          # TODO: Make a pull request for this...
-          meson = pythonSuper.meson.overrideAttrs (oldAttrs: {
-            pyproject = true;
-            build-system = [ pythonSelf.setuptools ];
-          });
+          # meson = pythonSuper.meson.overrideAttrs (oldAttrs: {
+          #   pyproject = true;
+          #   build-system = [ pythonSelf.setuptools ];
+          # });
         };
       };
     };
@@ -160,6 +162,7 @@ let
       sha256 = "sha256-Ob/HuUhANoDs+nvYqyTKrkcPXf4ZgXoqMTQoCK0RFgQ=";
     }) {};
   };
+
 in {
   channels = channels;
 }

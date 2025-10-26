@@ -1,7 +1,8 @@
 { 
   lib, 
   buildPythonPackage, 
-  fetchFromGitHub, 
+  fetchFromGitHub,
+  setuptools,
   pip, 
   six
 }:
@@ -9,6 +10,8 @@
 buildPythonPackage {
   pname = "ida-netcode";
   version = "3.0";
+  pyproject = true;
+  build-system = [ setuptools ];
 
   src = fetchFromGitHub {
     owner = "williballenthin";

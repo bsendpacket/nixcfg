@@ -54,7 +54,7 @@ in {
       "relative-motions" = channels.nixpkgs-unstable.fetchFromGitHub {
         owner = "dedukun";
         repo = "relative-motions.yazi";
-        rev = "df97039a04595a40a11024f321a865b3e9af5092";
+        rev = "a603d9ea924dfc0610bcf9d3129e7cba605d4501";
         sha256 = "sha256-csX8T2a5f7k6g2mlR+08rm0qBeWdI4ABuja+klIvwqw=";
       };
 
@@ -66,12 +66,6 @@ in {
         hash = "sha256-MW0pawBT2S0rOoclCQahiYzLX5JZPuiALCG0ZzOqvM4=";
       };
 
-      # "projects" = channels.nixpkgs-unstable.fetchFromGitHub {
-      #   owner = "MasouShizuka";
-      #   repo = "projects.yazi";
-      #   rev = "7a1dc3729f0bc3f0d62214683117d490113c3007";
-      #   hash = "sha256-ANDO+BgC9hb6bfq4pc/jTVBL/camUMtYZ0r6gbwHe6M=";
-      # };
     };
 
     keymap = {
@@ -87,16 +81,6 @@ in {
           { on = [ "7" ]; run = "plugin relative-motions --args=7"; desc = "Move in relative steps"; }
           { on = [ "8" ]; run = "plugin relative-motions --args=8"; desc = "Move in relative steps"; }
           { on = [ "9" ]; run = "plugin relative-motions --args=9"; desc = "Move in relative steps"; }
-
-          # Project management; not working at the moment?
-          # { on = [ "P" "s" ]; run = "plugin projects --args=save"; desc = "Save current project"; }
-          # { on = [ "P" "l" ]; run = "plugin projects --args=load"; desc = "Load project"; }
-          # { on = [ "P" "P" ]; run = "plugin projects --args=load_last"; desc = "Load last project"; }
-          # { on = [ "P" "d" ]; run = "plugin projects --args=delete"; desc = "Delete project"; }
-          # { on = [ "P" "D" ]; run = "plugin projects --args=delete_all"; desc = "Delete all projects"; }
-          # { on = [ "P" "m" ]; run = "plugin projects --args='merge current'"; desc = "Merge current tab to other projects"; }
-          # { on = [ "P" "M" ]; run = "plugin projects --args='merge all'"; desc = "Merge current project to other projects"; }
-          # { on = [ "q" ]; run = "plugin projects --args=quit"; desc = "Quit and save projects"; }
 
           # Tab management
           { on = [ "!" ]; run = "tab_switch 0"; desc = "Switch to tab"; }
@@ -149,6 +133,7 @@ in {
           { on = [ "c" "h" ]; run = "shell --confirm 'ef \"$@\" [| cfmt \"{sha256}  {path}\n\" ]| xsel -psb'"; desc = "Copy SHA256 and filename of selected files"; }
           { on = [ "c" "H" ]; run = "shell --confirm 'ef \"$@\" [| cfmt \"{sha256}\n\" ]| xsel -psb'"; desc = "Copy SHA256 of selected files"; }
           { on = [ "c" "p" ]; run = "shell --confirm 'echo $PWD | xsel -psb'"; desc = "Copy the current folder path"; }
+
           # ' - Common Aliases
           # 1 - Reserved
           # 2 - Reserved
@@ -174,7 +159,7 @@ in {
           { on = [ "'" "9" "y" ]; run = "shell --confirm 'cp ${config.xdg.configHome}/home-manager/yara/skeleton.yara .'"; }
 
 
-        ] ++ (workConfig.programs.yazi.keymap.manager.prepend_keymap or []);
+        ] ++ (workConfig.programs.yazi.keymap.mgr.prepend_keymap or []);
       };
     };
 
@@ -183,7 +168,7 @@ in {
         enabled = true;
       };        
 
-      manager = {
+      mgr = {
         ratio = [ 1 3 4 ];
         show_hidden = true;
         sort_by = "natural";
@@ -294,7 +279,7 @@ in {
     };
 
     theme = {
-      manager = {
+      mgr = {
         cwd = { fg = colorscheme.colors.n_purple_1; };
         hovered = { fg = colorscheme.colors.n_pink_5; reversed = true; };
         preview_hovered = { underline = true; };
