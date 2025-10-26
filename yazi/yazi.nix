@@ -129,7 +129,7 @@ in {
           { on = [ "g" "<Space>" ]; run = "cd --interactive";          desc = "[ G ]o to a [   ] directory interactively";       }
 
           # Drag-and-drop
-          { on = [ "b" "o" ]; run = "shell 'dragon -x -i -T \"$1\"' --confirm"; desc = "Drag file OUT of yazi"; }
+          { on = [ "b" "o" ]; run = "shell 'xdragon -x -i -T \"$1\"' --confirm"; desc = "Drag file OUT of yazi"; }
           { on = [ "b" "i" ]; run = "shell DRAG_TO_VM --confirm"; desc = "Drag file INTO yazi"; }
 
           # Copy

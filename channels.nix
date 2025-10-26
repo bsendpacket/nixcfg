@@ -73,6 +73,7 @@ let
 
     # If packages are broken in unstable, use the stable versions instead
     pinPackagesToStableOverlay = self: super: {
+      # This is now fixed, left as an example only:
       # contour = channels.nixpkgs-stable.contour;
     };
 
@@ -101,25 +102,26 @@ let
     # This overlay is for when a package exists on NixPkgs, but a custom patch is required
     patchPackagesOverlay = self: super: {
 
+      ## This is now handled by refinery, so the patch has been removed. This is only left here as an example:
       # Innoextract with custom patch to allow for extracting CompiledCode.bin file
-      innoextract = super.innoextract.overrideAttrs (oldAttrs: {
-        version = "1.10-dev-patched";
-
-        src = channels.nixpkgs-unstable.fetchFromGitHub {
-          owner = "dscharrer";
-          repo = "innoextract";
-          rev = "e58f295d80c3bbd18fb01c18983855064ebc361f";
-          hash = "sha256-nbemdwNnYABQb7rhJiztZdyVc2otLNfQBtPTaK+wdCY=";
-        };
-        
-        patches = [ ./innoextract/extract_compiled_code.patch ];
-
-        # Enable debug flags
-        cmakeFlags = [
-          "-DDEVELOPER=1"
-          "-DCMAKE_BUILD_TYPE=Debug"
-        ];
-      });
+      # innoextract = super.innoextract.overrideAttrs (oldAttrs: {
+      #   version = "1.10-dev-patched";
+      #
+      #   src = channels.nixpkgs-unstable.fetchFromGitHub {
+      #     owner = "dscharrer";
+      #     repo = "innoextract";
+      #     rev = "e58f295d80c3bbd18fb01c18983855064ebc361f";
+      #     hash = "sha256-nbemdwNnYABQb7rhJiztZdyVc2otLNfQBtPTaK+wdCY=";
+      #   };
+      #   
+      #   patches = [ ./innoextract/extract_compiled_code.patch ];
+      #
+      #   # Enable debug flags
+      #   cmakeFlags = [
+      #     "-DDEVELOPER=1"
+      #     "-DCMAKE_BUILD_TYPE=Debug"
+      #   ];
+      # });
     };
 
     # Fix Python package issues

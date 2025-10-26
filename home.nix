@@ -229,7 +229,7 @@ in
     file.".local/bin/DRAG_TO_VM" = {
       text = ''
         #!${channels.nixpkgs-unstable.zsh}/bin/zsh
-        dragon --target | while read dst
+        xdragon --target | while read dst
         do
           cp "''${dst//file:\/\//}" .
         done
