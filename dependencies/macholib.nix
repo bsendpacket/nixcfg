@@ -22,6 +22,6 @@ buildPythonPackage rec {
     description = "Mach-O header analysis and editing";
     homepage = "https://github.com/ronaldoussoren/macholib";
     license = licenses.mit;
-    maintainers = [ "bsendpacket" ];
+    maintainers = [ ];
   };
 }

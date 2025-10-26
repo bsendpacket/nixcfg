@@ -274,7 +274,7 @@
 
       # Only press tab once!
       intellitab.enable = true;
-      
+
       # Show colors in-place for hex codes
       colorizer.enable = true;
 
@@ -319,19 +319,7 @@
         settings = {
           lsp.signature.enabled = false;
         };
-
-        # routes = [{
-        #   view = "notify";
-        #   filter.event = "msg_showmode";
-        # }];
       };
-
-      # mini = {
-      #   enable = true;
-      #   modules = {
-      #     surround = { };
-      #   };
-      # };
 
       lsp = {
         enable = true;
@@ -548,7 +536,7 @@
           ];
         };
       };
-      
+
       # Enable visual selection commenting with gc / gb
       comment.enable = true;
 

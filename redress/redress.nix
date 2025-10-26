@@ -22,7 +22,7 @@ buildGoModule rec {
     description = "Redress - A tool for analyzing stripped Go binaries";
     homepage = "https://github.com/goretk/redress";
     license = licenses.agpl3Only;
-    maintainers = with maintainers; [ ];
+    maintainers = [ ];
     mainProgram = "redress";
   };
 }

@@ -1,4 +1,13 @@
-{ lib, fetchPypi, poetry-core, setuptools, wheel, buildPythonPackage, pygments, callPackage}:
+{ 
+  lib, 
+  fetchPypi, 
+  poetry-core, 
+  setuptools, 
+  wheel, 
+  buildPythonPackage, 
+  pygments, 
+  callPackage
+}:
 
 buildPythonPackage rec {
   pname = "k2l";
@@ -26,6 +35,6 @@ buildPythonPackage rec {
     description = "MachO/ObjC Analysis + Editing toolkit";
     homepage = "https://github.com/0cyn/ktool";
     license = licenses.mit;
-    maintainers = [ "bsendpacket" ];
+    maintainers = [ ];
   };
 }

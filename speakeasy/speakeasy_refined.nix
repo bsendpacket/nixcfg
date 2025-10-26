@@ -1,6 +1,18 @@
-{ lib, buildPythonPackage, callPackage, fetchFromGitHub, setuptools, wheel, unicorn, capstone, jsonschema, pefile, pycryptodome }:
+{ 
+  lib, 
+  buildPythonPackage, 
+  callPackage, 
+  fetchFromGitHub, 
+  setuptools, 
+  wheel, 
+  unicorn, 
+  capstone, 
+  jsonschema, 
+  pefile, 
+  pycryptodome 
+}:
 
-buildPythonPackage rec {
+buildPythonPackage {
   pname = "speakeasy";
   version = "1.5.11b0.post1";
 
@@ -35,7 +47,7 @@ buildPythonPackage rec {
     description = "Windows kernel and user mode emulation";
     homepage = "https://github.com/mandiant/speakeasy";
     license = licenses.mit;
-    maintainers = [ "bsendpacket" ];
+    maintainers = [ ];
     mainProgram = "speakeasy";
   };
 }

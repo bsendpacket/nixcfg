@@ -10,8 +10,6 @@
     initContent = ''
       # Place any values that need to be handled by ~/.zshrc here, if they cannot be defined elsewhere
 
-      source ${../python/activate_envs.sh}
-
       unset LD_LIBRARY_PATH
       unset QT_PLUGIN_PATH
 

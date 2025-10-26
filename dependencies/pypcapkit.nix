@@ -54,7 +54,7 @@ buildPythonApplication rec {
     description = "PyPCAPKit: comprehensive network packet analysis library";
     homepage = "https://pypi.org/project/pypcapkit/";
     license = lib.licenses.bsd3;
-    maintainers = with lib.maintainers; [ bsendpacket ];
+    maintainers = [ ];
     mainProgram = "pypcapkit";
   };
 }

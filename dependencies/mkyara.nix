@@ -8,7 +8,7 @@
   yara-python
 }:
 
-buildPythonPackage rec {
+buildPythonPackage {
   pname = "mk-yara";
   version = "unstable-2019-12-16";
   pyproject = true;
@@ -38,6 +38,6 @@ buildPythonPackage rec {
     description = "Generating YARA rules based on binary code";
     homepage = "https://github.com/fox-it/mkYARA";
     license = lib.licenses.gpl3Only;
-    maintainers = with lib.maintainers; [ ];
+    maintainers = [ ];
   };
 }

@@ -67,26 +67,26 @@ let
     #
     # By pinning Stable's Python to Unstable's Python, 
     # the build process and subsequent Python packages will not cause this hash collision.
-    pythonInterpreterOverlay = self: super: {
+    pythonInterpreterOverlay = final: prev: {
       python312 = channels.nixpkgs-unstable.python312;
     };
 
     # If packages are broken in unstable, use the stable versions instead
-    pinPackagesToStableOverlay = self: super: {
+    pinPackagesToStableOverlay = final: prev: {
       # This is now fixed, left as an example only:
       # contour = channels.nixpkgs-stable.contour;
     };
 
     # This overlay is to pin Home-Manager's src to a specific hash
-    homeManagerPinOverlay = self: super: {
-      home-manager = super.home-manager.overrideAttrs (oldAttrs: {
+    homeManagerPinOverlay = final: prev: {
+      home-manager = prev.home-manager.overrideAttrs (oldAttrs: {
         src = channels.home-manager;
       });
     };
 
-    pinPackagesToSpecificVersionOverlay = self: super: {
-      unicorn = super.unicorn.overrideAttrs (oldAttrs: {
-        src = super.fetchFromGitHub {
+    pinPackagesToSpecificVersionOverlay = final: prev: {
+      unicorn = prev.unicorn.overrideAttrs (oldAttrs: {
+        src = prev.fetchFromGitHub {
           owner = "unicorn-engine";
           repo = "unicorn";
           rev = "2.0.1.post1";
@@ -100,11 +100,12 @@ let
     };
 
     # This overlay is for when a package exists on NixPkgs, but a custom patch is required
-    patchPackagesOverlay = self: super: {
+    patchPackagesOverlay = final: prev: {
 
-      ## This is now handled by refinery, so the patch has been removed. This is only left here as an example:
+      ## Refinery now handles InnoSetup binaries via xtinno, so the patch and tool has been removed. 
+      # This is only left here as an example:
       # Innoextract with custom patch to allow for extracting CompiledCode.bin file
-      # innoextract = super.innoextract.overrideAttrs (oldAttrs: {
+      # innoextract = prev.innoextract.overrideAttrs (oldAttrs: {
       #   version = "1.10-dev-patched";
       #
       #   src = channels.nixpkgs-unstable.fetchFromGitHub {
@@ -125,41 +126,40 @@ let
     };
 
     # Fix Python package issues
-    pythonPackagesOverlay = self: super: {
-      python312Packages = super.python312Packages.override {
-        overrides = pythonSelf: pythonSuper: {
+    pythonPackagesOverlay = final: prev: {
+      python312Packages = prev.python312Packages.override {
+        overrides = pythonFinal: pythonPrev: {
 
           # Unicorn v2.0.1 still requires setuptools+distutils
-          # unicorn = pythonSuper.unicorn.overrideAttrs (oldAttrs: {
-          #   propagatedBuildInputs = with super.python312Packages; [ setuptools distutils ];
-          # });
+          unicorn = pythonPrev.unicorn.overrideAttrs (oldAttrs: {
+            propagatedBuildInputs = with prev.python312Packages; [ setuptools distutils ];
+            doCheck = false;
+            pythonImportsCheck = [ "unicorn" ];
+            pytestCheckPhase = ''
+              echo "No upstream tests for unicorn 2.0.1.post1; skipping pytest."
+            '';
+          });
 
-          ## The following issues are mostly resolved, and are unnessasary now, however,
-          ## they are here for examples as to what may be required:
+          ## The following issues are resolved, and are unnessasary now, however,
+          ## they are here for examples as to what may be required or can be done:
 
           # The NixPkg for angr uses protobuf4, although it works with protobuf5
           # By forcing protobuf5 here, conflicts of multiple versions existing is prevented
-          # protobuf = pythonSuper.protobuf5;
+          # protobuf = pythonPrev.protobuf5;
 
           # Suppress broken state as the version of Unicorn is correctly pinned
-          # angr = pythonSuper.angr.overrideAttrs (oldAttrs: {
+          # angr = pythonPrev.angr.overrideAttrs (oldAttrs: {
           #  meta = oldAttrs.meta // {
           #    broken = false;
           #  };
-          # });
-
-          # Upstream currently lacks pyproject + build-system, which is required.
-          # meson = pythonSuper.meson.overrideAttrs (oldAttrs: {
-          #   pyproject = true;
-          #   build-system = [ pythonSelf.setuptools ];
           # });
         };
       };
     };
   };
 
-  nixglOverlay = self: super: {
-    nixGL = super.callPackage (builtins.fetchTarball {
+  nixglOverlay = final: prev: {
+    nixGL = prev.callPackage (builtins.fetchTarball {
       url = "https://github.com/nix-community/nixGL/archive/a8e1ce7d49a149ed70df676785b07f63288f53c5.tar.gz";
       sha256 = "sha256-Ob/HuUhANoDs+nvYqyTKrkcPXf4ZgXoqMTQoCK0RFgQ=";
     }) {};

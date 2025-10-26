@@ -26,6 +26,6 @@ buildPythonPackage rec {
     description = "Python module for LZNT1 compression/decompression";
     homepage = "https://pypi.org/project/lznt1/";
     license = licenses.unfree; # FIXME: nix-init did not found a license
-    maintainers = with maintainers; [ ];
+    maintainers = [ ];
   };
 }

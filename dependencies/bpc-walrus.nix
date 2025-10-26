@@ -33,14 +33,10 @@ buildPythonApplication rec {
     typing-extensions
   ];
 
-  # pythonImportsCheck = [
-  #   "bpc_walrus"
-  # ];
-
   meta = {
     description = "Backport compiler for Python 3.8 assignment expressions";
     homepage = "https://pypi.org/project/bpc-walrus/";
     license = lib.licenses.mit;
-    maintainers = with lib.maintainers; [ bsendpacket ];
+    maintainers = [ ];
   };
 }

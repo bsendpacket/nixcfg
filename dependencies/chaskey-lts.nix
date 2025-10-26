@@ -25,6 +25,6 @@ buildPythonPackage {
   meta = {
     description = "A pure Python chaskey cipher implementation developed initially for use with the donut_decryptor.";
     homepage = "https://github.com/volexity/chaskey-lts";
-    maintainers = [ "bsendpacket" ];
+    maintainers = [ ];
   };
 }

@@ -18,6 +18,35 @@ let
     fi
     exec ${nixGLPrefix}${channels.nixpkgs-unstable.contour}/bin/contour --class scratchpad ${channels.nixpkgs-unstable.tmux}/bin/tmux -2 attach -t scratch
   '';
+  
+  scratchToggle = channels.nixpkgs-unstable.writeShellScriptBin "scratch-toggle" ''
+    #!${channels.nixpkgs-unstable.bash}/bin/bash
+    I3MSG=${channels.nixpkgs-unstable.i3}/bin/i3-msg
+    JQ=${channels.nixpkgs-unstable.jq}/bin/jq
+
+    has_scratch() {
+      # returns 0 if a window with class "scratchpad" exists anywhere
+      $I3MSG -t get_tree | $JQ -e '.. | objects | select(.window_properties?.class?=="scratchpad") | .id' >/dev/null
+    }
+
+    if has_scratch; then
+      # Show/cycle the existing scratchpad window
+      exec $I3MSG '[class="scratchpad"] scratchpad show'
+    else
+      # Spawn a new one
+      (${scratchWrapper}/bin/tmux-scratch) &
+
+      for _ in $(seq 1 50); do
+        if has_scratch; then
+          exec $I3MSG '[class="scratchpad"] scratchpad show'
+        fi
+        sleep 0.1
+      done
+
+      # Fallback attempt
+      exec $I3MSG '[class="scratchpad"] scratchpad show'
+    fi
+  '';
 
   modifier = "Mod1";
   # Main terminal
@@ -77,8 +106,7 @@ in {
           "${modifier}+s" = "exec ${channels.nixpkgs-unstable.tmux}/bin/tmux list-sessions | ${channels.nixpkgs-unstable.rofi}/bin/rofi -i -dmenu | cut -d: -f1 | xargs -r ${attachSessionCmd}";
 
           # Attach to the scratch terminal
-          #"${modifier}+Escape" = "exec --no-startup-id ${scratchTerminal}; exec --no-startup-id i3-msg floating enable, resize set 1200 700, move position center";
-          "${modifier}+Escape" = "[class=scratchpad] scratchpad show";
+          "${modifier}+Escape" = "exec --no-startup-id ${scratchToggle}/bin/scratch-toggle";
 
           # Vim-like keybindings for i3
           "${modifier}+h" = "focus left";

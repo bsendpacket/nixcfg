@@ -35,7 +35,7 @@ buildPythonPackage {
     description = "Humane API for storing and accessing persistent data in IDA Pro databases";
     homepage = "https://github.com/williballenthin/ida-netcode";
     license = licenses.asl20;
-    maintainers = [ "bsendpacket" ];
+    maintainers = [ ];
   };
 }
 

@@ -15,7 +15,10 @@ let
 
   # Packages to build, as they are not on NixPkgs
   customPackages = {
+    # NPM/PNPM Package
     webcrack = channels.nixpkgs-unstable.callPackage ./webcrack/webcrack.nix { };
+
+    # C++ Package
     decompylepp = channels.nixpkgs-unstable.callPackage ./decompylepp/decompylepp.nix { };
 
     # Python Packages
@@ -23,7 +26,7 @@ let
     binary-refinery = channels.nixpkgs-unstable.python312Packages.callPackage ./binary-refinery/binary-refinery.nix { };
   }; 
 
-  # Work-specific
+  # Certain folders can be kept off the Git tree, but can still be imported into the config.
   fileExists = path: if builtins.pathExists path then import path { inherit channels lib; } else {};
   workConfig = fileExists ./work/work.nix;
 
@@ -71,21 +74,22 @@ in
       nurl
       nix-init
 
+      # Window Manager
       i3
       i3status-rust
 
+      # Terminal
       contour
-
       tmux
 
-      git
-      zsh-fast-syntax-highlighting
-
+      # Shell
       oh-my-zsh
+      zsh-fast-syntax-highlighting
 
       man-pages
       man-pages-posix
 
+      git
       _7zz
       (hiPrio bat)
       ouch
@@ -100,10 +104,11 @@ in
 
       ffmpeg
 
-      # Used by neovim's LspInfo
+      # Required by neovim's LspInfo
       gcc
 
       # Web
+      # Unwrapped version defined in firefox/firefox.nix
       #firefox
       
       # Utilities
@@ -111,8 +116,7 @@ in
       xsel
       xdragon
       jless
-      p7zip
-      #unar
+      unar
 
       lsd
       zoxide
@@ -120,8 +124,8 @@ in
       fd
       ripgrep
       jq
-      channels.nixpkgs-unstable-feb-2025.yazi
       hexyl
+      channels.nixpkgs-unstable-feb-2025.yazi
 
       rofi
 
@@ -131,9 +135,6 @@ in
       unar
       file
       poppler
-
-      lazygit
-      poetry
 
       # Fonts
       pkgs.nerd-fonts.caskaydia-cove
@@ -174,9 +175,9 @@ in
 
       # Custom Python environment
       (channels.nixpkgs-unstable.python312.withPackages (ps: with channels.nixpkgs-unstable.python312Packages; [
-        pip
-        setuptools
-        wheel
+        # pip
+        # setuptools
+        # wheel
 
         # Networking
         requests
@@ -190,6 +191,8 @@ in
 
         capstone
         keystone-engine
+
+        unicorn
 
         lief
       ] ++ (workConfig.home.pythonPackages or [])))

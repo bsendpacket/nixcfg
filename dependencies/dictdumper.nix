@@ -32,6 +32,6 @@ buildPythonPackage rec {
     description = "DictDumper: comprehensive network packet analysis library";
     homepage = "https://pypi.org/project/dictdumper/";
     license = lib.licenses.bsd3;
-    maintainers = with lib.maintainers; [ bsendpacket ];
+    maintainers = [ ];
   };
 }

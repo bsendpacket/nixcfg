@@ -29,6 +29,6 @@ buildPythonPackage rec {
     description = "A utility to trim Python traceback information";
     homepage = "https://pypi.org/project/tbtrim/";
     license = lib.licenses.mit;
-    maintainers = with lib.maintainers; [ bsendpacket ];
+    maintainers = [ ];
   };
 }

@@ -41,6 +41,6 @@ buildPythonApplication rec {
     description = "Back-port compiler for Python 3.8 positional-only parameter syntax";
     homepage = "https://pypi.org/project/bpc-poseur/";
     license = lib.licenses.mit;
-    maintainers = with lib.maintainers; [ bsendpacket ];
+    maintainers = [ ];
   };
 }

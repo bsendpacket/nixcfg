@@ -52,7 +52,7 @@ buildPythonPackage rec {
     (callPackage ../dependencies/pyzstd.nix {})
     (callPackage ../dependencies/pypcapkit.nix {})
 
-    # (callPackage ../speakeasy/speakeasy_refined.nix {})
+    (callPackage ../speakeasy/speakeasy_refined.nix {})
 
     python-magic
     distutils
@@ -71,7 +71,7 @@ buildPythonPackage rec {
     jsbeautifier
     pillow
     angr
-    # unicorn
+    unicorn
     intervaltree
     capstone
   ];
@@ -86,6 +86,6 @@ buildPythonPackage rec {
     description = "Binary Refinery™ is a Python-based toolset for transforming binary data, designed for malware triage, and allows for the creation of complex pipelines from simple, stdin-to-stdout scripts similar to CyberChef but for the command line.";
     homepage = "https://github.com/binref/refinery/";
     license = licenses.bsd3;
-    maintainers = [ "bsendpacket" ];
+    maintainers = [ ];
   };
 }

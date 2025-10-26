@@ -29,6 +29,6 @@ buildPythonPackage rec {
     description = "A Python Parser";
     homepage = "https://pypi.org/project/parso/";
     license = lib.licenses.mit;
-    maintainers = with lib.maintainers; [ bsendpacket ];
+    maintainers = [ ];
   };
 }

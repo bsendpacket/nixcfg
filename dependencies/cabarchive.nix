@@ -23,6 +23,6 @@ buildPythonPackage rec {
     description = "A pure-python library for creating and extracting cab files";
     homepage = "https://github.com/hughsie/python-cabarchive";
     license = licenses.lgpl21Only;
-    maintainers = [ "bsendpacket" ];
+    maintainers = [ ];
   };
 }

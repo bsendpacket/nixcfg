@@ -24,7 +24,7 @@ buildPythonPackage rec {
     description = "dncil is a Common Intermediate Language (CIL) disassembly library written in Python that supports parsing the header, instructions, and exception handlers of .NET managed methods.";
     homepage = "https://github.com/mandiant/dncil";
     license = licenses.asl20;
-    maintainers = [ "bsendpacket" ];
+    maintainers = [ ];
   };
 }
 

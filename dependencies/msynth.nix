@@ -8,7 +8,7 @@
   z3-solver,
 }:
 
-buildPythonPackage rec {
+buildPythonPackage {
   pname = "msynth";
   version = "unstable-2025-05-03";
   pyproject = true;
@@ -40,6 +40,6 @@ buildPythonPackage rec {
     description = "Code deobfuscation framework to simplify Mixed Boolean-Arithmetic (MBA) expressions";
     homepage = "https://github.com/mrphrazer/msynth";
     license = lib.licenses.gpl2Only;
-    maintainers = with lib.maintainers; [ ];
+    maintainers = [ ];
   };
 }

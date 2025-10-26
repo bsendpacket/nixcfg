@@ -5,7 +5,7 @@
   callPackage,
   setuptools,
   wheel,
-  typing-extensions
+  typing-extensions,
 }:
 
 buildPythonApplication rec {
@@ -30,14 +30,10 @@ buildPythonApplication rec {
     typing-extensions
   ];
 
-  # pythonImportsCheck = [
-  #   "bpc_f2format"
-  # ];
-
   meta = {
     description = "Back-port compiler for Python 3.6 formatted string (f-string) literals";
     homepage = "https://pypi.org/project/bpc-f2format/";
     license = lib.licenses.mit;
-    maintainers = with lib.maintainers; [ bsendpacket ];
+    maintainers = [ ];
   };
 }

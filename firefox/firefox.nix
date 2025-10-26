@@ -1,4 +1,4 @@
-{ channels, lib, ... }: 
+{ channels, ... }: 
 let
   firefoxSettings = {
     "browser.aboutConfig.showWarning" = false;

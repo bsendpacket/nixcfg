@@ -123,7 +123,7 @@ stdenv.mkDerivation (finalAttrs: {
     description = "Deobfuscate obfuscator.io, unminify and unpack bundled javascript";
     homepage = "https://github.com/j4k0xb/webcrack";
     license = licenses.mit;
-    maintainers = with maintainers; [ bsendpacket ];
+    maintainers = [ ];
     mainProgram = "webcrack";
     platforms = [ "x86_64-linux" ];
   };

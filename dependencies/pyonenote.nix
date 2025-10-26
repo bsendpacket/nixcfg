@@ -16,6 +16,6 @@ buildPythonPackage rec {
     description = "pyOneNote is a lightweight python library to read OneNote files. The main goal of this parser is to allow cybersecurity analyst to extract useful information, such as embedded files, from OneNote files.";
     homepage = "https://github.com/DissectMalware/pyOneNote";
     license = licenses.asl20;
-    maintainers = [ "bsendpacket" ];
+    maintainers = [ ];
   };
 }

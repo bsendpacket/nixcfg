@@ -6,13 +6,13 @@
 
 stdenv.mkDerivation {
   pname = "decompyle-plus-plus";
-  version = "unstable-2024-08-12";
+  version = "unstable-2025-08-30";
 
   src = fetchFromGitHub {
     owner = "zrax";
     repo = "pycdc";
-    rev = "dc6ca4ae36128f2674b5b4c9b0ce6fdda97d4df0";
-    hash = "sha256-KoT8IL86oa4WkFuPQT1N/Nc3WJlSX3AyuAKw1esjv8s=";
+    rev = "a05ddec0d889efe3a9082790df4e2ed380d6a555";
+    hash = "sha256-VQrTfYrbo3OcKFy5LioTrMRox5/lfmx7ZDpxTLf517A=";
   };
 
   nativeBuildInputs = [ cmake ];
@@ -31,6 +31,6 @@ stdenv.mkDerivation {
     homepage = "https://github.com/zrax/pycdc";
     license = licenses.gpl3Only;
     platforms = platforms.unix;
-    maintainers = with maintainers; [ bsendpacket ];
+    maintainers = [ ];
   };
 }

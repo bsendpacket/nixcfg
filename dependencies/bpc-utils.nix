@@ -30,14 +30,10 @@ buildPythonPackage rec {
     typing-extensions
   ];
 
-  # pythonImportsCheck = [
-  #   "bpc_utils"
-  # ];
-
   meta = {
     description = "Utility library for the Python bpc compiler";
     homepage = "https://pypi.org/project/bpc-utils/";
     license = lib.licenses.mit;
-    maintainers = with lib.maintainers; [ bsendpacket ];
+    maintainers = [ ];
   };
 }

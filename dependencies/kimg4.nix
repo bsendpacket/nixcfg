@@ -1,4 +1,9 @@
-{ lib, fetchPypi, buildPythonPackage, setuptools, callPackage }:
+{ 
+  fetchPypi, 
+  buildPythonPackage, 
+  setuptools, 
+  callPackage 
+}:
 
 buildPythonPackage rec {
   pname = "kimg4";
@@ -20,6 +25,6 @@ buildPythonPackage rec {
   meta = {
     description = "pure-python library for parsing/decrypting Apple's proprietary IMG4 format";
     homepage = "https://github.com/0cyn/kimg4";
-    maintainers = [ "bsendpacket" ];
+    maintainers = [ ];
   };
 }

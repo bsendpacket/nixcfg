@@ -66,7 +66,7 @@ buildPythonPackage {
     description = "Dynamic symbolic execution and binary analysis framework (Python bindings)";
     homepage = "https://github.com/JonathanSalwan/Triton";
     license = licenses.asl20;
-    maintainers = [];
+    maintainers = [ ];
     platforms = platforms.linux;
   };
 }

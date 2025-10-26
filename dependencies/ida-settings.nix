@@ -36,7 +36,7 @@ buildPythonPackage rec {
     description = "ida_settings provides a mechanism for settings and fetching configration values for IDAPython scripts and plugins";
     homepage = "https://github.com/williballenthin/ida-settings";
     license = licenses.asl20;
-    maintainers = [ "bsendpacket" ];
+    maintainers = [ ];
   };
 }
 
