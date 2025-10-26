@@ -687,6 +687,11 @@
       }
       require("lsp_signature").setup(signature_cfg)
 
+      -- Make backticks work nicely in insert mode
+      vim.keymap.set('i', '`', function()
+        vim.api.nvim_feedkeys('``' .. vim.api.nvim_replace_termcodes('<Left>', true, false, true), 'n', true)
+      end, { noremap = true })
+
       -- Fix Python venvs
       require('lspconfig').pyright.setup({
         root_dir = function(fname)

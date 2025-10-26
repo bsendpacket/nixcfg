@@ -140,7 +140,7 @@ let
             '';
           });
 
-          ## The following issues are resolved, and are unnessasary now, however,
+          ## The following issues are resolved, and are unnecessary now, however,
           ## they are here for examples as to what may be required or can be done:
 
           # The NixPkg for angr uses protobuf4, although it works with protobuf5
