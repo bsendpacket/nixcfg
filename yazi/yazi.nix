@@ -14,12 +14,14 @@ let
   # }
   # Alternatively, simply leave the sha256 field blank
   # and copy the correct hash during rebuild
+  #
+  # Inspo: https://github.com/khaneliman/khanelinix/blob/main/modules/home/programs/terminal/tools/yazi/default.nix
 in {
 
   programs.yazi = {
     enable = true;
     enableZshIntegration = true;
-    package = channels.nixpkgs-unstable.yazi;
+    package = channels.nixpkgs-unstable-dec-2024.yazi;
 
     initLua = ''
       require("relative-motions"):setup({ show_numbers="relative", show_motion = true })
@@ -50,7 +52,7 @@ in {
         hash = "sha256-3VjTL/q4gSDIHyPXwUIQA/26bbhWya+01EZbxSKzzQo=";
       };
 
-      # Vim-like relative motions
+      # # Vim-like relative motions
       "relative-motions" = channels.nixpkgs-unstable.fetchFromGitHub {
         owner = "dedukun";
         repo = "relative-motions.yazi";
@@ -65,11 +67,10 @@ in {
         rev = "e2a7cfd750226ce4adc3acc42b4cf75c79fe9f0e";
         hash = "sha256-MW0pawBT2S0rOoclCQahiYzLX5JZPuiALCG0ZzOqvM4=";
       };
-
     };
 
     keymap = {
-      mgr = {
+      manager = {
         prepend_keymap = [
           # Relative motions
           { on = [ "1" ]; run = "plugin relative-motions --args=1"; desc = "Move in relative steps"; }
@@ -159,7 +160,7 @@ in {
           { on = [ "'" "9" "y" ]; run = "shell --confirm 'cp ${config.xdg.configHome}/home-manager/yara/skeleton.yara .'"; }
 
 
-        ] ++ (workConfig.programs.yazi.keymap.mgr.prepend_keymap or []);
+        ] ++ (workConfig.programs.yazi.keymap.manager.prepend_keymap or []);
       };
     };
 
@@ -168,7 +169,7 @@ in {
         enabled = true;
       };        
 
-      mgr = {
+      manager = {
         ratio = [ 1 3 4 ];
         show_hidden = true;
         sort_by = "natural";
@@ -279,7 +280,7 @@ in {
     };
 
     theme = {
-      mgr = {
+      manager = {
         cwd = { fg = colorscheme.colors.n_purple_1; };
         hovered = { fg = colorscheme.colors.n_pink_5; reversed = true; };
         preview_hovered = { underline = true; };

@@ -120,7 +120,7 @@ in
       fd
       ripgrep
       jq
-      yazi
+      channels.nixpkgs-unstable-dec-2024.yazi
       hexyl
 
       rofi

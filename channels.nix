@@ -132,8 +132,8 @@ let
           #   propagatedBuildInputs = with super.python312Packages; [ setuptools distutils ];
           # });
 
-	  ## The following issues are mostly resolved, and are unnessasary now, however,
-	  ## they are here for examples as to what may be required:
+          ## The following issues are mostly resolved, and are unnessasary now, however,
+          ## they are here for examples as to what may be required:
 
           # The NixPkg for angr uses protobuf4, although it works with protobuf5
           # By forcing protobuf5 here, conflicts of multiple versions existing is prevented
