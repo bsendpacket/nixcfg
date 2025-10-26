@@ -61,10 +61,9 @@
       lla = "ls -la";   # List Files (+ Hidden)
       lt = "ls --tree"; # List Files (Tree)
       y = "yy";         # Yazi
-      # yara = "${channels.nixpkgs-unstable.yara-x}/bin/yr";
-      # rbat = "${customPackages.binary-refinery}/bin/bat";
-      # goresym = "${channels.nixpkgs-unstable.goresym}/bin/GoReSym";
-      # ilspy = "${channels.nixpkgs-unstable.avalonia-ilspy}/bin/ILSpy";
+      yara = "${channels.nixpkgs-unstable.yara-x}/bin/yr";
+      rbat = "${customPackages.binary-refinery}/bin/bat";
+      goresym = "${channels.nixpkgs-unstable.goresym}/bin/GoReSym";
 
       # OpenGL Required
       contour = "${nixGLPrefix}contour";

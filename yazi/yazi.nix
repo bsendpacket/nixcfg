@@ -15,13 +15,13 @@ let
   # Alternatively, simply leave the sha256 field blank
   # and copy the correct hash during rebuild
   #
-  # Inspo: https://github.com/khaneliman/khanelinix/blob/main/modules/home/programs/terminal/tools/yazi/default.nix
+  # TODO- borrow some ideas from: https://github.com/khaneliman/khanelinix/blob/main/modules/home/programs/terminal/tools/yazi/default.nix
 in {
 
   programs.yazi = {
     enable = true;
     enableZshIntegration = true;
-    package = channels.nixpkgs-unstable-dec-2024.yazi;
+    package = channels.nixpkgs-unstable-feb-2025.yazi;
 
     initLua = ''
       require("relative-motions"):setup({ show_numbers="relative", show_motion = true })
@@ -32,8 +32,8 @@ in {
       "glow" = channels.nixpkgs-unstable.fetchFromGitHub {
         owner = "Reledia";
         repo = "glow.yazi";
-        rev = "5ce76dc92ddd0dcef36e76c0986919fda3db3cf5";
-        hash = "sha256-UljcrXXO5DZbufRfavBkiNV3IGUNct31RxCujRzC9D4=";
+        rev = "c76bf4fb612079480d305fe6fe570bddfe4f99d3";
+        hash = "sha256-DPud1Mfagl2z490f5L69ZPnZmVCa0ROXtFeDbEegBBU=";
       };
 
       # Preview archives as a tree
@@ -45,27 +45,28 @@ in {
       };
 
       # Search with fg / ff (content, fzf)
+      # TODO: Migrate to https://github.com/lpnh/fr.yazi
       "fg" = channels.nixpkgs-unstable.fetchFromGitHub {
-        owner = "lpnh";
+        owner = "DreamMaoMao";
         repo = "fg.yazi";
-        rev = "9bba7430dbcd30995deea600499b069fe6067a3e";
-        hash = "sha256-3VjTL/q4gSDIHyPXwUIQA/26bbhWya+01EZbxSKzzQo=";
+        rev = "c201a3e1c0cda921c06019127886f16faef4b17e";
+        hash = "sha256-PNZngyiWuzw2bmJ4v66er9HEAcD5z0Dr6iKYwcxJwf0=";
       };
 
-      # # Vim-like relative motions
+      # Vim-like relative motions
       "relative-motions" = channels.nixpkgs-unstable.fetchFromGitHub {
         owner = "dedukun";
         repo = "relative-motions.yazi";
-        rev = "a603d9ea924dfc0610bcf9d3129e7cba605d4501";
-        sha256 = "sha256-csX8T2a5f7k6g2mlR+08rm0qBeWdI4ABuja+klIvwqw=";
+        rev = "3a85f7c60b44cd0f9691a3307c8c22bd45217c78";
+        sha256 = "sha256-QCCKkYMQ6+wurKjvN0jQi3k+3geBnS5uqq1boK1M2k4=";
       };
 
       # Preview media metadata information
       "mediainfo" = channels.nixpkgs-unstable.fetchFromGitHub {
         owner = "boydaihungst";
         repo = "mediainfo.yazi";
-        rev = "e2a7cfd750226ce4adc3acc42b4cf75c79fe9f0e";
-        hash = "sha256-MW0pawBT2S0rOoclCQahiYzLX5JZPuiALCG0ZzOqvM4=";
+        rev = "436cb5f04d6e5e86ddc0386527254d87b7751ec8";
+        hash = "sha256-oFp8mJ62FsJX46mKQ7/o6qXPC9qx3+oSfqS0cKUZETI=";
       };
     };
 
@@ -73,15 +74,15 @@ in {
       manager = {
         prepend_keymap = [
           # Relative motions
-          { on = [ "1" ]; run = "plugin relative-motions --args=1"; desc = "Move in relative steps"; }
-          { on = [ "2" ]; run = "plugin relative-motions --args=2"; desc = "Move in relative steps"; }
-          { on = [ "3" ]; run = "plugin relative-motions --args=3"; desc = "Move in relative steps"; }
-          { on = [ "4" ]; run = "plugin relative-motions --args=4"; desc = "Move in relative steps"; }
-          { on = [ "5" ]; run = "plugin relative-motions --args=5"; desc = "Move in relative steps"; }
-          { on = [ "6" ]; run = "plugin relative-motions --args=6"; desc = "Move in relative steps"; }
-          { on = [ "7" ]; run = "plugin relative-motions --args=7"; desc = "Move in relative steps"; }
-          { on = [ "8" ]; run = "plugin relative-motions --args=8"; desc = "Move in relative steps"; }
-          { on = [ "9" ]; run = "plugin relative-motions --args=9"; desc = "Move in relative steps"; }
+          { on = [ "1" ]; run = "plugin relative-motions 1"; desc = "Move in relative steps"; }
+          { on = [ "2" ]; run = "plugin relative-motions 2"; desc = "Move in relative steps"; }
+          { on = [ "3" ]; run = "plugin relative-motions 3"; desc = "Move in relative steps"; }
+          { on = [ "4" ]; run = "plugin relative-motions 4"; desc = "Move in relative steps"; }
+          { on = [ "5" ]; run = "plugin relative-motions 5"; desc = "Move in relative steps"; }
+          { on = [ "6" ]; run = "plugin relative-motions 6"; desc = "Move in relative steps"; }
+          { on = [ "7" ]; run = "plugin relative-motions 7"; desc = "Move in relative steps"; }
+          { on = [ "8" ]; run = "plugin relative-motions 8"; desc = "Move in relative steps"; }
+          { on = [ "9" ]; run = "plugin relative-motions 9"; desc = "Move in relative steps"; }
 
           # Tab management
           { on = [ "!" ]; run = "tab_switch 0"; desc = "Switch to tab"; }
@@ -105,8 +106,9 @@ in {
           { on = [ "<C-9>" ]; run = "tab_swap 8"; desc = "Swap with tab"; }
 
           # File finding
-          { on = [ "f" "g" ]; run = "plugin fg";              desc = "Find file by Content"; }
-          { on = [ "f" "f" ]; run = "plugin fg --args='fzf'"; desc = "Find file by Name";    }
+          { on = [ "f" "g" ]; run = "plugin fg";              desc = "Find file by Content (Fuzzy)";   }
+          { on = [ "f" "G" ]; run = "plugin fg -- rg";        desc = "Find file by Content (RipGrep)"; }
+          { on = [ "f" "f" ]; run = "plugin fg -- fzf'";      desc = "Find file by Name";              }
 
           # Navigation
           { on = [ "K" ];     run = "seek -5";  desc = "Seek up 5 units in the preview";   }
@@ -131,8 +133,8 @@ in {
           { on = [ "b" "i" ]; run = "shell DRAG_TO_VM --confirm"; desc = "Drag file INTO yazi"; }
 
           # Copy
-          { on = [ "c" "h" ]; run = "shell --confirm 'ef \"$@\" [| cfmt \"{sha256}  {path}\n\" ]| xsel -psb'"; desc = "Copy SHA256 and filename of selected files"; }
-          { on = [ "c" "H" ]; run = "shell --confirm 'ef \"$@\" [| cfmt \"{sha256}\n\" ]| xsel -psb'"; desc = "Copy SHA256 of selected files"; }
+          { on = [ "c" "h" ]; run = "shell --confirm 'ef \"$@\" [| pf \"{sha256}  {path}\n\" ]| xsel -psb'"; desc = "Copy SHA256 and filename of selected files"; }
+          { on = [ "c" "H" ]; run = "shell --confirm 'ef \"$@\" [| pf \"{sha256}\n\" ]| xsel -psb'"; desc = "Copy SHA256 of selected files"; }
           { on = [ "c" "p" ]; run = "shell --confirm 'echo $PWD | xsel -psb'"; desc = "Copy the current folder path"; }
 
           # ' - Common Aliases
@@ -142,7 +144,7 @@ in {
           # 3 - Files
           # Compression
           { on = [ "'" "3" "c" ]; run = "shell --interactive --block '7z a -pinfected -mhe=on \"$1\".7z \"$@\"'"; desc = "Compress seleted files with password=infected"; }
-          { on = [ "'" "3" "e" ]; run = "shell --interactive --block '7z x \"$@\" -pinfected'";                   desc = "Extract with password=infected";         }
+          { on = [ "'" "3" "e" ]; run = "shell --interactive --block '7z x \"$@\" -pinfected'";                   desc = "Extract with password=infected"; }
           { on = [ "'" "3" "r" ]; run = "shell --interactive --block 'unar $@'"; desc = "Decompress with unar"; }
 
           # 4 - Tools
@@ -182,14 +184,14 @@ in {
           { name = "*"; run = "previewer"; }
         ];
         prepend_previewers = [
-          { name = "*.md";                        run = "glow"; }
-          { mime = "application/*zip";            run = "ouch"; }
+          { name = "*.md";                      run = "glow"; }
+          { mime = "application/*zip";          run = "ouch"; }
           { mime = "application/tar";           run = "ouch"; }
           { mime = "application/bzip2";         run = "ouch"; }
           { mime = "application/7z-compressed"; run = "ouch"; }
           { mime = "application/rar";           run = "ouch"; }
           { mime = "application/xz";            run = "ouch"; }
-          { mime = "{image,audio,video}/*";       run = "mediainfo"; }
+          { mime = "{image,audio,video}/*";     run = "mediainfo"; }
           { mime = "application/subrip";        run = "mediainfo"; }
         ];
       };
@@ -472,7 +474,7 @@ in {
     };
   };
 
-  home.file."/.config/yazi/plugins/previewer.yazi/init.lua" = {
+  home.file."/.config/yazi/plugins/previewer.yazi/main.lua" = {
     text = ''
       local M = {}
 

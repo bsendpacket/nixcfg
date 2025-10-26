@@ -9,9 +9,9 @@ let
       config.allowUnfree = true;
     };
 
-    nixpkgs-unstable-dec-2024 = import (builtins.fetchTarball {
-      url = "https://github.com/NixOS/nixpkgs/archive/69b9a8c860bdbb977adfa9c5e817ccb717884182.tar.gz";
-      sha256 = "12ljkkjg3gicamvryxr2bnfcdb05qdlbc5wv4lcw9sxamszp4cp7";
+    nixpkgs-unstable-feb-2025 = import (builtins.fetchTarball {
+      url = "https://github.com/NixOS/nixpkgs/archive/df251e20548ee2ee060ac4f43c4d52fafc62d695.tar.gz";
+      sha256 = "sha256-NRLlc2l8v72H2mcj9cY9KMym1BFiweimzr/2X0y3PQ0=";
     }) {
       system = "x86_64-linux";
       config = {

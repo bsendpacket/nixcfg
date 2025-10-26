@@ -56,15 +56,6 @@
           silent = true;
         };
       }
-      # {
-      #   action = "<cmd>lua require('telescope.builtin').lsp_definitions()<CR>";
-      #   options.desc = "[G]oto [D]efinition";
-      #   key = "gd";
-      #   mode = [ "n" ];
-      #   options = {
-      #     silent = true;
-      #   };
-      # }
       {
         action = "<cmd>Telescope lsp_definitions<CR>";
         options.desc = "[G]oto [D]efinition";
@@ -281,35 +272,15 @@
       cmp-cmdline.enable = true;
       cmp-cmdline-history.enable = true;
 
-      # cmp-calc.enable = true;
-
-      # Navigation helper, toggle with :Navbuddy
-      # Navic is required by Navbuddy.
-      # navic.enable = true;
-      # navbuddy = {
-      #   enable = true;
-      #   lsp.autoAttach = true;
-      # };
-
-      # Purposefully makes nvim harder to use by adding timeouts to the basic movement keys
-      # This is in order to train to utilize faster and better movement mechanisms
-      #hardtime.enable = true;
-
       # Only press tab once!
       intellitab.enable = true;
       
       # Show colors in-place for hex codes
       colorizer.enable = true;
 
-      # LSP Formatter
-      # lsp-format.enable = true;
-
       # Friendly Snippets
       friendly-snippets.enable = true;
 
-      # Multi-cursor support
-      # multicursors.enable = true;
-      
       # Auto-close brackets and quotes
       autoclose.enable = true;
 
@@ -378,46 +349,16 @@
             };
           };
 
-          # Rust LSP -- Must be disabled due to rustaceanvim
-          # rust_analyzer = {
-          #   enable = true;
-          #   installCargo = true;
-          #   installRustc = true;
-          #   # settings.check.command = "clippy";
-          #
-          #   rootDir = ''
-          #     function(fname)
-          #       return vim.loop.cwd()
-          #     end
-          #   '';
-          # };
-
           # Python LSP
           pyright = {
             enable = true;
             autostart = true;
-            #rootMarkers = []
-            # rootDir = ''
-            #   function(fname)
-            #     return vim.loop.cwd()
-            #   end
-            # '';
           };
-
-          # CSS LSP
-          #cssls = {
-          #  enable = true;
-          #};
 
           # C LSP
           ccls = {
             enable = true;
             autostart = true;
-            # rootDir = ''
-            #   function(fname)
-            #     return vim.loop.cwd()
-            #   end
-            # '';
           };
 
           # cmake LSP
@@ -430,32 +371,18 @@
           ts_ls = {
             enable = true;
             autostart = true;
-            # rootDir = ''
-            #   function(fname)
-            #     return vim.loop.cwd()
-            #   end
-            # '';
           };
 
           # Zig LSP
           zls = {
             enable = true;
             autostart = true;
-            # rootDir = ''
-            #   function(fname)
-            #     return vim.loop.cwd()
-            #   end
-            # '';
           };
 
           asm_lsp = {
             enable = true;
             autostart = true;
-            # rootDir = ''
-            #   function(fname)
-            #     return vim.loop.cwd()
-            #   end
-            # '';
+
             settings = {
               cmd = ["asm-lsp"];
               filetypes = ["asm" "s" "S"];
@@ -525,28 +452,12 @@
                   id = "console";
                   size = 1.0;
                 }
-                # {
-                #   id = "stacks";
-                #   size = 0.25;
-                # }
-                # {
-                #   id = "watches";
-                #   size = 0.25;
-                # }
               ];
               position = "left";
               size = 80;
             }
             {
               elements = [
-                # {
-                #   id = "repl";
-                #   size = 0.5;
-                # }
-                # {
-                #   id = "console";
-                #   size = 0.5;
-                # }
                 {
                   id = "scopes";
                   size = 0.5;
@@ -588,29 +499,13 @@
           lazy.__raw = "vim.fn.argc(-1) == 0";
         };
 
-        # folding = true;
         settings = {
           auto_install = true;
 
-          # ensure_installed = [
-          #   "all"
-          # ];
-
           highlight = {
             enable = true;
-            # additional_vim_regex_highlighting = true;
-            # custom_captures = { };
           };
 
-          # incremental_selection = {
-          #   enable = true;
-          #   keymaps = {
-          #     init_selection = "gnn";
-          #     node_decremental = "grm";
-          #     node_incremental = "grn";
-          #     scope_incremental = "grc";
-          #   };
-          # };
           incremental_selection.enable = false;
 
           indent = {
@@ -623,7 +518,6 @@
 
         nixvimInjections = true;
       };
-      # treesitter-refactor.enable = true;
 
       # Add indentation guides even on blank lines
       indent-blankline = {
@@ -711,8 +605,8 @@
           src = channels.nixpkgs-unstable.fetchFromGitHub {
             owner = "ray-x";
             repo = "lsp_signature.nvim";
-            rev = "e92b4e7073345b2a30a56b20db3d541a9aa2771e";
-            hash = "sha256-WAQ8DWjNWKYBbELC/M8ClGxU0cAqB4X1TlkWIEBqp24=";
+            rev = "62cadce83aaceed677ffe7a2d6a57141af7131ea";
+            hash = "sha256-Dr3rU/Heqb3crYGVI86xhfZ89Fs0M62zD6tI5fZANIw=";
           };
         });
       } 
@@ -722,8 +616,8 @@
           src = channels.nixpkgs-unstable.fetchFromGitHub {
             owner = "stevanmilic";
             repo = "nvim-lspimport";
-            rev = "4fef458b8853b1b90b55054ed6c3f98fff094cd1";
-            hash = "sha256-JIbd4ygOGuNsg6fZnlN9iz7hfN4LQWM6VSJy4Qh9LJg=";
+            rev = "9c1c61a5020faeb1863bb66eb4b2a9107e641876";
+            hash = "sha256-GIeuvGltgilFkYnKvsVYSogqQhDo1xcORy5jVtTz2cE=";
           };
         });
       } 
@@ -755,8 +649,8 @@
           src = channels.nixpkgs-unstable.fetchFromGitHub {
             owner = "nvim-neotest";
             repo = "nvim-nio";
-            rev = "a428f309119086dc78dd4b19306d2d67be884eee";
-            hash = "sha256-i6imNTb1xrfBlaeOyxyIwAZ/+o6ew9C4/z34a7/BgFg=";
+            rev = "21f5324bfac14e22ba26553caf69ec76ae8a7662";
+            hash = "sha256-eDbzJAGdUBhTwuD0Nt9FihZj1MmVdQfn/GKIybuu5a8=";
           };
         });
       }
@@ -804,11 +698,6 @@
         end,
       }
       require("lsp_signature").setup(signature_cfg)
-
-      -- Make backticks work nicely in insert mode
-      vim.keymap.set('i', '`', function()
-        vim.api.nvim_feedkeys('``' .. vim.api.nvim_replace_termcodes('<Left>', true, false, true), 'n', true)
-      end, { noremap = true })
 
       -- Fix Python venvs
       require('lspconfig').pyright.setup({
