@@ -291,10 +291,12 @@ in
         id = 0;
         isDefault = true;
         settings = firefoxSettings;
-        extensions = firefoxExtensions;
-        bookmarks = firefoxBookmarks;
+        extensions.packages = firefoxExtensions;
+        bookmarks = { 
+          force = true;
+          settings = firefoxBookmarks;
+        };
       };
     };
   };
 }
-

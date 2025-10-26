@@ -1,4 +1,10 @@
-{ lib, buildPythonPackage, fetchFromGitHub, pip, six }:
+{ 
+  lib, 
+  buildPythonPackage, 
+  fetchFromGitHub, 
+  pip, 
+  six
+}:
 
 buildPythonPackage {
   pname = "ida-netcode";

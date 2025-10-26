@@ -4,8 +4,10 @@
     enable = true;
     package = channels.nixpkgs-unstable.git;
 
-    userName = "";
-    userEmail = "";
+    settings.user = {
+      name = "";
+      email = "";
+    };
   };
 
 }

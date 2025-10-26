@@ -1,44 +1,27 @@
 let
   channels = {
     nixpkgs-stable = import (builtins.fetchTarball {
-      url = "https://github.com/NixOS/nixpkgs/archive/c0b1da36f7c34a7146501f684e9ebdf15d2bebf8.tar.gz";
-      sha256 = "0j15vhfz4na8wmvp532jya81y06g74qkr25ci58dp895bw7l9g2q";
+      url = "https://github.com/NixOS/nixpkgs/archive/c8aa8cc00a5cb57fada0851a038d35c08a36a2bb.tar.gz";
+      sha256 = "sha256-m9W0dYXflzeGgKNravKJvTMR4Qqa2MVD11AwlGMufeE=";
     }) {
       system = "x86_64-linux";
       overlays = with overlays; [ pythonInterpreterOverlay ];
       config.allowUnfree = true;
     };
 
-    nixpkgs-unstable = import (builtins.fetchTarball {
+    nixpkgs-unstable-dec-2024 = import (builtins.fetchTarball {
       url = "https://github.com/NixOS/nixpkgs/archive/69b9a8c860bdbb977adfa9c5e817ccb717884182.tar.gz";
       sha256 = "12ljkkjg3gicamvryxr2bnfcdb05qdlbc5wv4lcw9sxamszp4cp7";
     }) {
       system = "x86_64-linux";
-        overlays = with overlays; [ 
-          pinPackagesToSpecificVersionOverlay
-          pythonPackagesOverlay 
-          pinPackagesToStableOverlay 
-          patchPackagesOverlay 
-          homeManagerPinOverlay
-          nixglOverlay
-        ];
-        
       config = {
         allowUnfree = true;
-        packageOverrides = pkgs: {
-          nur = channels.nur;
-        };
-        # TEMPORARY
-        permittedInsecurePackages = [
-          "dotnet-sdk-6.0.428"
-          "dotnet-runtime-6.0.36"
-        ];
       };
     };
 
-    nixpkgs-unstable-upstream = import (builtins.fetchTarball {
-      url = "https://github.com/NixOS/nixpkgs/archive/cb82756ecc37fa623f8cf3e88854f9bf7f64af93.tar.gz";
-      sha256 = "1a28dlvrh2y1mps04f0mzb56syhkjd60zvr60brirvsgbrmcx46h";
+    nixpkgs-unstable = import (builtins.fetchTarball {
+      url = "https://github.com/NixOS/nixpkgs/archive/730ad931c6c8a5f95c965490b480fecee3d9b184.tar.gz";
+      sha256 = "sha256-NJ4HOFwcP50ozvoeul2Y3C6nxsnICSkKmNEPa5THqYY=";
     }) {
       system = "x86_64-linux";
         overlays = with overlays; [ 
@@ -55,28 +38,23 @@ let
         packageOverrides = pkgs: {
           nur = channels.nur;
         };
-        # TEMPORARY
-        permittedInsecurePackages = [
-          "dotnet-sdk-6.0.428"
-          "dotnet-runtime-6.0.36"
-        ];
       };
     };
 
     home-manager = (builtins.fetchTarball {
-      url = "https://github.com/nix-community/home-manager/archive/66c5d8b62818ec4c1edb3e941f55ef78df8141a8.tar.gz";
-      sha256 = "0bn15l9rnzqihmyhzx0dg1l0v5wg646wqrspjgnd1d8rjwd20b45";
+      url = "https://github.com/nix-community/home-manager/archive/7296022150cd775917e4c831c393026eae7c2427.tar.gz";
+      sha256 = "sha256-9wQpgBRW2PzYw1wx+MgCt1IbPAYz93csApLMgSZOJCk=";
     });
 
     # NUR and nixvim overlays
     nur = import (builtins.fetchTarball {
-      url = "https://github.com/nix-community/NUR/archive/12bcdb7c86a2598761a7e2ada1b1e6cd7542197c.tar.gz";
-      sha256 = "1ncwyc8fzw317gzagkfda28rk1f1ws7pnk4363zds1rpp0cls2rx";
+      url = "https://github.com/nix-community/NUR/archive/e65c733fc5dd8ca716bc27ab143c065bd65f6cc4.tar.gz";
+      sha256 = "sha256-KLrBBxEHIm9aduGSwxGHYlMy20z9NNXUymKnLmR8ydM=";
     }) { pkgs = channels.nixpkgs-unstable; };
 
     nixvim = import (builtins.fetchTarball {
-      url = "https://github.com/nix-community/nixvim/archive/78f6166c23f80bdfbcc8c44b20f7f4132299a33f.tar.gz";
-      sha256 = "020d56zs8ixaairnq7sxrrx41gk4lc1yi8cawiz0npcmp1za072z";
+      url = "https://github.com/nix-community/nixvim/archive/24d2ac2373598c032f37d70c46803feefd169084.tar.gz";
+      sha256 = "sha256-fuaDQWenfWv2HmlDUPTbfjaKSSBpwvjiQqoE0XN8tWA=";
     });
   };
 
@@ -90,12 +68,12 @@ let
     # By pinning Stable's Python to Unstable's Python, 
     # the build process and subsequent Python packages will not cause this hash collision.
     pythonInterpreterOverlay = self: super: {
-      python312 = channels.nixpkgs-unstable-upstream.python312;
+      python312 = channels.nixpkgs-unstable.python312;
     };
 
-    # Some packages are broken in unstable, use the stable versions instead
+    # If packages are broken in unstable, use the stable versions instead
     pinPackagesToStableOverlay = self: super: {
-      contour = channels.nixpkgs-stable.contour;
+      # contour = channels.nixpkgs-stable.contour;
     };
 
     # This overlay is to pin Home-Manager's src to a specific hash
@@ -118,18 +96,6 @@ let
           "-DCMAKE_POLICY_VERSION_MINIMUM=3.5"
         ];
       });
-
-
-      # zig = (super.zig.override {
-      #   llvmPackages = self.llvmPackages_19;
-      # }).overrideAttrs (oldAttrs: {
-      #   src = super.fetchFromGitHub {
-      #     owner = "ziglang";
-      #     repo = "zig";
-      #     rev = "fa86e09fb39c8007c7b63e70ed7db1afc7022476";
-      #     hash = "sha256-H6HoyWAdpoE0i+mAy78IHWgDm2JUR19wQzrX52v8p6Y=";
-      #   };
-      # });
     };
 
     # This overlay is for when a package exists on NixPkgs, but a custom patch is required
@@ -176,6 +142,13 @@ let
               broken = false;
             };
           });
+
+          # Upstream currently lacks pyproject + build-system, which is required.
+          # TODO: Make a pull request for this...
+          meson = pythonSuper.meson.overrideAttrs (oldAttrs: {
+            pyproject = true;
+            build-system = [ pythonSelf.setuptools ];
+          });
         };
       };
     };
@@ -183,8 +156,8 @@ let
 
   nixglOverlay = self: super: {
     nixGL = super.callPackage (builtins.fetchTarball {
-      url = "https://github.com/nix-community/nixGL/archive/310f8e49a149e4c9ea52f1adf70cdc768ec53f8a.tar.gz";
-      sha256 = "1crnbv3mdx83xjwl2j63rwwl9qfgi2f1lr53zzjlby5lh50xjz4n";
+      url = "https://github.com/nix-community/nixGL/archive/a8e1ce7d49a149ed70df676785b07f63288f53c5.tar.gz";
+      sha256 = "sha256-Ob/HuUhANoDs+nvYqyTKrkcPXf4ZgXoqMTQoCK0RFgQ=";
     }) {};
   };
 in {

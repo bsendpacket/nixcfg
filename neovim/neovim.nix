@@ -396,11 +396,12 @@
           pyright = {
             enable = true;
             autostart = true;
-            rootDir = ''
-              function(fname)
-                return vim.loop.cwd()
-              end
-            '';
+            #rootMarkers = []
+            # rootDir = ''
+            #   function(fname)
+            #     return vim.loop.cwd()
+            #   end
+            # '';
           };
 
           # CSS LSP
@@ -412,11 +413,11 @@
           ccls = {
             enable = true;
             autostart = true;
-            rootDir = ''
-              function(fname)
-                return vim.loop.cwd()
-              end
-            '';
+            # rootDir = ''
+            #   function(fname)
+            #     return vim.loop.cwd()
+            #   end
+            # '';
           };
 
           # cmake LSP
@@ -429,32 +430,32 @@
           ts_ls = {
             enable = true;
             autostart = true;
-            rootDir = ''
-              function(fname)
-                return vim.loop.cwd()
-              end
-            '';
+            # rootDir = ''
+            #   function(fname)
+            #     return vim.loop.cwd()
+            #   end
+            # '';
           };
 
           # Zig LSP
           zls = {
             enable = true;
             autostart = true;
-            rootDir = ''
-              function(fname)
-                return vim.loop.cwd()
-              end
-            '';
+            # rootDir = ''
+            #   function(fname)
+            #     return vim.loop.cwd()
+            #   end
+            # '';
           };
 
           asm_lsp = {
             enable = true;
             autostart = true;
-            rootDir = ''
-              function(fname)
-                return vim.loop.cwd()
-              end
-            '';
+            # rootDir = ''
+            #   function(fname)
+            #     return vim.loop.cwd()
+            #   end
+            # '';
             settings = {
               cmd = ["asm-lsp"];
               filetypes = ["asm" "s" "S"];

@@ -1,4 +1,8 @@
-{ buildPythonPackage, fetchFromGitHub, setuptools }:
+{ 
+  buildPythonPackage, 
+  fetchFromGitHub, 
+  setuptools
+}:
 
 buildPythonPackage {
   pname = "chaskey-lts";

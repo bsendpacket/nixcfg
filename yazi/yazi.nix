@@ -75,7 +75,7 @@ in {
     };
 
     keymap = {
-      manager = {
+      mgr = {
         prepend_keymap = [
           # Relative motions
           { on = [ "1" ]; run = "plugin relative-motions --args=1"; desc = "Move in relative steps"; }

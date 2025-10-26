@@ -1,4 +1,9 @@
-{ lib, fetchPypi, buildPythonPackage, setuptools }:
+{ 
+  lib, 
+  buildPythonPackage, 
+  fetchPypi, 
+  setuptools
+}:
 
 buildPythonPackage rec {
   pname = "dncil";

@@ -4,68 +4,33 @@
   ...
 }:
 let
+  channels = (import ./channels.nix).channels;
+
   username = builtins.getEnv "USER";
   homeDirectory = builtins.getEnv "HOME";
   isNixOS = builtins.pathExists "/etc/NIXOS";
   colorscheme = import ./colorscheme.nix;
   nixGLPrefix = if isNixOS then "" else "${channels.nixpkgs-unstable.nixGL.auto.nixGLDefault}/bin/nixGL ";
 
-  channels = (import ./channels.nix).channels;
-
-  binaryNinjaURL = import ./binary-ninja/binary-ninja-url.nix;
-  binaryNinjaConfig = import ./binary-ninja/config.nix { 
-    inherit channels binaryNinjaURL;
-  };
 
   # Packages to build, as they are not on NixPkgs
   customPackages = {
-    de4dot = channels.nixpkgs-unstable.callPackage ./de4dot/de4dot.nix { };
-    redress = channels.nixpkgs-unstable.callPackage ./redress/redress.nix { };
     webcrack = channels.nixpkgs-unstable.callPackage ./webcrack/webcrack.nix { };
     decompylepp = channels.nixpkgs-unstable.callPackage ./decompylepp/decompylepp.nix { };
-    detect-it-easy = channels.nixpkgs-unstable.callPackage ./detect-it-easy/detect-it-easy.nix { };
-    net-reactor-slayer = channels.nixpkgs-unstable.callPackage ./net-reactor-slayer/net-reactor-slayer.nix { };
-    obfuscator-llvm = channels.nixpkgs-unstable.callPackage ./obfuscator-llvm/obfuscator-llvm.nix { };
 
     # Python Packages
-    frida-tools = channels.nixpkgs-unstable.python312Packages.callPackage ./dependencies/frida-tools.nix { };
     capa = channels.nixpkgs-unstable.python312Packages.callPackage ./capa/capa.nix { };
-    binary-refinery = channels.nixpkgs-unstable-upstream.python312Packages.callPackage ./binary-refinery/binary-refinery.nix { };
-    donut-decryptor = channels.nixpkgs-unstable-upstream.python312Packages.callPackage ./donut-decryptor/donut-decryptor.nix { };
-    dncil = channels.nixpkgs-unstable.python312Packages.callPackage ./dependencies/dncil.nix { };
-    pyja3 = channels.nixpkgs-unstable.python312Packages.callPackage ./dependencies/pyja3.nix { };
-    #ucutils = channels.nixpkgs-unstable.callPackage ./dependencies/ucutils.nix { };
-    icicle-emu = channels.nixpkgs-unstable-upstream.python312Packages.callPackage ./dependencies/icicle-emu.nix { };
-
-    binary-ninja = channels.nixpkgs-unstable-upstream.callPackage ./binary-ninja/binary-ninja.nix { 
-      binaryNinjaUrl = binaryNinjaURL.binaryNinjaUrl;
-      binaryNinjaHash = binaryNinjaURL.binaryNinjaHash;
-      pythonEnv = binaryNinjaConfig.pythonEnv;
-    };
-
-    libtriton = channels.nixpkgs-unstable-upstream.python312Packages.callPackage ./dependencies/triton.nix { 
-      z3 = channels.nixpkgs-unstable-upstream.z3;
-      boost = channels.nixpkgs-unstable-upstream.boost;
-      libffi = channels.nixpkgs-unstable-upstream.libffi;
-      libxml2 = channels.nixpkgs-unstable-upstream.libxml2;
-      bitwuzla = channels.nixpkgs-unstable-upstream.bitwuzla;
-      capstone = channels.nixpkgs-unstable-upstream.capstone;
-      llvmPackages_16 = channels.nixpkgs-unstable.llvmPackages_16;
-    };
-
+    binary-refinery = channels.nixpkgs-unstable.python312Packages.callPackage ./binary-refinery/binary-refinery.nix { };
   }; 
 
   # Work-specific
   fileExists = path: if builtins.pathExists path then import path { inherit channels lib; } else {};
   workConfig = fileExists ./work/work.nix;
 
-  # Python Environments
-  pythonEnvs = import ./python/venvs.nix { inherit channels customPackages; binaryNinjaEnv = binaryNinjaConfig.pythonEnv; };
-
 in
 {
   imports = [
-    channels.nixvim.homeManagerModules.nixvim
+    channels.nixvim.homeModules.nixvim
 
     # Window Manager
     (import ./i3/i3.nix { inherit channels config lib nixGLPrefix; })
@@ -75,8 +40,6 @@ in
 
     # Terminal Setup 
     (import ./tmux/tmux.nix { inherit channels; })
-    # (import ./kitty/kitty.nix { inherit channels colorscheme; })
-    # (import ./alacritty/alacritty.nix { inherit channels colorscheme; })
     (import ./yazi/yazi.nix { inherit channels config colorscheme workConfig nixGLPrefix; })
     (import ./zsh/zsh.nix { inherit lib channels customPackages workConfig nixGLPrefix colorscheme; })
     (import ./neovim/neovim.nix { inherit channels homeDirectory; })
@@ -86,12 +49,6 @@ in
     (import ./zoxide/zoxide.nix { inherit channels; })
 
     ./zathura/zathura.nix
-    ./malwoverview/malwoverview.nix
-
-    # Services
-    (import ./picom/picom.nix { inherit channels; })
-
-    binaryNinjaConfig.binaryNinjaConfig
 
     # Program Setup
     (import ./firefox/firefox.nix { inherit channels lib; })
@@ -110,34 +67,13 @@ in
       # VM tools
       open-vm-tools
 
-      # Backup File Manager
-      nautilus
-
-      # Touchpad
-      libinput-gestures
-      wmctrl
-      xdotool
-
-      # Display
-      brightnessctl
-
       # Nix-specific tools
       nurl
       nix-init
-      node2nix
-      nuget-to-nix
 
       i3
       i3status-rust
-      
-      # Needed by i3status-rust
-      xorg.setxkbmap
 
-      # Find pressed key
-      xorg.xev
-
-      # kitty
-      # alacritty
       contour
 
       tmux
@@ -146,8 +82,6 @@ in
       zsh-fast-syntax-highlighting
 
       oh-my-zsh
-      thefuck
-      tealdeer
 
       man-pages
       man-pages-posix
@@ -156,9 +90,8 @@ in
       (hiPrio bat)
       ouch
       htop
-      glances
 
-      neofetch
+      fastfetch
       glow
 
       obsidian
@@ -167,22 +100,19 @@ in
 
       ffmpeg
 
-      # RSS
-      nom
+      # Used by neovim's LspInfo
+      gcc
 
       # Web
       #firefox
       
-      # Social
-      discord
-
       # Utilities
       xclip
       xsel
       xdragon
       jless
       p7zip
-      unar
+      #unar
 
       lsd
       zoxide
@@ -194,7 +124,6 @@ in
       hexyl
 
       rofi
-      inxi
 
       ffmpegthumbnailer
       mediainfo
@@ -203,177 +132,72 @@ in
       file
       poppler
 
-      #shared-mime-info
-
       lazygit
       poetry
-      flatpak # TODO: Make declarative
 
-      gcc
-      zig
-      # rustup
-      # rustlings
-      typescript
-      nodejs_22
-
-      sqlitebrowser
+      # Fonts
+      pkgs.nerd-fonts.caskaydia-cove
 
       ## Malware Analysis
-
-      # Triage
-      malwoverview
         
       # Binary Analysis
-      detect-it-easy
-      binary-ninja
-      frida-tools
-      flare-floss
-      ghidra
-      imhex
-      capa
-      upx
+      #detect-it-easy
+      #flare-floss
+      #ghidra
+      #imhex
+      #capa
+      #upx
 
-      yara-x
-      yaralyzer
-
-      # Family-Specific
-      donut-decryptor
-
-      # InnoSetup
-      innoextract
+      #yara-x
+      #yaralyzer
 
       # Networking
-      wireshark
+      #wireshark
 
       # JavaScript
-      webcrack
+      #webcrack
 
       # Java
-      jadx
+      #jadx
 
       # .NET
-      # avalonia-ilspy
-      ilspycmd
-      de4dot
-      net-reactor-slayer
+      #ilspycmd
 
       # Go
-      goresym
-      redress
+      #goresym
+      #redress
 
       # Python
-      decompylepp
+      #decompylepp
 
       # Android
-      apktool
-
-      # Emulation
-      #speakeasy
-
-      # CFG Analysis
-      xdot
-
-      retdec
-      obfuscator-llvm
-
-      nasm
-      fasm
-
-      # TODO
-      # rustbinsign (+rustup) - This should be possible w/ poetry?
-      # IDR
+      #apktool
 
       # Custom Python environment
-      (channels.nixpkgs-unstable-upstream.python312.withPackages (ps: with channels.nixpkgs-unstable-upstream.python312Packages; [
+      (channels.nixpkgs-unstable.python312.withPackages (ps: with channels.nixpkgs-unstable.python312Packages; [
         pip
         setuptools
         wheel
-
-        # Regex
-        exrex
 
         # Networking
         requests
         flask
         netifaces
-        mitmproxy
-        pyja3
 
         # Binary Analysis
         binary-refinery
         frida-python
         construct
         construct-typing
-        arrow
+        #arrow
 
-        # .NET
-        dnfile
-        dncil
-
-        # Emulation / Symbolic Execution
-        # unicorn
-        # ucutils
-        # icicle-emu
         capstone
         keystone-engine
-        libtriton
         miasm
-        # qiling
 
-        # CFG Analysis
-        (hiPrio graphviz)
-
-        # LLVM
-        llvmlite
-
-        pefile
         lief
-        sqlite-utils
       ] ++ (workConfig.home.pythonPackages or [])))
-
-      # qilling
-      # mkyara (?)
-      # pycdc
-      # view8
-      # bindiff (?)
-      # innoump
-
-      # Containers
-      #dive
-      #distrobox
-
-      # podman is broken on nix at the moment, if not on NixOS
-      # podman
-      # podman-tui
-      # podman-compose
-
-      # Fonts
-      pkgs.nerd-fonts.caskaydia-cove
-
     ]) ++ (workConfig.home.packages or []) ++ (if !isNixOS then [ channels.nixpkgs-unstable.nixGL.auto.nixGLDefault ] else []);
-    
-    # Create symlinks to the Python venvs in ~/.virtualenvs
-    activation.buildPythonEnvs = lib.mkAfter ''
-      echo "Building Python environments..."
-      ${lib.concatStringsSep "\n" (map (env:
-        ''
-        VENV_DIR="${config.home.homeDirectory}/.virtualenvs/${env.name}"
-
-        # Ensure the environment directory exists
-        mkdir -p "$VENV_DIR"
-
-        # Remove any existing symlinks
-        find "$VENV_DIR" -maxdepth 1 -type l -exec rm -f {} \;
-
-        # Create a symlink to the Python environment
-        ln -sf ${env.pythonEnv} "$VENV_DIR"
-
-        # Create a symlink to the Python binary
-        mkdir -p "$VENV_DIR/bin"
-        ln -sf ${env.pythonEnv}/bin/python "$VENV_DIR/bin/python"
-        ''
-      ) pythonEnvs.envs)}
-    '';
 
     sessionVariables = {
       EDITOR = "nvim";
@@ -418,12 +242,5 @@ in
     };
 
     stateVersion = "23.11";
-  };
-
-  dconf.settings = {
-    "org/virt-manager/virt-manager/connections" = {
-      autoconnect = ["qemu:///system"];
-      uris = ["qemu:///system"];
-    };
   };
 }

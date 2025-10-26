@@ -7,7 +7,7 @@
     autosuggestion.enable = true;
     enableCompletion = true;
 
-    initExtra = ''
+    initContent = ''
       # Place any values that need to be handled by ~/.zshrc here, if they cannot be defined elsewhere
 
       source ${../python/activate_envs.sh}
@@ -50,7 +50,7 @@
       ZVM_KEYTIMEOUT=0
       ZVM_ESCAPE_KEYTIMEOUT=0
       ZVM_VI_HIGHLIGHT_BACKGROUND=${colorscheme.colors.cursor}
-    '' + (workConfig.programs.zsh.initExtra or "");
+    '' + (workConfig.programs.zsh.initContent or "");
 
     shellAliases = {
       py = "python3";
@@ -61,15 +61,12 @@
       lla = "ls -la";   # List Files (+ Hidden)
       lt = "ls --tree"; # List Files (Tree)
       y = "yy";         # Yazi
-      yara = "${channels.nixpkgs-unstable.yara-x}/bin/yr";
-      netreactorslayer = "${customPackages.net-reactor-slayer}/bin/NETReactorSlayer";
-      rbat = "${customPackages.binary-refinery}/bin/bat";
-      goresym = "${channels.nixpkgs-unstable.goresym}/bin/GoReSym";
-      ilspy = "${channels.nixpkgs-unstable.avalonia-ilspy}/bin/ILSpy";
+      # yara = "${channels.nixpkgs-unstable.yara-x}/bin/yr";
+      # rbat = "${customPackages.binary-refinery}/bin/bat";
+      # goresym = "${channels.nixpkgs-unstable.goresym}/bin/GoReSym";
+      # ilspy = "${channels.nixpkgs-unstable.avalonia-ilspy}/bin/ILSpy";
 
       # OpenGL Required
-      kitty = "${nixGLPrefix}kitty";
-      alacritty = "${nixGLPrefix}alacritty";
       contour = "${nixGLPrefix}contour";
     } // (workConfig.programs.zsh.shellAliases or {});
 
@@ -105,7 +102,7 @@
       enable = true;
       package = channels.nixpkgs-unstable.oh-my-zsh;
 
-      plugins = [ "git" "thefuck" ];
+      plugins = [ "git" ];
     };
   };
 }

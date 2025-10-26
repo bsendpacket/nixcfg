@@ -1,4 +1,12 @@
-{ lib, fetchPypi, buildPythonApplication, pygments, prompt-toolkit, colorama, frida-python }:
+{ 
+  lib, 
+  fetchPypi, 
+  buildPythonApplication, 
+  pygments, 
+  prompt-toolkit, 
+  colorama, 
+  frida-python
+}:
 
 buildPythonApplication rec {
   pname = "frida-tools";
