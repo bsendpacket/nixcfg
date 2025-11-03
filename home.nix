@@ -12,20 +12,52 @@ let
   colorscheme = import ./colorscheme.nix;
   nixGLPrefix = if isNixOS then "" else "${channels.nixpkgs-unstable.nixGL.auto.nixGLDefault}/bin/nixGL ";
 
+  binaryNinjaURL = import ./binary-ninja/binary-ninja-url.nix;
+  binaryNinjaConfig = import ./binary-ninja/config.nix { 
+    inherit channels binaryNinjaURL;
+  };
 
   # Packages to build, as they are not on NixPkgs
   customPackages = {
-    # NPM/PNPM Package
+    # .NET
+    de4dot = channels.nixpkgs-unstable.callPackage ./de4dot/de4dot.nix { };
+    net-reactor-slayer = channels.nixpkgs-unstable.callPackage ./net-reactor-slayer/net-reactor-slayer.nix { };
+
+    # NPM/PNPM
     webcrack = channels.nixpkgs-unstable.callPackage ./webcrack/webcrack.nix { };
 
-    # C++ Package
+    # C++
     decompylepp = channels.nixpkgs-unstable.callPackage ./decompylepp/decompylepp.nix { };
 
-    # Python Packages
+    # Python
     capa = channels.nixpkgs-unstable.python312Packages.callPackage ./capa/capa.nix { };
     binary-refinery = channels.nixpkgs-unstable.python312Packages.callPackage ./binary-refinery/binary-refinery.nix { };
-  }; 
+    donut-decryptor = channels.nixpkgs-unstable.python312Packages.callPackage ./donut-decryptor/donut-decryptor.nix { };
+    pyja3 = channels.nixpkgs-unstable.python312Packages.callPackage ./dependencies/pyja3.nix { };
+    icicle-emu = channels.nixpkgs-unstable.python312Packages.callPackage ./dependencies/icicle-emu.nix { };
 
+    binary-ninja = channels.nixpkgs-unstable.callPackage ./binary-ninja/binary-ninja.nix {
+      inherit channels;
+      binaryNinjaUrl = binaryNinjaURL.binaryNinjaUrl;
+      binaryNinjaHash = binaryNinjaURL.binaryNinjaHash;
+      pythonEnv = binaryNinjaConfig.pythonEnv;
+    };
+
+    libtriton = channels.nixpkgs-unstable.python312Packages.callPackage ./dependencies/triton.nix { 
+      z3 = channels.nixpkgs-unstable.z3;
+      boost = channels.nixpkgs-unstable.boost;
+      libffi = channels.nixpkgs-unstable.libffi;
+      libxml2 = channels.nixpkgs-unstable.libxml2;
+      bitwuzla = channels.nixpkgs-unstable.bitwuzla;
+      capstone = channels.nixpkgs-unstable.capstone;
+      llvmPackages_16 = channels.nixpkgs-unstable-feb-2025.llvmPackages_16;
+    };
+  };
+
+  # Python Environments
+  pythonEnvs = import ./python/venvs.nix { inherit channels customPackages; binaryNinjaEnv = binaryNinjaConfig.pythonEnv; };
+
+  # Work-Specific
   # Certain folders can be kept off the Git tree, but can still be imported into the config.
   fileExists = path: if builtins.pathExists path then import path { inherit channels lib; } else {};
   workConfig = fileExists ./work/work.nix;
@@ -69,6 +101,7 @@ in
     packages = (with channels.nixpkgs-unstable // customPackages; [
       # VM tools
       open-vm-tools
+      spice-vdagent
 
       # Nix-specific tools
       nurl
@@ -143,6 +176,7 @@ in
         
       # Binary Analysis
       detect-it-easy
+      binary-ninja
       flare-floss
       ghidra
       imhex
@@ -151,6 +185,9 @@ in
 
       yara-x
       yaralyzer
+
+      # Family-Specific
+      donut-decryptor
 
       # Networking
       wireshark
@@ -175,20 +212,30 @@ in
 
       # Custom Python environment
       (channels.nixpkgs-unstable.python312.withPackages (ps: with channels.nixpkgs-unstable.python312Packages; [
-        # pip
-        # setuptools
-        # wheel
-
         # Networking
         requests
         flask
         netifaces
+        pyja3
 
         # Binary Analysis
         binary-refinery
+        frida-python
         construct
         construct-typing
+        arrow
 
+        # .NET
+        dnfile
+        dncil
+
+        # Emulation / Symbolic Execution
+        icicle-emu
+        libtriton
+        angr
+        miasm
+
+        # Disassembly/Assembly
         capstone
         keystone-engine
 
@@ -197,6 +244,29 @@ in
         lief
       ] ++ (workConfig.home.pythonPackages or [])))
     ]) ++ (workConfig.home.packages or []) ++ (if !isNixOS then [ channels.nixpkgs-unstable.nixGL.auto.nixGLDefault ] else []);
+
+    # Create symlinks to the Python venvs in ~/.virtualenvs
+    activation.buildPythonEnvs = lib.mkAfter ''
+      echo "Building Python environments..."
+      ${lib.concatStringsSep "\n" (map (env:
+        ''
+        VENV_DIR="${config.home.homeDirectory}/.virtualenvs/${env.name}"
+
+        # Ensure the environment directory exists
+        mkdir -p "$VENV_DIR"
+
+        # Remove any existing symlinks
+        find "$VENV_DIR" -maxdepth 1 -type l -exec rm -f {} \;
+
+        # Create a symlink to the Python environment
+        ln -sf ${env.pythonEnv} "$VENV_DIR"
+
+        # Create a symlink to the Python binary
+        mkdir -p "$VENV_DIR/bin"
+        ln -sf ${env.pythonEnv}/bin/python "$VENV_DIR/bin/python"
+        ''
+      ) pythonEnvs.envs)}
+    '';
 
     sessionVariables = {
       EDITOR = "nvim";

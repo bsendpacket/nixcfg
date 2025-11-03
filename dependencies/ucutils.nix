@@ -43,6 +43,6 @@ buildPythonPackage rec {
     description = "Convenience routines for working with the Unicorn emulator in Python";
     homepage = "https://github.com/williballenthin/ucutils";
     license = lib.licenses.asl20;
-    maintainers = with lib.maintainers; [ ];
+    maintainers = [ ];
   };
 }

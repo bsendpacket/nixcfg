@@ -1,29 +1,28 @@
-{ 
+{
   lib, 
-  buildPythonPackage, 
-  callPackage, 
-  fetchFromGitHub, 
-  setuptools, 
-  wheel, 
-  unicorn,
-  capstone, 
-  jsonschema, 
-  pefile, 
-  pycryptodome 
+  buildPythonPackage,
+  setuptools,
+  wheel,
+  capstone,
+  jsonschema,
+  pefile,
+  pycryptodome,
+  fetchFromGitHub,
+  callPackage
 }:
 
 buildPythonPackage {
   pname = "speakeasy";
-  version = "1.5.11b0.post1";
+  version = "1.6.1";
+  pyproject = true;
 
   src = fetchFromGitHub {
-    owner = "binref";
+    owner = "mandiant";
     repo = "speakeasy";
-    rev = "56379d0763b035df2c288451f033732b3fb94b67";
-    hash = "sha256-bgUODRW3VlZ4kdysjuu2VgwICw5b+GiQGH46fJPIhUA=";
+    rev = "22ef6f7bf5323b2b3ddb10f3c9b6bc150ac78c95";
+    hash = "sha256-M0ePCRcRJTKJWKURtvwUo7fLWQzZ6sA6bPkgkh4e+lk=";
   };
 
-  pyproject = true;
   build-system = [ setuptools ];
 
   buildInputs = [
@@ -33,8 +32,8 @@ buildPythonPackage {
 
   propagatedBuildInputs = [
     (callPackage ../dependencies/lznt1.nix {})
+    (callPackage ../dependencies/unicorn-1_0_2.nix {})
 
-    unicorn
     capstone
     jsonschema
     pefile
@@ -47,7 +46,7 @@ buildPythonPackage {
     description = "Windows kernel and user mode emulation";
     homepage = "https://github.com/mandiant/speakeasy";
     license = licenses.mit;
-    maintainers = [ ];
+    maintainers = [ "bsendpacket" ];
     mainProgram = "speakeasy";
   };
 }

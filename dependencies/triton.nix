@@ -15,14 +15,14 @@
 
 buildPythonPackage {
   pname = "triton";
-  version = "unstable-2025-02-15";
+  version = "unstable-2025-10-15";
   format = "other";
 
   src = fetchFromGitHub {
     owner = "jonathansalwan";
     repo = "Triton";
-    rev = "e312eafcdf507d9aebd0f8a7daf2eb4c28a19d30";
-    hash = "sha256-f+hgmcyDEtNfVtZ/WdFGrnxi6sdEDD2jNegj8MqTLC8=";
+    rev = "8b4362604bc1d153eb937f0d5a826005be2f04fe";
+    hash = "sha256-+VMgxrNlvUGBsmJBvP5iuITdD9TKGBdgy73NrYi4xeU=";
   };
 
   nativeBuildInputs = [

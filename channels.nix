@@ -5,15 +5,23 @@ let
       sha256 = "sha256-m9W0dYXflzeGgKNravKJvTMR4Qqa2MVD11AwlGMufeE=";
     }) {
       system = "x86_64-linux";
-      overlays = with overlays; [ pythonInterpreterOverlay ];
+      overlays = with overlays; [ 
+        pythonInterpreterOverlay
+      ];
+
       config.allowUnfree = true;
     };
 
+    # Used to pin older version of Yazi, as well as to use LLVMPackages_16, which is now removed.
     nixpkgs-unstable-feb-2025 = import (builtins.fetchTarball {
       url = "https://github.com/NixOS/nixpkgs/archive/df251e20548ee2ee060ac4f43c4d52fafc62d695.tar.gz";
       sha256 = "sha256-NRLlc2l8v72H2mcj9cY9KMym1BFiweimzr/2X0y3PQ0=";
     }) {
       system = "x86_64-linux";
+      overlays = with overlays; [
+        pinPackagesToSpecificVersionOverlay
+        pythonPackagesOverlay
+      ];
       config = {
         allowUnfree = true;
       };
@@ -24,20 +32,24 @@ let
       sha256 = "sha256-NbqeppjwBFamZ80XAPTuB8KesUIQytcu9+plXUvTPDg=";
     }) {
       system = "x86_64-linux";
-        overlays = with overlays; [ 
-          pinPackagesToSpecificVersionOverlay
-          pythonPackagesOverlay 
-          pinPackagesToStableOverlay 
-          patchPackagesOverlay 
-          homeManagerPinOverlay
-          nixglOverlay
-        ];
+      overlays = with overlays; [ 
+        pinPackagesToSpecificVersionOverlay
+        pythonPackagesOverlay 
+        pinPackagesToStableOverlay 
+        patchPackagesOverlay 
+        homeManagerPinOverlay
+        nixglOverlay
+      ];
         
       config = {
         allowUnfree = true;
         packageOverrides = pkgs: {
           nur = channels.nur;
         };
+        permittedInsecurePackages = [
+          "dotnet-sdk-6.0.428"
+          "dotnet-runtime-6.0.36"
+        ];
       };
     };
 
@@ -85,18 +97,26 @@ let
     };
 
     pinPackagesToSpecificVersionOverlay = final: prev: {
-      unicorn = prev.unicorn.overrideAttrs (oldAttrs: {
-        src = prev.fetchFromGitHub {
-          owner = "unicorn-engine";
-          repo = "unicorn";
-          rev = "2.0.1.post1";
-          hash = "sha256-Jz5C35rwnDz0CXcfcvWjkwScGNQO1uijF7JrtZhM7mI=";
-        };
+      # unicorn = prev.unicorn.overrideAttrs (oldAttrs: {
+      #   version = "2.0.1.post1";
+      #
+      #   src = prev.fetchFromGitHub {
+      #     owner = "unicorn-engine";
+      #     repo = "unicorn";
+      #     rev = "2.0.1.post1";
+      #     hash = "sha256-Jz5C35rwnDz0CXcfcvWjkwScGNQO1uijF7JrtZhM7mI=";
+      #   };
+      #
+      #   cmakeFlags = (oldAttrs.cmakeFlags or []) ++ [
+      #     "-DCMAKE_POLICY_VERSION_MINIMUM=3.5"
+      #   ];
+      # });
 
-        cmakeFlags = (oldAttrs.cmakeFlags or []) ++ [
-          "-DCMAKE_POLICY_VERSION_MINIMUM=3.5"
-        ];
-      });
+      # unicorn-angr = prev.unicorn-angr.overrideAttrs (oldAttrs: {
+      #   cmakeFlags = (oldAttrs.cmakeFlags or []) ++ [
+      #     "-DCMAKE_POLICY_VERSION_MINIMUM=3.5"
+      #   ];
+      # });
     };
 
     # This overlay is for when a package exists on NixPkgs, but a custom patch is required
@@ -130,15 +150,24 @@ let
       python312Packages = prev.python312Packages.override {
         overrides = pythonFinal: pythonPrev: {
 
-          # Unicorn v2.0.1 still requires setuptools+distutils
-          unicorn = pythonPrev.unicorn.overrideAttrs (oldAttrs: {
-            propagatedBuildInputs = with prev.python312Packages; [ setuptools distutils ];
-            doCheck = false;
-            pythonImportsCheck = [ "unicorn" ];
-            pytestCheckPhase = ''
-              echo "No upstream tests for unicorn 2.0.1.post1; skipping pytest."
-            '';
-          });
+          # # Unicorn v2.0.1 still requires setuptools+distutils
+          # unicorn = pythonPrev.unicorn.overrideAttrs (oldAttrs: {
+          #   version = "2.0.1.post1";
+          #
+          #   propagatedBuildInputs = with prev.python312Packages; [ setuptools distutils ];
+          #   build-system = with prev.python312Packages; [ distutils ];
+          #
+          #   doCheck = false;
+          #   pythonImportsCheck = [ "unicorn" ];
+          #   pytestCheckPhase = ''
+          #     echo "No upstream tests for unicorn 2.0.1.post1; skipping pytest."
+          #   '';
+          # });
+
+          # unicorn-angr = prev.unicorn.overrideAttrs (oldAttrs: {
+          #   propagatedBuildInputs = with prev.python312Packages; [ setuptools distutils ];
+          #   build-system = with prev.python312Packages; [ distutils ];
+          # });
 
           ## The following issues are resolved, and are unnecessary now, however,
           ## they are here for examples as to what may be required or can be done:

@@ -52,7 +52,8 @@ buildPythonPackage rec {
     (callPackage ../dependencies/pyzstd.nix {})
     (callPackage ../dependencies/pypcapkit.nix {})
 
-    (callPackage ../speakeasy/speakeasy_refined.nix {})
+    # (callPackage ../speakeasy/speakeasy_refined.nix {})
+    # (callPackage ../speakeasy/speakeasy.nix {})
 
     python-magic
     distutils

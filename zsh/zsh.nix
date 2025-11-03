@@ -13,6 +13,8 @@
       unset LD_LIBRARY_PATH
       unset QT_PLUGIN_PATH
 
+      source ${../python/activate_envs.sh}
+
       export PYENV_ROOT="$HOME/.pyenv"
       export PATH="$PYENV_ROOT/bin:$HOME/ida-pro-9.0:$PATH"
 
@@ -60,8 +62,10 @@
       lt = "ls --tree"; # List Files (Tree)
       y = "yy";         # Yazi
       yara = "${channels.nixpkgs-unstable.yara-x}/bin/yr";
+      netreactorslayer = "${customPackages.net-reactor-slayer}/bin/NETReactorSlayer";
       rbat = "${customPackages.binary-refinery}/bin/bat";
       goresym = "${channels.nixpkgs-unstable.goresym}/bin/GoReSym";
+      ilspy = "${channels.nixpkgs-unstable.avalonia-ilspy}/bin/ILSpy";
 
       # OpenGL Required
       contour = "${nixGLPrefix}contour";
