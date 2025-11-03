@@ -86,7 +86,7 @@ let
     # If packages are broken in unstable, use the stable versions instead
     pinPackagesToStableOverlay = final: prev: {
       # This is now fixed, left as an example only:
-      # contour = channels.nixpkgs-stable.contour;
+      #contour = channels.nixpkgs-unstable-feb-2025.contour;
     };
 
     # This overlay is to pin Home-Manager's src to a specific hash

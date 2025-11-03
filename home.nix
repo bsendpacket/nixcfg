@@ -74,7 +74,6 @@ in
     (import (if builtins.pathExists ./work/git/git.nix then ./work/git/git.nix else ./git/git.nix) { inherit channels; } )
 
     # Terminal Setup 
-    (import ./tmux/tmux.nix { inherit channels; })
     (import ./yazi/yazi.nix { inherit channels config colorscheme workConfig nixGLPrefix; })
     (import ./zsh/zsh.nix { inherit lib channels customPackages workConfig nixGLPrefix colorscheme; })
     (import ./neovim/neovim.nix { inherit channels homeDirectory; })

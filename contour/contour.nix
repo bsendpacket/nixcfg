@@ -23,11 +23,7 @@
         draw_bold_text_with_bright_colors = false;
         vi_mode_highlight_timeout = 300;
         vi_mode_scrolloff = 8;
-
-        environment = {
-          TERM = "xterm-256color";
-          COLORTERM = "truecolor";
-        };
+        terminal_id = "xterm-256color";
 
         bell = {
           sound = "off";

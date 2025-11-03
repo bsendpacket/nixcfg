@@ -1,22 +1,8 @@
 { channels, config, lib, nixGLPrefix, ... }: 
 let 
-  tmuxWrapper = channels.nixpkgs-unstable.writeShellScriptBin "tmux-main" ''
+  scratchWrapper = channels.nixpkgs-unstable.writeShellScriptBin "contour-scratch" ''
     #!${channels.nixpkgs-unstable.bash}/bin/bash
-    if ! ${channels.nixpkgs-unstable.tmux}/bin/tmux -2 has-session -t main 2>/dev/null; then
-      # First time: create session and use its initial window
-      exec ${channels.nixpkgs-unstable.tmux}/bin/tmux -2 new-session -s main
-    fi
-    # Not first time: create new window and use that
-    WINDOW_INDEX=$(${channels.nixpkgs-unstable.tmux}/bin/tmux -2 new-window -d -P -t main -F "#{window_index}")
-    exec ${channels.nixpkgs-unstable.tmux}/bin/tmux -2 new-session -t main \; select-window -t $WINDOW_INDEX
-  '';
-
-  scratchWrapper = channels.nixpkgs-unstable.writeShellScriptBin "tmux-scratch" ''
-    #!${channels.nixpkgs-unstable.bash}/bin/bash
-    if ! ${channels.nixpkgs-unstable.tmux}/bin/tmux -2 has-session -t scratch 2>/dev/null; then
-      ${channels.nixpkgs-unstable.tmux}/bin/tmux -2 new-session -d -s scratch
-    fi
-    exec ${nixGLPrefix}${channels.nixpkgs-unstable.contour}/bin/contour --class scratchpad ${channels.nixpkgs-unstable.tmux}/bin/tmux -2 attach -t scratch
+    exec ${nixGLPrefix}${channels.nixpkgs-unstable.contour}/bin/contour --class scratchpad
   '';
   
   scratchToggle = channels.nixpkgs-unstable.writeShellScriptBin "scratch-toggle" ''
@@ -25,16 +11,13 @@ let
     JQ=${channels.nixpkgs-unstable.jq}/bin/jq
 
     has_scratch() {
-      # returns 0 if a window with class "scratchpad" exists anywhere
       $I3MSG -t get_tree | $JQ -e '.. | objects | select(.window_properties?.class?=="scratchpad") | .id' >/dev/null
     }
 
     if has_scratch; then
-      # Show/cycle the existing scratchpad window
       exec $I3MSG '[class="scratchpad"] scratchpad show'
     else
-      # Spawn a new one
-      (${scratchWrapper}/bin/tmux-scratch) &
+      (${scratchWrapper}/bin/contour-scratch) &
 
       for _ in $(seq 1 50); do
         if has_scratch; then
@@ -43,23 +26,17 @@ let
         sleep 0.1
       done
 
-      # Fallback attempt
       exec $I3MSG '[class="scratchpad"] scratchpad show'
     fi
   '';
 
   modifier = "Mod1";
-  # Main terminal
-  terminal = "${nixGLPrefix}${channels.nixpkgs-unstable.contour}/bin/contour ${tmuxWrapper}/bin/tmux-main";
+  
+  # Main terminal - just Contour
+  terminal = "${nixGLPrefix}${channels.nixpkgs-unstable.contour}/bin/contour";
 
-  # Scratch terminal (Just to quickly run some commands)
-  scratchTerminal = "${scratchWrapper}/bin/tmux-scratch";
-
-  # Create a new tmux session
-  newSessionCmd = ''${nixGLPrefix}${channels.nixpkgs-unstable.contour}/bin/contour ${channels.nixpkgs-unstable.tmux}/bin/tmux -2 new-session -s'';
-
-  # Open a terminal with a given tmux session
-  attachSessionCmd = ''${nixGLPrefix}${channels.nixpkgs-unstable.contour}/bin/contour ${channels.nixpkgs-unstable.tmux}/bin/tmux -2 attach -t'';
+  # Scratch terminal
+  scratchTerminal = "${scratchWrapper}/bin/contour-scratch";
 in {
   xsession = {
     windowManager.i3 = {
@@ -67,10 +44,7 @@ in {
       package = channels.nixpkgs-unstable.i3;
 
       config = {
-
         defaultWorkspace = "workspace number 1";
-
-        # Mod+Enter opens the terminal under the 'main' tmux session
         terminal = terminal;
 
         bars = [{ 
@@ -95,17 +69,8 @@ in {
           size = 11.0;
         };
 
-        # TIP: Utilizing `lib.mkOptionDefault` here allows us to keep all the defaults
-        # and simply add new keybinds to the configuration.
         keybindings = lib.mkOptionDefault {
-
-          # Create new tmux session
-          "${modifier}+Shift+s" = "exec ${channels.nixpkgs-unstable.rofi}/bin/rofi -dmenu -p 'New Session Name' | xargs -r ${newSessionCmd}";
-
-          # Attach to existing tmux session
-          "${modifier}+s" = "exec ${channels.nixpkgs-unstable.tmux}/bin/tmux list-sessions | ${channels.nixpkgs-unstable.rofi}/bin/rofi -i -dmenu | cut -d: -f1 | xargs -r ${attachSessionCmd}";
-
-          # Attach to the scratch terminal
+          # Scratch terminal toggle
           "${modifier}+Escape" = "exec --no-startup-id ${scratchToggle}/bin/scratch-toggle";
 
           # Vim-like keybindings for i3
@@ -125,8 +90,6 @@ in {
           "${modifier}+d" = "exec --no-startup-id ${channels.nixpkgs-unstable.zsh}/bin/zsh -c 'LANG=en_US.UTF-8 LC_ALL=C PATH=~/.nix-profile/bin:$PATH ${channels.nixpkgs-unstable.rofi}/bin/rofi -show run'";
           "${modifier}+Shift+w" = "exec --no-startup-id ${channels.nixpkgs-unstable.zsh}/bin/zsh -c 'LANG=en_US.UTF-8 LC_ALL=C ${channels.nixpkgs-unstable.rofi}/bin/rofi -show window'";
 
-          # Floating window toggle
-          #"${modifier}+Escape" = "scratchpad show";
           "${modifier}+space" = "floating toggle";
 
           # Laptop function keys

@@ -50,6 +50,9 @@
       ZVM_KEYTIMEOUT=0
       ZVM_ESCAPE_KEYTIMEOUT=0
       ZVM_VI_HIGHLIGHT_BACKGROUND=${colorscheme.colors.cursor}
+
+      export COLORTERM=truecolor
+      export TERM=xterm-256color
     '' + (workConfig.programs.zsh.initContent or "");
 
     shellAliases = {
