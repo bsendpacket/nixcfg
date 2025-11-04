@@ -282,7 +282,25 @@
       friendly-snippets.enable = true;
 
       # Auto-close brackets and quotes
-      autoclose.enable = true;
+      autoclose.enable = true; 
+
+      # Diagnostic Text
+      tiny-inline-diagnostic = {
+        enable = true;
+
+        settings = {
+          multilines = {
+            enabled = true;
+          };
+          options = {
+            use_icons_from_diagnostic = true;
+          };
+          preset = "modern";
+          virt_texts = {
+            priority = 2048;
+          };
+        };
+      };
 
       # Status line
       lualine = {

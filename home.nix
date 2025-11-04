@@ -112,7 +112,6 @@ in
 
       # Terminal
       contour
-      tmux
 
       # Shell
       oh-my-zsh
