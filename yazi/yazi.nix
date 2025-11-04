@@ -49,8 +49,8 @@ in {
       "fg" = channels.nixpkgs-unstable.fetchFromGitHub {
         owner = "DreamMaoMao";
         repo = "fg.yazi";
-        rev = "c201a3e1c0cda921c06019127886f16faef4b17e";
-        hash = "sha256-PNZngyiWuzw2bmJ4v66er9HEAcD5z0Dr6iKYwcxJwf0=";
+        rev = "652d02a1413d2440d264667608102eb158ed0e68";
+        hash = "sha256-/GApLVDpGcH2drwSNluEvoQdnjgE8AsPHdci/9eg7Lg=";
       };
 
       # Vim-like relative motions
@@ -106,9 +106,9 @@ in {
           { on = [ "<C-9>" ]; run = "tab_swap 8"; desc = "Swap with tab"; }
 
           # File finding
-          { on = [ "f" "g" ]; run = "plugin fg";              desc = "Find file by Content (Fuzzy)";   }
-          { on = [ "f" "G" ]; run = "plugin fg -- rg";        desc = "Find file by Content (RipGrep)"; }
-          { on = [ "f" "f" ]; run = "plugin fg -- fzf'";      desc = "Find file by Name";              }
+          { on = [ "f" "g" ]; run = "plugin fg";               desc = "Find file by Content (Fuzzy)";   }
+          { on = [ "f" "G" ]; run = "plugin fg rg";   desc = "Find file by Content (RipGrep)"; }
+          { on = [ "f" "f" ]; run = "plugin fg fzf";  desc = "Find file by Name";              }
 
           # Navigation
           { on = [ "K" ];     run = "seek -5";  desc = "Seek up 5 units in the preview";   }
@@ -157,6 +157,7 @@ in {
           { on = [ "'" "4" "d" "4" ]; run = "shell --interactive 'de4dot \"$@\"'"; desc = "[D]e[4]Dot"; }
           { on = [ "'" "4" "d" "r" ]; run = "shell --interactive --block 'netreactorslayer \"$@\"'"; desc = "[D]otNet [R]eactorSlayer"; }
           { on = [ "'" "4" "h" ]; run = "shell --confirm --orphan '${nixGLPrefix}imhex $@'"; desc = "Open in ImHex"; }
+          { on = [ "'" "4" "b" ]; run = "shell --confirm --orphan 'binaryninja $@'"; desc = "Open in Binary Ninja"; }
 
           { on = [ "'" "9" "y" ]; run = "shell --confirm 'cp ${config.xdg.configHome}/home-manager/yara/skeleton.yara .'"; }
 

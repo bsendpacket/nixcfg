@@ -194,6 +194,15 @@ let
       name = "obfuscation_detection";
       folder = "obfuscation_detection";
     })
+
+    (fetchBinaryNinjaPlugin {
+      owner = "junron";
+      repo = "auto-enum";
+      rev = "ec12ba5b49c768ccbc3a226e69c6e2bed4d5101a";
+      sha256 = "sha256-tqx7IHJMY7Jh8mu5wmeNrzmQE8IE97n/O8DW8c8zviE=";
+      name = "plugin";
+    })
+
   ];
 
   binaryNinjaConfigFiles = channels.nixpkgs-unstable.stdenv.mkDerivation {

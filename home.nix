@@ -84,6 +84,8 @@ in
 
     ./zathura/zathura.nix
 
+    binaryNinjaConfig.binaryNinjaConfig
+
     # Program Setup
     (import ./firefox/firefox.nix { inherit channels lib; })
   ];
