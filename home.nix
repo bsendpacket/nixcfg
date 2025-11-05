@@ -201,6 +201,8 @@ in
 
       # .NET
       ilspycmd
+      de4dot
+      net-reactor-slayer
 
       # Go
       goresym

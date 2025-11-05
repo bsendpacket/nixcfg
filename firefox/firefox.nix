@@ -11,6 +11,12 @@ let
     "media.webspeech.synth.dont_notify_on_error" = true;
     "browser.newtabpage.activity-stream.showSponsored" = false;
     "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
+    "apz.overscroll.damping" = 1;
+    "apz.overscroll.max_velocity" = 11;
+    "general.smoothScroll.currentVelocityWeighting" = 0.5;
+    "general.smoothScroll.lines.durationMaxMS" = 0;
+    "general.smoothScroll.lines.durationMinMS" = 0;
+    "general.smoothScroll.mouseWheel.durationMaxMS" = 100;
   };
   firefoxExtensions = with channels.nixpkgs-unstable.nur.repos.rycee.firefox-addons; [
     ublock-origin

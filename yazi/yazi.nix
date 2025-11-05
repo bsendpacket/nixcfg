@@ -143,8 +143,8 @@ in {
 
           # 3 - Files
           # Compression
-          { on = [ "'" "3" "c" ]; run = "shell --interactive --block '7z a -pinfected -mhe=on \"$1\".7z \"$@\"'"; desc = "Compress seleted files with password=infected"; }
-          { on = [ "'" "3" "e" ]; run = "shell --interactive --block '7z x \"$@\" -pinfected'";                   desc = "Extract with password=infected"; }
+          { on = [ "'" "3" "c" ]; run = "shell --interactive --block '7zz a -pinfected -mhe=on \"$1\".7z \"$@\"'"; desc = "Compress seleted files with password=infected"; }
+          { on = [ "'" "3" "e" ]; run = "shell --interactive --block '7zz x \"$@\" -pinfected'";                   desc = "Extract with password=infected"; }
           { on = [ "'" "3" "r" ]; run = "shell --interactive --block 'unar $@'"; desc = "Decompress with unar"; }
 
           # 4 - Tools
@@ -155,7 +155,7 @@ in {
           { on = [ "'" "4" "f" ]; run = "shell --confirm 'floss -j $@ | dump $@_info/floss'"; desc = "Run Floss"; }
           { on = [ "'" "4" "d" "d" ]; run = "shell --confirm 'ilspycmd -p -d -usepdb --no-dead-code --no-dead-stores -o $@_info/decompiled/ $@'"; desc = "[D]otNet [D]ecompile"; }
           { on = [ "'" "4" "d" "4" ]; run = "shell --interactive 'de4dot \"$@\"'"; desc = "[D]e[4]Dot"; }
-          { on = [ "'" "4" "d" "r" ]; run = "shell --interactive --block 'netreactorslayer \"$@\"'"; desc = "[D]otNet [R]eactorSlayer"; }
+          { on = [ "'" "4" "d" "r" ]; run = "shell --interactive --block 'NETReactorSlayer \"$@\"'"; desc = "[D]otNet [R]eactorSlayer"; }
           { on = [ "'" "4" "h" ]; run = "shell --confirm --orphan '${nixGLPrefix}imhex $@'"; desc = "Open in ImHex"; }
           { on = [ "'" "4" "b" ]; run = "shell --confirm --orphan 'binaryninja $@'"; desc = "Open in Binary Ninja"; }
 
