@@ -34,6 +34,7 @@ let
     binary-refinery = channels.nixpkgs-unstable.python312Packages.callPackage ./binary-refinery/binary-refinery.nix { };
     donut-decryptor = channels.nixpkgs-unstable.python312Packages.callPackage ./donut-decryptor/donut-decryptor.nix { };
     pyja3 = channels.nixpkgs-unstable.python312Packages.callPackage ./dependencies/pyja3.nix { };
+    ucutils = channels.nixpkgs-unstable.python312Packages.callPackage ./dependencies/ucutils.nix { };
     icicle-emu = channels.nixpkgs-unstable.python312Packages.callPackage ./dependencies/icicle-emu.nix { };
 
     binary-ninja = channels.nixpkgs-unstable.callPackage ./binary-ninja/binary-ninja.nix {
@@ -240,6 +241,7 @@ in
         keystone-engine
 
         unicorn
+        ucutils
 
         lief
       ] ++ (workConfig.home.pythonPackages or [])))

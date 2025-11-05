@@ -211,6 +211,42 @@
       }
     ];
 
+    lsp = {
+      servers = {
+        # Lua LSP
+        lua_ls.enable = true;
+
+        # Nix LSP
+        nixd.enable = true;
+
+        # Python LSP
+        pyright.enable = true;
+
+        # C LSP
+        ccls.enable = true;
+
+        # cmake LSP
+        cmake.enable = true;
+
+        # Typescript LSP
+        ts_ls.enable = true;
+
+        # Zig LSP
+        zls.enable = true;
+
+        # ASM LSP
+        asm_lsp = {
+          enable = true;
+
+          config = {
+            cmd = ["asm-lsp"];
+            filetypes = ["asm" "s" "S"];
+            root_markers = [".git" ".asm-lsp.toml"];
+          };
+        };
+      };
+    };
+
     plugins = {
       # Nix Support for Vim
       nix.enable = true;
@@ -290,12 +326,12 @@
 
         settings = {
           multilines = {
-            enabled = true;
+            enabled = false;
           };
           options = {
             use_icons_from_diagnostic = true;
           };
-          preset = "modern";
+          preset = "classic";
           virt_texts = {
             priority = 2048;
           };
@@ -339,64 +375,6 @@
         };
       };
 
-      lsp = {
-        enable = true;
-        
-        servers = {
-          # Lua LSP
-          lua_ls.enable = true;
-
-          # Nix LSP
-          nixd = {
-            enable = true;
-            extraOptions = {
-              # https://github.com/nix-community/nixvim/issues/2390
-              offset_encoding = "utf-8";
-            };
-          };
-
-          # Python LSP
-          pyright = {
-            enable = true;
-            autostart = true;
-          };
-
-          # C LSP
-          ccls = {
-            enable = true;
-            autostart = true;
-          };
-
-          # cmake LSP
-          cmake = {
-            enable = true;
-            #autostart = true;
-          };
-
-          # Typescript LSP
-          ts_ls = {
-            enable = true;
-            autostart = true;
-          };
-
-          # Zig LSP
-          zls = {
-            enable = true;
-            autostart = true;
-          };
-
-          asm_lsp = {
-            enable = true;
-            autostart = true;
-
-            settings = {
-              cmd = ["asm-lsp"];
-              filetypes = ["asm" "s" "S"];
-              root_markers = [".git" ".asm-lsp.toml"];
-            };
-          };
-        };
-      };
 
       # LSP Additions (automatically sets up rust_analyzer setup, + DAP for debugging)
       rustaceanvim = {
@@ -583,6 +561,44 @@
           event = "DeferredUIEnter";
         };
       };
+
+      # Custom LSP Signature
+      lsp-signature = {
+        enable = true;
+
+        settings = {
+          hint_prefix = "🤷 ";
+          floating_window_off_x = 5;
+          floating_window_off_y.__raw = ''
+            function() 
+              local linenr = vim.api.nvim_win_get_cursor(0)[1] -- buf line number
+                local pumheight = vim.o.pumheight
+                local winline = vim.fn.winline() -- line number in the window
+                local winheight = vim.fn.winheight(0)
+
+                -- window top
+                if winline - 1 < pumheight then
+                  return pumheight
+                end
+
+                -- window bottom
+                if winheight - winline < pumheight then
+                  return -pumheight
+                end
+                return 0
+              end
+          '';
+        };
+      };
+
+      # Default LSP configs
+      lspconfig.enable = true;
+
+      # Detect tabstop and shiftwidth automatically
+      sleuth.enable = true;
+
+      # Pretty markdown via Glow
+      markview.enable = true;
     };
 
     extraPlugins = [
@@ -605,18 +621,6 @@
         config = ''colorscheme moonfly'';
       } 
       {
-        # Show LSP Function Signature
-        plugin = (channels.nixpkgs-unstable.vimUtils.buildVimPlugin {
-          name = "lsp_signature";
-          src = channels.nixpkgs-unstable.fetchFromGitHub {
-            owner = "ray-x";
-            repo = "lsp_signature.nvim";
-            rev = "62cadce83aaceed677ffe7a2d6a57141af7131ea";
-            hash = "sha256-Dr3rU/Heqb3crYGVI86xhfZ89Fs0M62zD6tI5fZANIw=";
-          };
-        });
-      } 
-      {
         plugin = (channels.nixpkgs-unstable.vimUtils.buildVimPlugin {
           name = "nvim-lspimport";
           src = channels.nixpkgs-unstable.fetchFromGitHub {
@@ -627,17 +631,6 @@
           };
         });
       } 
-      {
-        plugin = (channels.nixpkgs-unstable.vimUtils.buildVimPlugin {
-          name = "markview";
-          src = channels.nixpkgs-unstable.fetchFromGitHub {
-            owner = "OXY2DEV";
-            repo = "markview.nvim";
-            rev = "72cd34279e94ee96ee33bdf30a87b00e6d45319d";
-            hash = "sha256-4D4jB9CmamMAdpEodw4MdDyJVU6EMsh8P4gLs7p4E40=";
-          };
-        });
-      }
       {
         plugin = (channels.nixpkgs-unstable.vimUtils.buildVimPlugin {
           name = "vim-syntax-yara";
@@ -661,14 +654,10 @@
         });
       }
 
-      # Detect tabstop and shiftwidth automatically
-      channels.nixpkgs-unstable.vimPlugins.vim-sleuth
-
       channels.nixpkgs-unstable.vimPlugins.luasnip
 
       channels.nixpkgs-unstable.vimPlugins.nui-nvim
 
-      channels.nixpkgs-unstable.vimPlugins.nvim-lspconfig
       channels.nixpkgs-unstable.vimPlugins.fidget-nvim
     ];
 
@@ -680,30 +669,6 @@
       vim.wo.signcolumn = 'yes'
 
       require('luasnip.loaders.from_vscode').lazy_load()
-
-      -- Custom siguature box
-      local signature_cfg = {
-        hint_prefix = "🤷 ",
-        floating_window_off_x = 5, -- adjust float windows x position.
-        floating_window_off_y = function() 
-        local linenr = vim.api.nvim_win_get_cursor(0)[1] -- buf line number
-          local pumheight = vim.o.pumheight
-          local winline = vim.fn.winline() -- line number in the window
-          local winheight = vim.fn.winheight(0)
-
-          -- window top
-          if winline - 1 < pumheight then
-            return pumheight
-          end
-
-          -- window bottom
-          if winheight - winline < pumheight then
-            return -pumheight
-          end
-          return 0
-        end,
-      }
-      require("lsp_signature").setup(signature_cfg)
 
       -- Make backticks work nicely in insert mode
       vim.keymap.set('i', '`', function()
