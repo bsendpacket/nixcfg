@@ -597,7 +597,7 @@
       # Detect tabstop and shiftwidth automatically
       sleuth.enable = true;
 
-      # Pretty markdown via Glow
+      # Pretty markdown view
       markview.enable = true;
     };
 

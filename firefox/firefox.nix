@@ -13,10 +13,11 @@ let
     "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
     "apz.overscroll.damping" = 1;
     "apz.overscroll.max_velocity" = 11;
-    "general.smoothScroll.currentVelocityWeighting" = 0.5;
+    "general.smoothScroll.currentVelocityWeighting" = 5;
     "general.smoothScroll.lines.durationMaxMS" = 0;
     "general.smoothScroll.lines.durationMinMS" = 0;
-    "general.smoothScroll.mouseWheel.durationMaxMS" = 100;
+    "general.smoothScroll.mouseWheel.durationMaxMS" = 30;
+    "general.smoothScroll.mouseWheel.durationMinMS" = 10;
   };
   firefoxExtensions = with channels.nixpkgs-unstable.nur.repos.rycee.firefox-addons; [
     ublock-origin
