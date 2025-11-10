@@ -79,6 +79,7 @@ in
     (import ./zsh/zsh.nix { inherit lib channels customPackages workConfig nixGLPrefix colorscheme; })
     (import ./neovim/neovim.nix { inherit channels homeDirectory; })
     (import ./rofi/rofi.nix { inherit channels config; })
+    (import ./newsboat/newsboat.nix { inherit channels; })
     (import ./contour/settings.nix { inherit channels config lib; })
     (import ./contour/contour.nix { inherit channels lib colorscheme; })
     (import ./zoxide/zoxide.nix { inherit channels; })
@@ -144,7 +145,10 @@ in
       # Web
       # Unwrapped version defined in firefox/firefox.nix
       #firefox
-      
+
+      # RSS
+      newsboat
+
       # Utilities
       xclip
       xsel
@@ -227,6 +231,10 @@ in
         construct
         construct-typing
         arrow
+
+        # Image Manipulation
+        pillow
+        types-pillow
 
         # .NET
         dnfile

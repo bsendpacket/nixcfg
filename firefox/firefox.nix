@@ -18,6 +18,7 @@ let
     "general.smoothScroll.lines.durationMinMS" = 0;
     "general.smoothScroll.mouseWheel.durationMaxMS" = 30;
     "general.smoothScroll.mouseWheel.durationMinMS" = 10;
+    "mousewheel.default.delta_multiplier_y" = 130;
   };
   firefoxExtensions = with channels.nixpkgs-unstable.nur.repos.rycee.firefox-addons; [
     ublock-origin
