@@ -11,6 +11,9 @@
       # Set highlight on search
       hlsearch = true;
 
+      # Allow window manager to see neovim file
+      title = true;
+
       # Enable mouse usage
       mouse = "a";
 
