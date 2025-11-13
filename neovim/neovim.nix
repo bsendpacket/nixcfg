@@ -52,82 +52,82 @@
     keymaps = [
       {
         action = "<cmd>Neotree toggle<CR>";
-        options.desc = "Toggle NeoTree";
         key = "<leader>e";
         mode = [ "n" ];
         options = {
+          desc = "Toggle NeoTree";
           silent = true;
         };
       }
       {
         action = "<cmd>Telescope lsp_definitions<CR>";
-        options.desc = "[G]oto [D]efinition";
         key = "gd";
         mode = [ "n" ];
         options = {
+          desc = "[G]oto [D]efinition";
           silent = true;
         };
       }
       {
         action = "<cmd>Telescope lsp_references<CR>";
-        options.desc = "[G]oto [R]eferences";
         key = "gr";
         mode = [ "n" ];
         options = {
+          desc = "[G]oto [R]eferences";
           silent = true;
         };
       }
       {
         action = "<cmd>Telescope lsp_implementations<CR>";
-        options.desc = "[G]oto [I]mplementations";
         key = "gI";
         mode = [ "n" ];
         options = {
+          desc = "[G]oto [I]mplementations";
           silent = true;
         };
       }
       {
         action = "<cmd>Telescope lsp_type_definitions<CR>";
-        options.desc = "Type [D]efinitions";
         key = "<leader>D";
         mode = [ "n" ];
         options = {
+          desc = "Type [D]efinitions";
           silent = true;
         };
       }
       {
         action = "<cmd>Telescope lsp_document_symbols<CR>";
-        options.desc = "[D]ocument [S]ymbols";
         key = "<leader>ds";
         mode = [ "n" ];
         options = {
+          desc = "[D]ocument [S]ymbols";
           silent = true;
         };
       }
       {
         action = "<cmd>Telescope lsp_dynamic_workspace_symbols<CR>";
-        options.desc = "[W]orkspace [S]ymbols";
         key = "<leader>ws";
         mode = [ "n" ];
         options = {
+          desc = "[W]orkspace [S]ymbols";
           silent = true;
         };
       }
       {
         action = "<cmd>lua vim.lsp.buf.hover()<CR>";
-        options.desc = "Hover Documentation";
         key = "K";
         mode = [ "n" ];
         options = {
+          desc = "Hover Documentation";
           silent = true;
         };
       }
       {
         action = "<cmd>lua vim.lsp.buf.signature_help()<CR>";
-        options.desc = "Signature Documentation";
         key = "<C-k>";
         mode = [ "n" ];
         options = {
+          desc = "Signature Documentation";
           silent = true;
         };
       }
@@ -223,7 +223,26 @@
         nixd.enable = true;
 
         # Python LSP
-        pyright.enable = true;
+        pyright = {
+          enable = true;
+          config.on_attach = {
+            __raw = ''
+              function(client, _)
+                local venv = os.getenv("VIRTUAL_ENV")
+                client.config.settings = client.config.settings or {}
+                client.config.settings.python = client.config.settings.python or {}
+
+                if venv then
+                  client.config.settings.python.pythonPath = venv .. "/bin/python"
+                else
+                  client.config.settings.python.pythonPath = vim.fn.exepath("python")
+                end
+
+                client.notify("workspace/didChangeConfiguration")
+              end
+            '';
+          };
+        };
 
         # C LSP
         ccls.enable = true;
@@ -243,7 +262,7 @@
 
           config = {
             cmd = ["asm-lsp"];
-            filetypes = ["asm" "s" "S"];
+            filetypes = ["asm" "inc" "s" "S"];
             root_markers = [".git" ".asm-lsp.toml"];
           };
         };
@@ -287,9 +306,9 @@
         
           mapping = {
             "<C-Space>" = "cmp.mapping.complete()";
-            "<C-d>" = "cmp.mapping.scroll_docs(-4)";
+            "<C-u>" = "cmp.mapping.scroll_docs(-4)";
             "<C-e>" = "cmp.mapping.close()";
-            "<C-f>" = "cmp.mapping.scroll_docs(4)";
+            "<C-d>" = "cmp.mapping.scroll_docs(4)";
             "<CR>" = "cmp.mapping.confirm({ select = true })";
             "<S-Tab>" = "cmp.mapping(cmp.mapping.select_prev_item(), {'i', 's'})";
             "<Tab>" = "cmp.mapping(cmp.mapping.select_next_item(), {'i', 's'})";
@@ -299,13 +318,14 @@
           };
           sources = [
             { name = "nvim_lsp"; }
-            #{ name = "calc"; }
+            { name = "nvim_lsp_signature_help"; }
             { name = "path"; }
           ];
         };
       };
 
       cmp-nvim-lsp.enable = true;
+      cmp-nvim-lsp-signature-help.enable = true;
       cmp-path.enable = true;
 
       cmp-cmdline.enable = true;
@@ -565,35 +585,6 @@
         };
       };
 
-      # Custom LSP Signature
-      lsp-signature = {
-        enable = true;
-
-        settings = {
-          hint_prefix = "🤷 ";
-          floating_window_off_x = 5;
-          floating_window_off_y.__raw = ''
-            function() 
-              local linenr = vim.api.nvim_win_get_cursor(0)[1] -- buf line number
-                local pumheight = vim.o.pumheight
-                local winline = vim.fn.winline() -- line number in the window
-                local winheight = vim.fn.winheight(0)
-
-                -- window top
-                if winline - 1 < pumheight then
-                  return pumheight
-                end
-
-                -- window bottom
-                if winheight - winline < pumheight then
-                  return -pumheight
-                end
-                return 0
-              end
-          '';
-        };
-      };
-
       # Default LSP configs
       lspconfig.enable = true;
 
@@ -679,20 +670,20 @@
       end, { noremap = true })
 
       -- Fix Python venvs
-      require('lspconfig').pyright.setup({
-        root_dir = function(fname)
-          return vim.loop.cwd()
-        end,
-        on_init = function(client)
-          local venv = os.getenv("VIRTUAL_ENV")
-          if venv then
-            client.config.settings.python.pythonPath = venv .. "/bin/python"
-          else
-            client.config.settings.python.pythonPath = vim.fn.exepath("python")
-          end
-          client.notify("workspace/didChangeConfiguration")
-        end
-      })
+      -- require('lspconfig').pyright.setup({
+      --   root_dir = function(fname)
+      --     return vim.loop.cwd()
+      --   end,
+      --   on_init = function(client)
+      --     local venv = os.getenv("VIRTUAL_ENV")
+      --     if venv then
+      --       client.config.settings.python.pythonPath = venv .. "/bin/python"
+      --     else
+      --       client.config.settings.python.pythonPath = vim.fn.exepath("python")
+      --     end
+      --     client.notify("workspace/didChangeConfiguration")
+      --   end
+      -- })
 
       -- DAP
       local dap, dapui = require('dap'), require('dapui')

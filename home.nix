@@ -139,8 +139,11 @@ in
 
       ffmpeg
 
-      # Required by neovim's LspInfo
+      # Build Tools
       gcc
+      nasm
+      fasm
+      rustup
 
       # Web
       # Unwrapped version defined in firefox/firefox.nix
