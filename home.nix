@@ -153,6 +153,7 @@ in
       newsboat
 
       # Utilities
+      nautilus
       xclip
       xsel
       xdragon
