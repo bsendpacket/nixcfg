@@ -223,7 +223,7 @@
         nixd.enable = true;
 
         # Python LSP
-        pyright = {
+        basedpyright = {
           enable = true;
           config.on_attach = {
             __raw = ''
@@ -318,14 +318,14 @@
           };
           sources = [
             { name = "nvim_lsp"; }
-            { name = "nvim_lsp_signature_help"; }
+            # { name = "nvim_lsp_signature_help"; }
             { name = "path"; }
           ];
         };
       };
 
       cmp-nvim-lsp.enable = true;
-      cmp-nvim-lsp-signature-help.enable = true;
+      # cmp-nvim-lsp-signature-help.enable = true;
       cmp-path.enable = true;
 
       cmp-cmdline.enable = true;
@@ -392,9 +392,8 @@
 
       noice = {
         enable = true;
-        # Handled by custom box in additional lua
         settings = {
-          lsp.signature.enabled = false;
+          lsp.signature.enabled = true;
         };
       };
 
