@@ -225,8 +225,8 @@
         # Python LSP
         basedpyright = {
           enable = true;
-          config.on_attach = {
-            __raw = ''
+          config = {
+            on_attach.__raw = ''
               function(client, _)
                 local venv = os.getenv("VIRTUAL_ENV")
                 client.config.settings = client.config.settings or {}
@@ -241,6 +241,11 @@
                 client.notify("workspace/didChangeConfiguration")
               end
             '';
+
+            settings.basedpyright = {
+              typeCheckingMode = "standard";
+              enableTypeIgnoreComments = true;
+            };
           };
         };
 
@@ -318,14 +323,14 @@
           };
           sources = [
             { name = "nvim_lsp"; }
-            # { name = "nvim_lsp_signature_help"; }
+            { name = "nvim_lsp_signature_help"; }
             { name = "path"; }
           ];
         };
       };
 
       cmp-nvim-lsp.enable = true;
-      # cmp-nvim-lsp-signature-help.enable = true;
+      cmp-nvim-lsp-signature-help.enable = true;
       cmp-path.enable = true;
 
       cmp-cmdline.enable = true;
@@ -393,7 +398,7 @@
       noice = {
         enable = true;
         settings = {
-          lsp.signature.enabled = true;
+          lsp.signature.enabled = false;
         };
       };
 

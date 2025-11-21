@@ -9,5 +9,7 @@
 	"ui.view.symbols.showImports" : false,
 	"ui.view.symbols.showFoldersFirst" : true,
 	"ui.tags.promptForBookmarkText": true,
+	"network.enableWARP": true,
+	"network.enableUpdates": false,
 	"corePlugins.binexport": true
 }
