@@ -336,6 +336,19 @@
       cmp-cmdline.enable = true;
       cmp-cmdline-history.enable = true;
 
+      toggleterm = {
+        enable = true;
+        settings = {
+          direction = "float";
+          float_opts = {
+            border = "curved";
+            height = 30;
+            width = 130;
+          };
+          open_mapping = "[[<c-\\>]]";
+        };
+      };
+
       # Only press tab once!
       intellitab.enable = true;
 
