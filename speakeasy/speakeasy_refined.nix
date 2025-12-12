@@ -12,15 +12,15 @@
   pycryptodome 
 }:
 
-buildPythonPackage {
+buildPythonPackage rec {
   pname = "speakeasy";
-  version = "1.5.11b0.post1";
+  version = "1.6.1-br003";
 
   src = fetchFromGitHub {
     owner = "binref";
     repo = "speakeasy";
-    rev = "56379d0763b035df2c288451f033732b3fb94b67";
-    hash = "sha256-bgUODRW3VlZ4kdysjuu2VgwICw5b+GiQGH46fJPIhUA=";
+    rev = "${version}";
+    hash = "sha256-t+u5Up1lJCH3zLhbPS0eMTN8iFzUanFBwLlXduozWE4=";
   };
 
   pyproject = true;

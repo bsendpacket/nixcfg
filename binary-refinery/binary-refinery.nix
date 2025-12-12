@@ -23,18 +23,19 @@
   angr,
   unicorn,
   intervaltree,
-  capstone
+  capstone,
+  xdis
 }:
 
 buildPythonPackage rec {
   pname = "binary-refinery";
-  version = "0.9.7";
+  version = "0.9.18";
 
   src = fetchFromGitHub {
     owner = "binref";
     repo = "refinery";
     rev = "${version}";
-    hash = "sha256-0sg/6yZxoujGJsJruqB2+o0319cCQdEHHrlnPT/tBno=";
+    hash = "sha256-KOmCYl7R1OagVBzI7gtDYwEoRg6x75EMydZiqpgIHrA=";
   };
 
   pyproject = true;
@@ -51,8 +52,9 @@ buildPythonPackage rec {
     (callPackage ../dependencies/pyonenote.nix {})
     (callPackage ../dependencies/pyzstd.nix {})
     (callPackage ../dependencies/pypcapkit.nix {})
+    (callPackage ../dependencies/icicle-emu.nix {})
 
-    # (callPackage ../speakeasy/speakeasy_refined.nix {})
+    (callPackage ../speakeasy/speakeasy_refined.nix {})
     # (callPackage ../speakeasy/speakeasy.nix {})
 
     python-magic
@@ -75,6 +77,7 @@ buildPythonPackage rec {
     unicorn
     intervaltree
     capstone
+    xdis
   ];
 
   # Disable tests for now
