@@ -36,6 +36,7 @@ let
     pyja3 = channels.nixpkgs-unstable.python312Packages.callPackage ./dependencies/pyja3.nix { };
     ucutils = channels.nixpkgs-unstable.python312Packages.callPackage ./dependencies/ucutils.nix { };
     icicle-emu = channels.nixpkgs-unstable.python312Packages.callPackage ./dependencies/icicle-emu.nix { };
+    msynth = channels.nixpkgs-unstable.python312Packages.callPackage ./dependencies/msynth.nix { };
 
     binary-ninja = channels.nixpkgs-unstable.callPackage ./binary-ninja/binary-ninja.nix {
       inherit channels;
@@ -247,8 +248,11 @@ in
         # Emulation / Symbolic Execution
         icicle-emu
         libtriton
+        z3-solver
         angr
         miasm
+        sympy
+        msynth
 
         # Disassembly/Assembly
         capstone
@@ -256,6 +260,10 @@ in
 
         unicorn
         ucutils
+
+        jupyterlab
+        graphviz
+        numpy
 
         lief
       ] ++ (workConfig.home.pythonPackages or [])))
