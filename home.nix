@@ -33,6 +33,7 @@ let
     capa = channels.nixpkgs-unstable.python312Packages.callPackage ./capa/capa.nix { };
     binary-refinery = channels.nixpkgs-unstable.python312Packages.callPackage ./binary-refinery/binary-refinery.nix { };
     donut-decryptor = channels.nixpkgs-unstable.python312Packages.callPackage ./donut-decryptor/donut-decryptor.nix { };
+    pylingual = channels.nixpkgs-unstable.python312Packages.callPackage ./pylingual/pylingual.nix { };
     pyja3 = channels.nixpkgs-unstable.python312Packages.callPackage ./dependencies/pyja3.nix { };
     ucutils = channels.nixpkgs-unstable.python312Packages.callPackage ./dependencies/ucutils.nix { };
     icicle-emu = channels.nixpkgs-unstable.python312Packages.callPackage ./dependencies/icicle-emu.nix { };
@@ -218,6 +219,7 @@ in
 
       # Python
       decompylepp
+      pylingual
 
       # Android
       apktool

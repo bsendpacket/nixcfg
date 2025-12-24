@@ -56,5 +56,8 @@
 	"Undefine" : "U",
 	"Undefine Current Function" : "Shift+U",
 	"Undefine Variable" : "U",
-	"View in Hex Editor" : ""
+	"View in Hex Editor" : "",
+	"Field Resolution - Annotate0": "!",
+	"Field Resolution - Annotate1": "@",
+	"Field Resolution - Annotate2": "#"
 }
