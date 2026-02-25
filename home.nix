@@ -268,6 +268,9 @@ in
         numpy
 
         lief
+
+        pyyaml
+        types-pyyaml
       ] ++ (workConfig.home.pythonPackages or [])))
     ]) ++ (workConfig.home.packages or []) ++ (if !isNixOS then [ channels.nixpkgs-unstable.nixGL.auto.nixGLDefault ] else []);
 

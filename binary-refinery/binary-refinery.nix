@@ -24,18 +24,21 @@
   unicorn,
   intervaltree,
   capstone,
-  xdis
+  xdis,
+  javaobj-py3,
+  py7zr,
+  pyzstd,
 }:
 
 buildPythonPackage rec {
   pname = "binary-refinery";
-  version = "0.9.18";
+  version = "0.9.26";
 
   src = fetchFromGitHub {
     owner = "binref";
     repo = "refinery";
     rev = "${version}";
-    hash = "sha256-KOmCYl7R1OagVBzI7gtDYwEoRg6x75EMydZiqpgIHrA=";
+    hash = "sha256-x9soUEFrrVL8qt14YFyLm4zrwoVVWJs1ABa01yIjVwU=";
   };
 
   pyproject = true;
@@ -50,7 +53,6 @@ buildPythonPackage rec {
     (callPackage ../dependencies/ktool.nix {})
     (callPackage ../dependencies/cabarchive.nix {})
     (callPackage ../dependencies/pyonenote.nix {})
-    (callPackage ../dependencies/pyzstd.nix {})
     (callPackage ../dependencies/pypcapkit.nix {})
     (callPackage ../dependencies/icicle-emu.nix {})
 
@@ -78,6 +80,9 @@ buildPythonPackage rec {
     intervaltree
     capstone
     xdis
+    javaobj-py3
+    py7zr
+    pyzstd
   ];
 
   # Disable tests for now

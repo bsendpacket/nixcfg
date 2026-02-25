@@ -203,6 +203,15 @@ let
       name = "plugin";
     })
 
+    (fetchBinaryNinjaPlugin {
+      owner = "dipusone";
+      repo = "golang_pclntab_parser";
+      rev = "de9cb49889dcb420f57d25bea00b707018e44656";
+      sha256 = "sha256-CQHPu5ASNjFi4vBg4zLM01mhxhUQBz1HFgq/y7i6XVQ=";
+      name = "golang_pclntab_parser";
+      folder = "golang_pclntab_parser";
+    })
+
   ];
 
   binaryNinjaConfigFiles = channels.nixpkgs-unstable.stdenv.mkDerivation {
