@@ -28,17 +28,18 @@
   javaobj-py3,
   py7zr,
   pyzstd,
+  cython,
 }:
 
 buildPythonPackage rec {
   pname = "binary-refinery";
-  version = "0.9.26";
+  version = "0.10.10";
 
   src = fetchFromGitHub {
     owner = "binref";
     repo = "refinery";
     rev = "${version}";
-    hash = "sha256-x9soUEFrrVL8qt14YFyLm4zrwoVVWJs1ABa01yIjVwU=";
+    hash = "sha256-yj25Y5zNT8Ay2VUY1fCR4EnSBgMbcNrZ4GoE2XEpO5A=";
   };
 
   pyproject = true;
@@ -46,6 +47,7 @@ buildPythonPackage rec {
   nativeBuildInputs = [
     setuptools
     wheel
+    cython
   ];
 
   propagatedBuildInputs = [
@@ -55,6 +57,7 @@ buildPythonPackage rec {
     (callPackage ../dependencies/pyonenote.nix {})
     (callPackage ../dependencies/pypcapkit.nix {})
     (callPackage ../dependencies/icicle-emu.nix {})
+    (callPackage ../dependencies/pure-magic-rs.nix {})
 
     (callPackage ../speakeasy/speakeasy_refined.nix {})
     # (callPackage ../speakeasy/speakeasy.nix {})

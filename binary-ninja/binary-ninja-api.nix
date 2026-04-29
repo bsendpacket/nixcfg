@@ -59,10 +59,6 @@ let
 
     dontWrapQtApps = true;
 
-    # propagatedBuildInputs = [
-    #   channels.nixpkgs-unstable.python312Packages.pyside6
-    # ];
-
     unpackPhase = ''
       unzip $src -d $TMPDIR
     '';
@@ -81,7 +77,16 @@ let
           cp "$lib" $out/lib/bundled/
         fi
       done
-      
+
+      # Copy bundled PySide6 and Shiboken6 libraries
+      for dir in $TMPDIR/binaryninja/python3/PySide6 $TMPDIR/binaryninja/python3/shiboken6; do
+        if [ -d "$dir" ]; then
+          for lib in "$dir"/*.so*; do
+            [ -f "$lib" ] && cp "$lib" $out/lib/bundled/
+          done
+        fi
+      done
+
       # Set up autoPatchelf to look in our bundled directory
       export LD_LIBRARY_PATH="$out/lib/bundled:$LD_LIBRARY_PATH"
     '';

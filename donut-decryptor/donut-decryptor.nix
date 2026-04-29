@@ -1,22 +1,18 @@
-{ buildPythonApplication, fetchFromGitHub, setuptools, callPackage, yara-python }:
+{ buildPythonApplication, fetchFromGitHub, hatchling, hatch-vcs, callPackage, yara-python }:
 
 buildPythonApplication {
   pname = "donut-decryptor";
-  version = "0.0.1";
+  version = "0.1.1";
 
   src = fetchFromGitHub {
     owner = "volexity";
     repo = "donut-decryptor";
-    rev = "8832d47364e73d0cf926864f635b6bb42ab060a2";
-    hash = "sha256-numLXWOm8fE0MSu0cnzWL4Vqtm0gM/VARtP7rDCtj+Q=";
+    rev = "4b2120aa9f6290051971e3b7fa520dfdef7e34c9";
+    hash = "sha256-fyQKKGPT29sAU2uy3Vqt8YF98/sd4MZHt/Xq5/1O/o8=";
   };
 
   pyproject = true;
-  build-system = [ setuptools ];
-
-  nativeBuildInputs = [
-    setuptools
-  ];
+  build-system = [ hatchling hatch-vcs ];
 
   propagatedBuildInputs = [
     (callPackage ../dependencies/chaskey-lts.nix {})

@@ -3,6 +3,7 @@ let
 
   pythonWithPackages = channels.nixpkgs-unstable.python312.withPackages (ps: with channels.nixpkgs-unstable.python312Packages; [
     python
+    mcp
 
     rpyc
     lxml

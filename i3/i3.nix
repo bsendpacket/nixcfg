@@ -134,6 +134,7 @@ in {
         exec --no-startup-id nm-applet
         exec --no-startup-id vmware-user
         exec --no-startup-id vmware-user-suid-wrapper
+        exec --no-startup-id spice-vdagent
       '';
     };
   };

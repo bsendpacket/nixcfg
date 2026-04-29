@@ -1,26 +1,23 @@
-{ 
-  buildPythonPackage, 
-  fetchFromGitHub, 
-  setuptools
+{
+  buildPythonPackage,
+  fetchFromGitHub,
+  hatchling,
+  hatch-vcs,
 }:
 
 buildPythonPackage {
   pname = "chaskey-lts";
-  version = "0.0.3";
+  version = "0.0.4";
 
   src = fetchFromGitHub {
     owner = "volexity";
     repo = "chaskey-lts";
-    rev = "66d75bfa1d32fdac9508e710a9ade234690463bb";
-    hash = "sha256-KFMpHSc21V1divx8vUGjHzmoz9ZFcyBgVnK6pmtz7OM=";
+    rev = "85d3c85fadda24cd9c8d86fe80f5effc7da85390";
+    hash = "sha256-sxrdLTml6R0r563VwtgUMOAX18kIbN5LkRT2bw/3QsU=";
   };
 
   pyproject = true;
-  build-system = [ setuptools ];
-
-  nativeBuildInputs = [
-    setuptools
-  ];
+  build-system = [ hatchling hatch-vcs ];
 
   meta = {
     description = "A pure Python chaskey cipher implementation developed initially for use with the donut_decryptor.";

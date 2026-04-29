@@ -2,13 +2,13 @@
 
 buildDotnetModule {
   pname = "de4dot";
-  version = "3.1.41592.3405";
+  version = "3.6.0";
 
   src = fetchFromGitHub {
-    owner = "de4dot";
-    repo = "de4dot";
-    rev = "b7d5728fc0c82fb0ad758e3a4c0fbb70368a4853";
-    hash = "sha256-f0G3vVg0NZcx0RqWwDNmLZ9FqMVekDCml1jkXgUWMZc=";
+    owner = "GDATAAdvancedAnalytics";
+    repo = "de4dotEx";
+    rev = "f20ace72a90c7cbfab68ff720860cf70a0458ebb";
+    hash = "sha256-PCExo6XkDA5WvaWKeopn+aLOQ1aL2rIICNg9/scHvYo=";
     fetchSubmodules = true;
   };
 
@@ -16,8 +16,8 @@ buildDotnetModule {
 
   nugetDeps = ./deps.nix;
 
-  dotnet-sdk = dotnetCorePackages.sdk_6_0;
-  dotnet-runtime = dotnetCorePackages.runtime_6_0;
+  dotnet-sdk = dotnetCorePackages.sdk_8_0;
+  dotnet-runtime = dotnetCorePackages.runtime_8_0;
 
   buildType = "Release";
   selfContainedBuild = true;
@@ -27,7 +27,7 @@ buildDotnetModule {
 
   dotnetFlags = [
     "/p:De4DotNetFramework=false"
-    "/p:TargetFramework=netcoreapp3.1"
+    "/p:TargetFramework=net8.0"
   ];
 
   postFixup = ''

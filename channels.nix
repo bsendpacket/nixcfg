@@ -32,14 +32,14 @@ let
       sha256 = "sha256-NbqeppjwBFamZ80XAPTuB8KesUIQytcu9+plXUvTPDg=";
     }) {
       system = "x86_64-linux";
-      overlays = with overlays; [ 
+      overlays = with overlays; [
         pinPackagesToSpecificVersionOverlay
-        pythonPackagesOverlay 
-        pinPackagesToStableOverlay 
-        patchPackagesOverlay 
+        pythonPackagesOverlay
+        pinPackagesToStableOverlay
+        patchPackagesOverlay
         homeManagerPinOverlay
         nixglOverlay
-      ];
+      ] ++ workOverlays;
         
       config = {
         allowUnfree = true;
@@ -186,6 +186,10 @@ let
       };
     };
   };
+
+  workOverlays = if builtins.pathExists ./work/overlays.nix
+    then import ./work/overlays.nix
+    else [];
 
   nixglOverlay = final: prev: {
     nixGL = prev.callPackage (builtins.fetchTarball {

@@ -64,6 +64,7 @@
       lla = "ls -la";   # List Files (+ Hidden)
       lt = "ls --tree"; # List Files (Tree)
       y = "yy";         # Yazi
+      docker = "podman";
       news = "${channels.nixpkgs-unstable.newsboat}/bin/newsboat";
       yara = "${channels.nixpkgs-unstable.yara-x}/bin/yr";
       netreactorslayer = "${customPackages.net-reactor-slayer}/bin/NETReactorSlayer";

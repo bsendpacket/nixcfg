@@ -2,11 +2,11 @@
 
 buildPythonPackage rec {
   pname = "macholib";
-  version = "1.16.3";
+  version = "1.16.4";
 
   src = fetchPypi {
     inherit pname version;
-    sha256 = "sha256-B66eFejkzZp4gBPYH1kIs2Cap2+bFCG66cTXYG7IajA=";
+    sha256 = "sha256-9AjJOrLplc0sRuNP4yixMEBL4UNGnkG8NmyAdEiXk2I=";
   };
 
   pyproject = true;

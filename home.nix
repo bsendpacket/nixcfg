@@ -106,7 +106,7 @@ in
     packages = (with channels.nixpkgs-unstable // customPackages; [
       # VM tools
       open-vm-tools
-      spice-vdagent
+      # spice-vdagent
 
       # Nix-specific tools
       nurl
@@ -131,6 +131,7 @@ in
       (hiPrio bat)
       ouch
       htop
+      unixtools.xxd
 
       fastfetch
       glow
@@ -143,6 +144,7 @@ in
 
       # Build Tools
       gcc
+      cmake
       nasm
       fasm
       rustup
@@ -189,7 +191,7 @@ in
       detect-it-easy
       binary-ninja
       flare-floss
-      ghidra
+      #ghidra
       imhex
       capa
       upx
@@ -226,6 +228,11 @@ in
 
       # Custom Python environment
       (channels.nixpkgs-unstable.python312.withPackages (ps: with channels.nixpkgs-unstable.python312Packages; [
+        pip
+        mcp
+
+        ruff
+
         # Networking
         requests
         flask
@@ -301,7 +308,7 @@ in
       EDITOR = "nvim";
       LANG = "en_US.UTF-8";
       LC_ALL = "en_US.UTF-8";
-      XDG_DATA_DIRS = "$HOME/.nix-profile/share:$XDG_DATA_DIRS";
+      XDG_DATA_DIRS = "$HOME/.nix-profile/share:/nix/var/nix/profiles/default/share:/usr/share:/usr/local/share";
       FONTCONFIG_PATH = "$HOME/.nix-profile/share/fonts/truetype";
       PATH = "$PATH:$HOME/.local/bin";
     };
