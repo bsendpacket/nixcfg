@@ -27,6 +27,17 @@ let
       };
     };
 
+    # Used for llvmPackages_22 (not yet in the main unstable pin)
+    nixpkgs-unstable-may-2025 = import (builtins.fetchTarball {
+      url = "https://github.com/NixOS/nixpkgs/archive/d99b013d5d1931ad77fe3912ed218170dec5d9a4.tar.gz";
+      sha256 = "sha256-7DKWmH23hL2eYdkxCKeqj2i+yljTKuU+3Nk1UPHOnxc=";
+    }) {
+      system = "x86_64-linux";
+      config = {
+        allowUnfree = true;
+      };
+    };
+
     nixpkgs-unstable = import (builtins.fetchTarball {
       url = "https://github.com/NixOS/nixpkgs/archive/201c9d5bf2996f95d635545364614ad27262b525.tar.gz";
       sha256 = "sha256-NbqeppjwBFamZ80XAPTuB8KesUIQytcu9+plXUvTPDg=";

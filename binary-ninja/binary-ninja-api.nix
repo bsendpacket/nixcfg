@@ -87,6 +87,11 @@ let
         fi
       done
 
+      # Copy lldb libraries bundled with Binary Ninja (needed by libdebuggercore.so)
+      for lib in $TMPDIR/binaryninja/plugins/lldb/lib/*.so*; do
+        [ -f "$lib" ] && cp "$lib" $out/lib/bundled/
+      done
+
       # Set up autoPatchelf to look in our bundled directory
       export LD_LIBRARY_PATH="$out/lib/bundled:$LD_LIBRARY_PATH"
     '';
@@ -94,10 +99,16 @@ let
     installPhase = ''
       mkdir -p $out/lib/python3.12/site-packages/binaryninja
       mkdir -p $out/lib/python3.12/site-packages/binaryninjaui
+      mkdir -p $out/lib/python3.12/plugins
       cp -r $TMPDIR/binaryninja/python/binaryninja/* $out/lib/python3.12/site-packages/binaryninja/
       cp -r $TMPDIR/binaryninja/python/binaryninjaui/* $out/lib/python3.12/site-packages/binaryninjaui/
       cp $TMPDIR/binaryninja/libbinaryninjacore.so.1 $out/lib/python3.12/
       cp $TMPDIR/binaryninja/libbinaryninjaui.so.1 $out/lib/python3.12/
+
+      # Copy bundled plugins (libwarp_ninja.so, etc.) needed by binaryninja.warp
+      # Path must be at lib/python3.12/plugins/ because _binaryninjacore.py resolves
+      # _base_path as __file__/../../ which is lib/python3.12/, then appends "plugins"
+      cp $TMPDIR/binaryninja/plugins/*.so $out/lib/python3.12/plugins/
 
       # Allow libbinaryninjacore.so/libbinaryninjaui.so.1 to find required libraries
       patchelf --set-rpath ${channels.nixpkgs-unstable.stdenv.cc.cc.lib}/lib $out/lib/python3.12/libbinaryninjacore.so.1

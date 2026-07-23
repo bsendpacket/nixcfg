@@ -271,6 +271,9 @@
             root_markers = [".git" ".asm-lsp.toml"];
           };
         };
+
+        # .NET LSP
+        roslyn_ls.enable = true;
       };
     };
 

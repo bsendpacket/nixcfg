@@ -33,13 +33,13 @@
 
 buildPythonPackage rec {
   pname = "binary-refinery";
-  version = "0.10.10";
+  version = "0.11.0";
 
   src = fetchFromGitHub {
     owner = "binref";
     repo = "refinery";
     rev = "${version}";
-    hash = "sha256-yj25Y5zNT8Ay2VUY1fCR4EnSBgMbcNrZ4GoE2XEpO5A=";
+    hash = "sha256-dJU26PpPKfVh2CPjmBxkfAgP9+VnXFzrpygg3cvylLw=";
   };
 
   pyproject = true;

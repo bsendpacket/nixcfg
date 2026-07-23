@@ -3,3 +3,4 @@ binary-ninja/binary-ninja-url.nix
 git/git.nix
 obfuscator-llvm/demo/result
 .ccls-cache/
+.claude/

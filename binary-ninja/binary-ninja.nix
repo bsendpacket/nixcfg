@@ -90,6 +90,7 @@ let
 
     preFixup = ''
       addAutoPatchelfSearchPath $out/opt/binaryninja/binaryninja
+      addAutoPatchelfSearchPath $out/opt/binaryninja/binaryninja/plugins/lldb/lib
     '';
 
     autoPatchelfIgnoreMissingDeps = [

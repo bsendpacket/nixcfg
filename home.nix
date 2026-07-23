@@ -26,8 +26,11 @@ let
     # NPM/PNPM
     webcrack = channels.nixpkgs-unstable.callPackage ./webcrack/webcrack.nix { };
 
-    # C++
+    # C++/Rust
     decompylepp = channels.nixpkgs-unstable.callPackage ./decompylepp/decompylepp.nix { };
+    binlex = channels.nixpkgs-unstable.callPackage ./binlex/binlex.nix {
+      inherit (channels.nixpkgs-unstable-may-2025) llvmPackages_22 rustPlatform;
+    };
 
     # Python
     capa = channels.nixpkgs-unstable.python312Packages.callPackage ./capa/capa.nix { };
@@ -190,6 +193,7 @@ in
       # Binary Analysis
       detect-it-easy
       binary-ninja
+      binlex
       flare-floss
       #ghidra
       imhex
@@ -212,6 +216,7 @@ in
       jadx
 
       # .NET
+      dotnet-sdk_10
       ilspycmd
       de4dot
       net-reactor-slayer
@@ -311,6 +316,7 @@ in
       XDG_DATA_DIRS = "$HOME/.nix-profile/share:/nix/var/nix/profiles/default/share:/usr/share:/usr/local/share";
       FONTCONFIG_PATH = "$HOME/.nix-profile/share/fonts/truetype";
       PATH = "$PATH:$HOME/.local/bin";
+      DOTNET_ROOT = "${channels.nixpkgs-unstable.dotnet-sdk_10}/share/dotnet";
     };
 
     file.".xsessionrc" = {

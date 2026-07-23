@@ -27,6 +27,7 @@
 	"Show Cross References at Selection..." : "Shift+X",
 	"Focus Tab Content" : "Ctrl+M",
 	"Keybindings" : "Ctrl+Shift+K",
+	"Make Code" : "Alt+C",
 	"Move Cursor Down" : "J",
 	"Move Cursor Left" : "H",
 	"Move Cursor Right" : "L",
