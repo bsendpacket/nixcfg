@@ -55,5 +55,10 @@ chsh -s ~/.nix-profile/bin/zsh
 - **Yazi is pinned to an older nixpkgs.** Yazi renamed its `manager` config
   section to `mgr` in later releases. `channels.nix` keeps the Feb 2025 pin so
   `yazi/yazi.nix` stays valid; updating means renaming those keys.
+- **Homebrew shadows the nix profile.** `~/.zprofile` runs `brew shellenv`, which
+  prepends `/opt/homebrew/bin`, and zsh sources it *after* home-manager's
+  `~/.zshenv` — so a brew-installed `nvim`/`git`/`jq` would win over the nix ones.
+  `zsh/zsh.nix` re-prepends `~/.nix-profile/bin` from `.zshrc` (sourced last) to
+  correct this. Check with `command -v nvim`.
 - **`rustup` is installed but has no toolchain.** Run `rustup default stable`
   once — `rustaceanvim` in neovim shells out to `rustup run stable rust-analyzer`.

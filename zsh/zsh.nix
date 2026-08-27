@@ -10,6 +10,14 @@
     initContent = ''
       # Place any values that need to be handled by ~/.zshrc here, if they cannot be defined elsewhere
 
+      # ~/.zprofile runs `brew shellenv` *after* home-manager's ~/.zshenv, which
+      # prepends /opt/homebrew/bin and shadows the nix profile (most visibly, a
+      # brew-installed nvim wins over the nixvim build). .zshrc is sourced last,
+      # so re-prepend here. `typeset -U` keeps this idempotent across re-sourcing.
+      typeset -U path PATH
+      path=("$HOME/.nix-profile/bin" $path)
+      export PATH
+
       ## ZSH Vi Bindings
       zvm_bindkey vicmd _ beginning-of-line
       zvm_bindkey vicmd '^R' fzf_history_search
