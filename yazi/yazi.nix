@@ -1,21 +1,20 @@
-{ channels, config, colorscheme, workConfig, nixGLPrefix, ... }: 
+{ channels, colorscheme, ... }:
 let
+  pkgs = channels.nixpkgs-unstable;
+
+  # Referenced by absolute store path so the previewer does not depend on
+  # PATH, and so GNU coreutils does not have to shadow the macOS builtins.
+  sha256sum = "${pkgs.coreutils}/bin/sha256sum";
+  fileCmd = "${pkgs.file}/bin/file";
+  hexyl = "${pkgs.hexyl}/bin/hexyl";
+
   # To get a SHA-256 for a GitHub repo:
   # Use nurl <url>
-  # i.e. for the Hexyl repo, use:
-  # nurl https://github.com/Reledia/hexyl.yazi
-  
-  # This will return the following:
-  # fetchFromGitHub {
-  #   owner = "Reledia";
-  #   repo = "hexyl.yazi";
-  #   rev = "64daf93a67d75eff871befe52d9013687171ffad";
-  #   hash = "sha256-B2L3/Q1g0NOO6XEMIMGBC/wItbNgBVpbaMMhiXOYcrI=";
-  # }
+  # i.e. for the Glow repo, use:
+  # nurl https://github.com/Reledia/glow.yazi
+  #
   # Alternatively, simply leave the sha256 field blank
   # and copy the correct hash during rebuild
-  #
-  # TODO- borrow some ideas from: https://github.com/khaneliman/khanelinix/blob/main/modules/home/programs/terminal/tools/yazi/default.nix
 in {
 
   programs.yazi = {
@@ -29,7 +28,7 @@ in {
 
     plugins = {
       # Preview Markdown files
-      "glow" = channels.nixpkgs-unstable.fetchFromGitHub {
+      "glow" = pkgs.fetchFromGitHub {
         owner = "Reledia";
         repo = "glow.yazi";
         rev = "c76bf4fb612079480d305fe6fe570bddfe4f99d3";
@@ -37,7 +36,7 @@ in {
       };
 
       # Preview archives as a tree
-      "ouch" = channels.nixpkgs-unstable.fetchFromGitHub {
+      "ouch" = pkgs.fetchFromGitHub {
         owner = "ndtoan96";
         repo = "ouch.yazi";
         rev = "0742fffea5229271164016bf96fb599d861972db";
@@ -45,8 +44,7 @@ in {
       };
 
       # Search with fg / ff (content, fzf)
-      # TODO: Migrate to https://github.com/lpnh/fr.yazi
-      "fg" = channels.nixpkgs-unstable.fetchFromGitHub {
+      "fg" = pkgs.fetchFromGitHub {
         owner = "DreamMaoMao";
         repo = "fg.yazi";
         rev = "652d02a1413d2440d264667608102eb158ed0e68";
@@ -54,7 +52,7 @@ in {
       };
 
       # Vim-like relative motions
-      "relative-motions" = channels.nixpkgs-unstable.fetchFromGitHub {
+      "relative-motions" = pkgs.fetchFromGitHub {
         owner = "dedukun";
         repo = "relative-motions.yazi";
         rev = "3a85f7c60b44cd0f9691a3307c8c22bd45217c78";
@@ -62,7 +60,7 @@ in {
       };
 
       # Preview media metadata information
-      "mediainfo" = channels.nixpkgs-unstable.fetchFromGitHub {
+      "mediainfo" = pkgs.fetchFromGitHub {
         owner = "boydaihungst";
         repo = "mediainfo.yazi";
         rev = "436cb5f04d6e5e86ddc0386527254d87b7751ec8";
@@ -106,7 +104,7 @@ in {
           { on = [ "<C-9>" ]; run = "tab_swap 8"; desc = "Swap with tab"; }
 
           # File finding
-          { on = [ "f" "g" ]; run = "plugin fg";               desc = "Find file by Content (Fuzzy)";   }
+          { on = [ "f" "g" ]; run = "plugin fg";      desc = "Find file by Content (Fuzzy)";   }
           { on = [ "f" "G" ]; run = "plugin fg rg";   desc = "Find file by Content (RipGrep)"; }
           { on = [ "f" "f" ]; run = "plugin fg fzf";  desc = "Find file by Name";              }
 
@@ -122,54 +120,28 @@ in {
           { on = [ "g" "h" ];       run = "cd ~/.config/home-manager"; desc = "[ G ]o to the config [ h ]ome-manager directory"; }
           { on = [ "g" "d" ];       run = "cd ~/Downloads";            desc = "[ G ]o to the [ d ]ownloads directory";           }
           { on = [ "g" "D" ];       run = "cd ~/Documents";            desc = "[ G ]o to the [ d ]ocuments directory";           }
-          { on = [ "g" "t" ];       run = "cd ~/tickets";              desc = "[ G ]o to the [ t ]ickets directory";             }
+          { on = [ "g" "r" ];       run = "cd ~/repos";                desc = "[ G ]o to the [ r ]epos directory";               }
           { on = [ "g" "T" ];       run = "cd /tmp";                   desc = "[ G ]o to the [ t ]emporary directory";           }
-          { on = [ "g" "w" ];       run = "cd ~/work";                 desc = "[ G ]o to the [ w ]ork directory";                }
           { on = [ "g" "b" ];       run = "cd ~/bin";                  desc = "[ G ]o to the [ b ]in directory (PATH)";          }
           { on = [ "g" "<Space>" ]; run = "cd --interactive";          desc = "[ G ]o to a [   ] directory interactively";       }
 
-          # Drag-and-drop
-          { on = [ "b" "o" ]; run = "shell 'xdragon -x -i -T \"$1\"' --confirm"; desc = "Drag file OUT of yazi"; }
-          { on = [ "b" "i" ]; run = "shell DRAG_TO_VM --confirm"; desc = "Drag file INTO yazi"; }
-
-          # Copy
-          { on = [ "c" "h" ]; run = "shell --confirm 'ef \"$@\" [| pf \"{sha256}  {path}\n\" ]| xsel -psb'"; desc = "Copy SHA256 and filename of selected files"; }
-          { on = [ "c" "H" ]; run = "shell --confirm 'ef \"$@\" [| pf \"{sha256}\n\" ]| xsel -psb'"; desc = "Copy SHA256 of selected files"; }
-          { on = [ "c" "p" ]; run = "shell --confirm 'echo $PWD | xsel -psb'"; desc = "Copy the current folder path"; }
+          # Copy (macOS pasteboard)
+          { on = [ "c" "h" ]; run = "shell --confirm '${sha256sum} \"$@\" | pbcopy'"; desc = "Copy SHA256 and filename of selected files"; }
+          { on = [ "c" "p" ]; run = "shell --confirm 'echo $PWD | pbcopy'"; desc = "Copy the current folder path"; }
 
           # ' - Common Aliases
-          # 1 - Reserved
-          # 2 - Reserved
-
-          # 3 - Files
-          # Compression
-          { on = [ "'" "3" "c" ]; run = "shell --interactive --block '7zz a -pinfected -mhe=on \"$1\".7z \"$@\"'"; desc = "Compress seleted files with password=infected"; }
-          { on = [ "'" "3" "e" ]; run = "shell --interactive --block '7zz x \"$@\" -pinfected'";                   desc = "Extract with password=infected"; }
-          { on = [ "'" "3" "r" ]; run = "shell --interactive --block 'unar $@'"; desc = "Decompress with unar"; }
-
-          # 4 - Tools
-          { on = [ "'" "4" "j" ]; run = "shell --interactive --orphan 'jadx-gui \"$@\"'"; desc = "Launch Jadx-GUI with the selected file"; }
-          { on = [ "'" "4" "g" ]; run = "shell --confirm 'GoReSym $@ | dump $@_info/goresym'"; desc = "Run GoReSym"; }
-          { on = [ "'" "4" "w" ]; run = "shell --confirm 'wireshark $@'"; desc = "Run Wireshark"; }
-          { on = [ "'" "4" "c" ]; run = "shell --confirm 'capa -j $@ | dump $@_info/capa'"; desc = "Run Capa"; }
-          { on = [ "'" "4" "f" ]; run = "shell --confirm 'floss -j $@ | dump $@_info/floss'"; desc = "Run Floss"; }
-          { on = [ "'" "4" "d" "d" ]; run = "shell --confirm 'ilspycmd -p -d -usepdb --no-dead-code --no-dead-stores -o $@_info/decompiled/ $@'"; desc = "[D]otNet [D]ecompile"; }
-          { on = [ "'" "4" "d" "4" ]; run = "shell --interactive 'de4dot \"$@\"'"; desc = "[D]e[4]Dot"; }
-          { on = [ "'" "4" "d" "r" ]; run = "shell --interactive --block 'NETReactorSlayer \"$@\"'"; desc = "[D]otNet [R]eactorSlayer"; }
-          { on = [ "'" "4" "h" ]; run = "shell --confirm --orphan '${nixGLPrefix}imhex $@'"; desc = "Open in ImHex"; }
-          { on = [ "'" "4" "b" ]; run = "shell --confirm --orphan 'binaryninja $@'"; desc = "Open in Binary Ninja"; }
-
-          { on = [ "'" "9" "y" ]; run = "shell --confirm 'cp ${config.xdg.configHome}/home-manager/yara/skeleton.yara .'"; }
-
-
-        ] ++ (workConfig.programs.yazi.keymap.manager.prepend_keymap or []);
+          # 3 - Archives
+          { on = [ "'" "3" "c" ]; run = "shell --interactive --block '${pkgs._7zz}/bin/7zz a \"$1\".7z \"$@\"'"; desc = "Compress selected files to .7z"; }
+          { on = [ "'" "3" "e" ]; run = "shell --interactive --block '${pkgs._7zz}/bin/7zz x \"$@\"'";            desc = "Extract with 7zz"; }
+          { on = [ "'" "3" "r" ]; run = "shell --interactive --block '${pkgs.unar}/bin/unar $@'";                 desc = "Decompress with unar"; }
+        ];
       };
     };
 
     settings = {
       log = {
         enabled = true;
-      };        
+      };
 
       manager = {
         ratio = [ 1 3 4 ];
@@ -197,85 +169,30 @@ in {
       };
 
       opener = {
+        # Edit in the current terminal rather than spawning a new emulator
         edit = [
-          { run = "${nixGLPrefix}${channels.nixpkgs-unstable.contour}/bin/contour nvim \"$@\""; orphan = true; }
+          { run = ''nvim "$@"''; block = true; desc = "Edit in Neovim"; }
         ];
 
-        # Open directories with nautilus (backup file manager)
+        # Reveal directories in Finder (backup file manager)
         directory = [
-          { run = "nautilus \"$0\""; desc = "Open directory in Nautilus"; }
+          { run = ''open "$0"''; desc = "Open directory in Finder"; }
         ];
 
         # View JSON files with jless
         json = [
-          { run = "${channels.nixpkgs-unstable.jless}/bin/jless $0"; desc = "View JSON with jless"; block = true; }
-        ];
-
-        # Automatically triage PE files
-        triage_pe = [
-          { run = "ef $@ [| pemeta -cI | dump $@_info/imports ];
-                   ef $@ [| pemeta -cE | dump $@_info/exports ];
-                   ef $@ [| pemeta -DNSPVB | dump $@_info/pemeta ];
-                   ef $@ [| vsect [| dump $@_info/sections/{path} ]];
-                   ef $@ [| perc [| dump $@_info/resources/{path} ]];
-                   ef $@ [| peoverlay [| dump $@_info/peoverlay ]];
-                   strings --encoding=s $@ | dump $@_info/strings_utf8;
-                   strings --encoding=b $@ | dump $@_info/strings_unicode;
-                   diec -dbru $@ | dump $@_info/peinfo"; }
-        ];
-
-        triage_msi = [
-          { run = "ef $@ [| xtmsi [| dump $@_info/extracted/{path} ]]
-                   strings --encoding=s $@ | dump $@_info/strings_utf8;
-                   strings --encoding=b $@ | dump $@_info/strings_unicode;
-                   diec -dbru $@ | dump $@_info/msiinfo"; }
-        ];
-
-        triage_cab = [
-          { run = "ef $@ [| xtcab [| dump $@_extracted/{path} ]]"; }
-        ];
-
-        triage_elf = [
-          { run = "ef $@ [| vsect [| dump $@_info/sections/{path} ]];
-                   strings --encoding=s $@ | dump $@_info/strings_utf8;
-                   strings --encoding=b $@ | dump $@_info/strings_unicode;
-                   diec -dbru $@ | dump $@_info/elfinfo"; }
-        ];
-
-        triage_macho = [
-          { run = "ef $@ [| machometa -cI | dump $@_info/imports ];
-                   ef $@ [| machometa -cE | dump $@_info/exports ];
-                   ef $@ [| machometa | dump $@_info/machometa ];
-                   ef $@ [| vsect [| dump $@_info/sections/{path} ]];
-                   ef $@ [| xtmacho [| dump $@_info/executables/{path} ]];
-                   strings --encoding=s $@ | dump $@_info/strings_utf8;
-                   strings --encoding=b $@ | dump $@_info/strings_unicode;
-                   diec -dbru $@ | dump $@_info/machoinfo"; }
+          { run = "${pkgs.jless}/bin/jless $0"; desc = "View JSON with jless"; block = true; }
         ];
 
         extract_rar = [
-          { run = "unar $@"; }
+          { run = "${pkgs.unar}/bin/unar $@"; }
         ];
       };
 
       open = {
         prepend_rules = [
           { mime = "inode/directory"; use = [ "directory" ]; }
-
           { mime = "application/*json*"; use = [ "json" ]; }
-
-          { mime = "application/microsoft.portable-executable"; use = [ "triage_pe" ]; }
-          { mime = "application/msi"; use = [ "triage_msi" ]; }
-          { mime = "application/ms-cab-compressed"; use = [ "triage_cab" ]; }
-
-          { mime = "application/executable"; use = [ "triage_elf" ]; }
-          { mime = "application/coredump"; use = [ "triage_elf" ]; }
-          { mime = "application/object"; use = [ "triage_elf" ]; }
-          { mime = "application/pie-executable"; use = [ "triage_elf" ]; }
-          { mime = "application/sharedlib"; use = [ "triage_elf" ]; }
-
-          { mime = "application/mach-binary"; use = [ "triage_macho" ]; }
-
           { mime = "application/rar"; use = [ "extract_rar" ]; }
         ];
       };
@@ -293,7 +210,7 @@ in {
           underline = true;
         };
 
-        find_position = { 
+        find_position = {
           fg = colorscheme.colors.n_pink_1;
           bg = "reset";
           italic = true;
@@ -474,12 +391,12 @@ in {
     };
   };
 
-  home.file."/.config/yazi/plugins/previewer.yazi/main.lua" = {
+  xdg.configFile."yazi/plugins/previewer.yazi/main.lua" = {
     text = ''
       local M = {}
 
       function M.calc_sha256(job)
-        local child = Command('sha256sum')
+        local child = Command('${sha256sum}')
           :args({
             tostring(job.file.url)
           })
@@ -501,7 +418,7 @@ in {
 
       function M.calc_file1(job)
         -- Calculate file type
-        local child = Command("file")
+        local child = Command("${fileCmd}")
           :args({
             "-b",
             tostring(job.file.url),
@@ -521,7 +438,7 @@ in {
       end
 
       function M:peek(job)
-        local child = Command("hexyl")
+        local child = Command("${hexyl}")
           :args({
             "--border",
             "none",
@@ -564,15 +481,15 @@ in {
           local max_skip = math.max(0, i - limit)
           if job.skip > max_skip then
             -- We've scrolled too far, correct the position
-            ya.manager_emit("peek", { 
-              max_skip, 
-              only_if = tostring(job.file.url), 
-              upper_bound = true 
+            ya.manager_emit("peek", {
+              max_skip,
+              only_if = tostring(job.file.url),
+              upper_bound = true
             })
             return
           end
         end
-        
+
         lines = lines:gsub("\t", string.rep(" ", PREVIEW.tab_size))
 
         -- Define display areas within the peek function

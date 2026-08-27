@@ -260,20 +260,6 @@
 
         # Zig LSP
         zls.enable = true;
-
-        # ASM LSP
-        asm_lsp = {
-          enable = true;
-
-          config = {
-            cmd = ["asm-lsp"];
-            filetypes = ["asm" "inc" "s" "S"];
-            root_markers = [".git" ".asm-lsp.toml"];
-          };
-        };
-
-        # .NET LSP
-        roslyn_ls.enable = true;
       };
     };
 
@@ -423,23 +409,6 @@
       rustaceanvim = {
         enable = true;
         settings = {
-          dap.autoloadConfigurations = true;
-          dap.adapter = 
-            let
-              code-lldb = channels.nixpkgs-unstable.vscode-extensions.vadimcn.vscode-lldb;
-            in {
-              executable.command = "${code-lldb}/share/vscode/extensions/vadimcn.vscode-lldb/adapter/codelldb";
-              executable.args = [
-                "--liblldb"
-                "${code-lldb}/share/vscode/extensions/vadimcn.vscode-lldb/lldb/lib/liblldb.so"
-                "--port"
-                "31337"
-              ];
-              type = "server";
-              port = "31337";
-              host = "127.0.0.1";
-            };
-
           server = {
             cmd = [
               "rustup"
@@ -645,17 +614,6 @@
           };
         });
       } 
-      {
-        plugin = (channels.nixpkgs-unstable.vimUtils.buildVimPlugin {
-          name = "vim-syntax-yara";
-          src = channels.nixpkgs-unstable.fetchFromGitHub {
-            owner = "s3rvac";
-            repo = "vim-syntax-yara";
-            rev = "7f163d489bb041fe74f8788662620a0bcd3c0025";
-            hash = "sha256-TEo9TV2Iexki0n1ME2ywLvkqpnq5ZosWc8di0/VNYIA=";
-          };
-        });
-      }
       {
         plugin = (channels.nixpkgs-unstable.vimUtils.buildVimPlugin {
           name = "nvim-nio";

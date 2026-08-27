@@ -1,4 +1,4 @@
-{ channels, customPackages, workConfig, nixGLPrefix, colorscheme, ... }:
+{ channels, colorscheme, ... }:
 {
   programs.zsh = {
     enable = true;
@@ -9,36 +9,6 @@
 
     initContent = ''
       # Place any values that need to be handled by ~/.zshrc here, if they cannot be defined elsewhere
-
-      unset LD_LIBRARY_PATH
-      unset QT_PLUGIN_PATH
-
-      source ${../python/activate_envs.sh}
-
-      export PYENV_ROOT="$HOME/.pyenv"
-      export PATH="$PYENV_ROOT/bin:$HOME/ida-pro-9.0:$PATH"
-
-      ## PyEnv Setup
-      if command -v pyenv &> /dev/null; then
-        eval "$(pyenv init -)"
-      fi
-
-      ## Binary Refinery Setup
-      function alias-noglob {
-          while read -r entrypoint; do
-              alias $entrypoint="noglob $entrypoint"
-          done
-      }
-
-      python <<EOF | alias-noglob
-      from importlib.metadata import entry_points
-
-      eps = entry_points(group='console_scripts')
-      refinery_eps = [ep.name for ep in eps if ep.module.startswith('refinery')]
-
-      for ep_name in refinery_eps:
-          print(ep_name)
-      EOF
 
       ## ZSH Vi Bindings
       zvm_bindkey vicmd _ beginning-of-line
@@ -52,8 +22,7 @@
       ZVM_VI_HIGHLIGHT_BACKGROUND=${colorscheme.colors.cursor}
 
       export COLORTERM=truecolor
-      export TERM=xterm-256color
-    '' + (workConfig.programs.zsh.initContent or "");
+    '';
 
     shellAliases = {
       py = "python3";
@@ -64,17 +33,7 @@
       lla = "ls -la";   # List Files (+ Hidden)
       lt = "ls --tree"; # List Files (Tree)
       y = "yy";         # Yazi
-      docker = "podman";
-      news = "${channels.nixpkgs-unstable.newsboat}/bin/newsboat";
-      yara = "${channels.nixpkgs-unstable.yara-x}/bin/yr";
-      netreactorslayer = "${customPackages.net-reactor-slayer}/bin/NETReactorSlayer";
-      rbat = "${customPackages.binary-refinery}/bin/bat";
-      goresym = "${channels.nixpkgs-unstable.goresym}/bin/GoReSym";
-      ilspy = "${channels.nixpkgs-unstable.avalonia-ilspy}/bin/ILSpy";
-
-      # OpenGL Required
-      contour = "${nixGLPrefix}${channels.nixpkgs-unstable.contour}/bin/contour";
-    } // (workConfig.programs.zsh.shellAliases or {});
+    };
 
     plugins = [
       {

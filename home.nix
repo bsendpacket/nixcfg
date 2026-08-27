@@ -1,126 +1,40 @@
-{
-  config,
-  lib,
-  ...
-}:
+{ ... }:
 let
   channels = (import ./channels.nix).channels;
+  pkgs = channels.nixpkgs-unstable;
 
   username = builtins.getEnv "USER";
   homeDirectory = builtins.getEnv "HOME";
-  isNixOS = builtins.pathExists "/etc/NIXOS";
+
   colorscheme = import ./colorscheme.nix;
-  nixGLPrefix = if isNixOS then "" else "${channels.nixpkgs-unstable.nixGL.auto.nixGLDefault}/bin/nixGL ";
-
-  binaryNinjaURL = import ./binary-ninja/binary-ninja-url.nix;
-  binaryNinjaConfig = import ./binary-ninja/config.nix { 
-    inherit channels binaryNinjaURL;
-  };
-
-  # Packages to build, as they are not on NixPkgs
-  customPackages = {
-    # .NET
-    de4dot = channels.nixpkgs-unstable.callPackage ./de4dot/de4dot.nix { };
-    net-reactor-slayer = channels.nixpkgs-unstable.callPackage ./net-reactor-slayer/net-reactor-slayer.nix { };
-
-    # NPM/PNPM
-    webcrack = channels.nixpkgs-unstable.callPackage ./webcrack/webcrack.nix { };
-
-    # C++/Rust
-    decompylepp = channels.nixpkgs-unstable.callPackage ./decompylepp/decompylepp.nix { };
-    binlex = channels.nixpkgs-unstable.callPackage ./binlex/binlex.nix {
-      inherit (channels.nixpkgs-unstable-may-2025) llvmPackages_22 rustPlatform;
-    };
-
-    # Python
-    capa = channels.nixpkgs-unstable.python312Packages.callPackage ./capa/capa.nix { };
-    binary-refinery = channels.nixpkgs-unstable.python312Packages.callPackage ./binary-refinery/binary-refinery.nix { };
-    donut-decryptor = channels.nixpkgs-unstable.python312Packages.callPackage ./donut-decryptor/donut-decryptor.nix { };
-    pylingual = channels.nixpkgs-unstable.python312Packages.callPackage ./pylingual/pylingual.nix { };
-    pyja3 = channels.nixpkgs-unstable.python312Packages.callPackage ./dependencies/pyja3.nix { };
-    ucutils = channels.nixpkgs-unstable.python312Packages.callPackage ./dependencies/ucutils.nix { };
-    icicle-emu = channels.nixpkgs-unstable.python312Packages.callPackage ./dependencies/icicle-emu.nix { };
-    msynth = channels.nixpkgs-unstable.python312Packages.callPackage ./dependencies/msynth.nix { };
-
-    binary-ninja = channels.nixpkgs-unstable.callPackage ./binary-ninja/binary-ninja.nix {
-      inherit channels;
-      binaryNinjaUrl = binaryNinjaURL.binaryNinjaUrl;
-      binaryNinjaHash = binaryNinjaURL.binaryNinjaHash;
-      pythonEnv = binaryNinjaConfig.pythonEnv;
-    };
-
-    libtriton = channels.nixpkgs-unstable.python312Packages.callPackage ./dependencies/triton.nix { 
-      z3 = channels.nixpkgs-unstable.z3;
-      boost = channels.nixpkgs-unstable.boost;
-      libffi = channels.nixpkgs-unstable.libffi;
-      libxml2 = channels.nixpkgs-unstable.libxml2;
-      bitwuzla = channels.nixpkgs-unstable.bitwuzla;
-      capstone = channels.nixpkgs-unstable.capstone;
-      llvmPackages_16 = channels.nixpkgs-unstable-feb-2025.llvmPackages_16;
-    };
-  };
-
-  # Python Environments
-  pythonEnvs = import ./python/venvs.nix { inherit channels customPackages; binaryNinjaEnv = binaryNinjaConfig.pythonEnv; };
-
-  # Work-Specific
-  # Certain folders can be kept off the Git tree, but can still be imported into the config.
-  fileExists = path: if builtins.pathExists path then import path { inherit channels lib; } else {};
-  workConfig = fileExists ./work/work.nix;
-
 in
 {
   imports = [
     channels.nixvim.homeModules.nixvim
 
-    # Window Manager
-    (import ./i3/i3.nix { inherit channels config lib nixGLPrefix; })
-
     # Git
-    (import (if builtins.pathExists ./work/git/git.nix then ./work/git/git.nix else ./git/git.nix) { inherit channels; } )
+    (import ./git/git.nix { inherit channels; })
 
-    # Terminal Setup 
-    (import ./yazi/yazi.nix { inherit channels config colorscheme workConfig nixGLPrefix; })
-    (import ./zsh/zsh.nix { inherit lib channels customPackages workConfig nixGLPrefix colorscheme; })
+    # Terminal Setup
+    (import ./yazi/yazi.nix { inherit channels colorscheme; })
+    (import ./zsh/zsh.nix { inherit channels colorscheme; })
     (import ./neovim/neovim.nix { inherit channels homeDirectory; })
-    (import ./rofi/rofi.nix { inherit channels config; })
-    (import ./newsboat/newsboat.nix { inherit channels; })
-    (import ./contour/settings.nix { inherit channels config lib; })
-    (import ./contour/contour.nix { inherit channels lib colorscheme; })
     (import ./zoxide/zoxide.nix { inherit channels; })
-
-    ./zathura/zathura.nix
-
-    binaryNinjaConfig.binaryNinjaConfig
-
-    # Program Setup
-    (import ./firefox/firefox.nix { inherit channels lib; })
   ];
 
   programs.home-manager = {
     enable = true;
-    path = "${channels.nixpkgs-unstable.home-manager.src}";
+    path = "${pkgs.home-manager.src}";
   };
 
   home = {
     username = username;
     homeDirectory = homeDirectory;
 
-    packages = (with channels.nixpkgs-unstable // customPackages; [
-      # VM tools
-      open-vm-tools
-      # spice-vdagent
-
+    packages = (with pkgs; [
       # Nix-specific tools
       nurl
       nix-init
-
-      # Window Manager
-      i3
-      i3status-rust
-
-      # Terminal
-      contour
 
       # Shell
       oh-my-zsh
@@ -130,227 +44,53 @@ in
       man-pages-posix
 
       git
-      _7zz
       (hiPrio bat)
+      _7zz
       ouch
+      unar
       htop
-      unixtools.xxd
-
       fastfetch
       glow
 
-      obsidian
-
-      lxqt.screengrab
-
-      ffmpeg
-
-      # Build Tools
-      gcc
-      cmake
-      nasm
-      fasm
-      rustup
-
-      # Web
-      # Unwrapped version defined in firefox/firefox.nix
-      #firefox
-
-      # RSS
-      newsboat
-
-      # Utilities
-      nautilus
-      xclip
-      xsel
-      xdragon
-      jless
-      unar
-
+      # Navigation / search
       lsd
       zoxide
       fzf
       fd
       ripgrep
       jq
+      jless
       hexyl
+      file
       channels.nixpkgs-unstable-feb-2025.yazi
 
-      rofi
-
+      # Yazi preview dependencies
       ffmpegthumbnailer
       mediainfo
       exiftool
-      unar
-      file
       poppler
 
+      # Build tools
+      # NOTE: on macOS the C/C++ compiler comes from the Xcode Command Line
+      # Tools (`xcode-select --install`), which is also what the nixpkgs
+      # darwin stdenv uses. Only the extras are installed here.
+      cmake
+      gnumake
+      pkg-config
+      nasm
+      rustup
+
       # Fonts
-      pkgs.nerd-fonts.caskaydia-cove
-
-      ## Malware Analysis
-        
-      # Binary Analysis
-      detect-it-easy
-      binary-ninja
-      binlex
-      flare-floss
-      #ghidra
-      imhex
-      capa
-      upx
-
-      yara-x
-      yaralyzer
-
-      # Family-Specific
-      donut-decryptor
-
-      # Networking
-      wireshark
-
-      # JavaScript
-      webcrack
-
-      # Java
-      jadx
-
-      # .NET
-      dotnet-sdk_10
-      ilspycmd
-      de4dot
-      net-reactor-slayer
-
-      # Go
-      goresym
-
-      # Python
-      decompylepp
-      pylingual
-
-      # Android
-      apktool
-
-      # Custom Python environment
-      (channels.nixpkgs-unstable.python312.withPackages (ps: with channels.nixpkgs-unstable.python312Packages; [
-        pip
-        mcp
-
-        ruff
-
-        # Networking
-        requests
-        flask
-        netifaces
-        pyja3
-
-        # Binary Analysis
-        binary-refinery
-        frida-python
-        construct
-        construct-typing
-        arrow
-
-        # Image Manipulation
-        pillow
-        types-pillow
-
-        # .NET
-        dnfile
-        dncil
-
-        # Emulation / Symbolic Execution
-        icicle-emu
-        libtriton
-        z3-solver
-        angr
-        miasm
-        sympy
-        msynth
-
-        # Disassembly/Assembly
-        capstone
-        keystone-engine
-
-        unicorn
-        ucutils
-
-        jupyterlab
-        graphviz
-        numpy
-
-        lief
-
-        pyyaml
-        types-pyyaml
-      ] ++ (workConfig.home.pythonPackages or [])))
-    ]) ++ (workConfig.home.packages or []) ++ (if !isNixOS then [ channels.nixpkgs-unstable.nixGL.auto.nixGLDefault ] else []);
-
-    # Create symlinks to the Python venvs in ~/.virtualenvs
-    activation.buildPythonEnvs = lib.mkAfter ''
-      echo "Building Python environments..."
-      ${lib.concatStringsSep "\n" (map (env:
-        ''
-        VENV_DIR="${config.home.homeDirectory}/.virtualenvs/${env.name}"
-
-        # Ensure the environment directory exists
-        mkdir -p "$VENV_DIR"
-
-        # Remove any existing symlinks
-        find "$VENV_DIR" -maxdepth 1 -type l -exec rm -f {} \;
-
-        # Create a symlink to the Python environment
-        ln -sf ${env.pythonEnv} "$VENV_DIR"
-
-        # Create a symlink to the Python binary
-        mkdir -p "$VENV_DIR/bin"
-        ln -sf ${env.pythonEnv}/bin/python "$VENV_DIR/bin/python"
-        ''
-      ) pythonEnvs.envs)}
-    '';
+      nerd-fonts.caskaydia-cove
+    ]);
 
     sessionVariables = {
       EDITOR = "nvim";
       LANG = "en_US.UTF-8";
       LC_ALL = "en_US.UTF-8";
-      XDG_DATA_DIRS = "$HOME/.nix-profile/share:/nix/var/nix/profiles/default/share:/usr/share:/usr/local/share";
-      FONTCONFIG_PATH = "$HOME/.nix-profile/share/fonts/truetype";
-      PATH = "$PATH:$HOME/.local/bin";
-      DOTNET_ROOT = "${channels.nixpkgs-unstable.dotnet-sdk_10}/share/dotnet";
     };
 
-    file.".xsessionrc" = {
-      text = ''
-        #!/bin/sh
-        . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
-        export XDG_DATA_DIRS="$HOME/.nix-profile/share:$XDG_DATA_DIRS"
-        export XDG_DATA_DIRS="$HOME/.local/share:$XDG_DATA_DIRS"
-        export FONTCONFIG_PATH="$HOME/.nix-profile/etc/fonts"
-      '';
-      executable = true;
-    };
-
-    file.".local/share/applications/i3.desktop" = {
-      text = ''
-        [Desktop Entry]
-        Name=i3
-        Comment=improved dynamic tiling window manager
-        Exec=${homeDirectory}/.nix-profile/bin/i3
-        Type=Application
-      '';
-      executable = false;
-    };
-
-    file.".local/bin/DRAG_TO_VM" = {
-      text = ''
-        #!${channels.nixpkgs-unstable.zsh}/bin/zsh
-        xdragon --target | while read dst
-        do
-          cp "''${dst//file:\/\//}" .
-        done
-      '';
-      executable = true;
-    };
+    sessionPath = [ "$HOME/.local/bin" ];
 
     stateVersion = "23.11";
   };
