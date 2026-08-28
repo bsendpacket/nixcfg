@@ -6,9 +6,12 @@ the terminal environment only: **zsh** (oh-my-zsh + powerlevel10k), **neovim**
 
 This branch is the macOS port of the Linux config on `master`. Everything
 X11/i3-specific and all of the reverse-engineering tooling has been removed.
-No GUI applications are managed here — install your terminal emulator
-(Ghostty, iTerm2, kitty, …) however you like; nix only configures what runs
-*inside* it.
+
+**kitty** is config-managed but not installed here: `programs.kitty.package` is
+`null`, so home-manager writes `~/.config/kitty/kitty.conf` and leaves the app
+itself to the Homebrew cask (`brew install --cask kitty`). This matters because
+the emulator supplies the 16 ANSI colors that `lsd`, powerlevel10k, `git` and
+`bat` all draw from — without it, `colorscheme.nix` only reaches yazi.
 
 ## Notes
 - The install assumes `curl` and `git` from the system (Xcode Command Line Tools).
@@ -31,8 +34,10 @@ No GUI applications are managed here — install your terminal emulator
 9. exit, then restart the shell
 ```
 
-Then point your terminal emulator at the **CaskaydiaCove Nerd Font Mono** family
-(installed by `home.packages`) so the powerlevel10k prompt and yazi icons render.
+kitty picks up the font and palette on its next start; `ctrl+shift+f5` reloads
+the config in a running instance. Note the family name is **CaskaydiaCove Nerd
+Font Mono** on macOS — the Linux config's `CaskaydiaCove NFM Light` does not
+resolve here.
 
 ## Optional: use the nix build of zsh as the login shell
 ```
@@ -46,6 +51,7 @@ chsh -s ~/.nix-profile/bin/zsh
 | `channels.nix` | Pinned nixpkgs / home-manager / nixvim inputs |
 | `home.nix` | Entry point: imports, packages, session variables |
 | `colorscheme.nix` | Shared palette, consumed by zsh and yazi |
+| `kitty/` | kitty colors and font (config only — app comes from brew) |
 | `zsh/` | zsh, oh-my-zsh, powerlevel10k, vi-mode, fzf history |
 | `neovim/` | nixvim: LSPs, cmp, telescope, treesitter, DAP |
 | `yazi/` | yazi keymaps, previewers, theme, hexdump previewer plugin |

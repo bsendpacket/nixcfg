@@ -16,6 +16,7 @@ in
     (import ./git/git.nix { inherit channels; })
 
     # Terminal Setup
+    (import ./kitty/kitty.nix { inherit channels colorscheme; })
     (import ./yazi/yazi.nix { inherit channels colorscheme; })
     (import ./zsh/zsh.nix { inherit channels colorscheme; })
     (import ./neovim/neovim.nix { inherit channels homeDirectory; })
