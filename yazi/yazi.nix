@@ -21,6 +21,7 @@ in {
   programs.yazi = {
     enable = true;
     enableZshIntegration = true;
+    shellWrapperName = "yy";
     package = channels.nixpkgs-unstable-feb-2025.yazi;
 
     initLua = ''

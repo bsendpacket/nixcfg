@@ -273,6 +273,7 @@ in
 {
   programs.firefox = {
     enable = true;
+    configPath = ".mozilla/firefox";
 
     package = channels.nixpkgs-unstable.wrapFirefox channels.nixpkgs-unstable.firefox-unwrapped {
       extraPolicies = {
