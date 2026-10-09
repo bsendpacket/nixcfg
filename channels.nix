@@ -65,8 +65,8 @@ let
     };
 
     home-manager = (builtins.fetchTarball {
-      url = "https://github.com/nix-community/home-manager/archive/7296022150cd775917e4c831c393026eae7c2427.tar.gz";
-      sha256 = "sha256-9wQpgBRW2PzYw1wx+MgCt1IbPAYz93csApLMgSZOJCk=";
+      url = "https://github.com/nix-community/home-manager/archive/dfadbe5162d5e86bc0808badec8f346f81b4b3f0.tar.gz";
+      sha256 = "sha256-iKxFHJrg7Sltwhq3ssCZYQ4CFEDVvReVVuVuO9dj3sE=";
     });
 
     # NUR and nixvim overlays
