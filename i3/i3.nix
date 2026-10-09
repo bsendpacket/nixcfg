@@ -134,7 +134,7 @@ in {
         exec --no-startup-id nm-applet
         exec --no-startup-id vmware-user
         exec --no-startup-id vmware-user-suid-wrapper
-        exec --no-startup-id spice-vdagent
+        exec --no-startup-id sh -c 'sleep 2 && xrandr --output Virtual-1 --preferred'
       '';
     };
   };
